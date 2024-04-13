@@ -64,3 +64,19 @@ function register() {
     caja_trasera_login.style.opacity = "1";
   }
 }
+
+const tipoRegistroCheckbox = document.getElementById("toggle");
+const usuarioInputs = document.querySelectorAll(".usuario");
+const empresaInputs = document.querySelectorAll(".empresa");
+
+tipoRegistroCheckbox.addEventListener("change", function () {
+  if (this.checked) {
+    // Si el checkbox está activado, mostrar los inputs de usuario y ocultar los de empresa
+    usuarioInputs.forEach((input) => (input.style.display = "block"));
+    empresaInputs.forEach((input) => (input.style.display = "none"));
+  } else {
+    // Si el checkbox está desactivado, mostrar los inputs de empresa y ocultar los de usuario
+    usuarioInputs.forEach((input) => (input.style.display = "none"));
+    empresaInputs.forEach((input) => (input.style.display = "block"));
+  }
+});

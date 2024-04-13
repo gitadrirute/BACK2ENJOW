@@ -33,19 +33,59 @@
           <!--Login-->
           <form action="" class="formulario__login">
             <h2>Iniciar Sesión</h2>
-            <input type="text" placeholder="Correo Electronico" />
-            <input type="password" placeholder="Contraseña" />
+            <input type="text" placeholder="Correo Electronico" name="correo" />
+            <input type="password" placeholder="Contraseña" name="contrasena" />
             <button>Entrar</button>
           </form>
 
           <!--Register-->
           <form action="" class="formulario__register">
             <h2>Regístrarse</h2>
-            <input type="text" placeholder="Nombre completo" />
-            <input type="text" placeholder="Correo Electronico" />
-            <input type="text" placeholder="Usuario" />
-            <input type="password" placeholder="Contraseña" />
-            <button>Regístrarse</button>
+            <input
+              type="text"
+              placeholder="Nombre completo"
+              class="usuario"
+              name="nombre"
+            />
+            <input
+              type="text"
+              placeholder="Correo Electronico"
+              class="usuario"
+              name="correo"
+            />
+            <input type="text" placeholder="Usuario" class="usuario" />
+            <input
+              type="password"
+              placeholder="Contraseña"
+              class="usuario"
+              name="contrasena"
+            />
+            <button type="submit" class="usuario">Enviar</button>
+
+            <input
+              type="text"
+              placeholder="Nombre completo 2"
+              class="empresa"
+              name="nombre"
+            />
+            <input
+              type="text"
+              placeholder="Correo Electronico 2"
+              class="empresa"
+              name="correo"
+            />
+            <input type="text" placeholder="Usuario 2" class="empresa" />
+            <input
+              type="password"
+              placeholder="Contraseña 2"
+              class="empresa"
+              name="contrasena"
+            />
+            <button type="submit" class="empresa">Enviar2</button>
+            <div class="toggle-button">
+              <input type="checkbox" id="toggle" class="toggle-checkbox" />
+              <label for="toggle" class="toggle-label"></label>
+            </div>
           </form>
         </div>
       </div>
