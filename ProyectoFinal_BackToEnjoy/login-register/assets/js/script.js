@@ -81,10 +81,52 @@ tipoRegistroCheckbox.addEventListener("change", function () {
   }
 });
 
+function mifuncion(event) {
+  event.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+  const nombre = document.querySelector("[name=nombre]").value;
+  const correo = document.querySelector("[name=correo]").value;
+  const usuario = document.querySelector(".usuario [name=usuario]").value;
+  const contrasena = document.querySelector("[name=contrasena]").value;
+
+  let tipoRegistro;
+  if (tipoRegistroCheckbox.checked) {
+    tipoRegistro = "empresa";
+  } else {
+    tipoRegistro = "usuario";
+  }
+
+  // Aquí puedes enviar los datos al servidor, incluyendo el tipo de registro
+  // Por ejemplo, puedes utilizar fetch() para enviar una solicitud POST
+
+  fetch("URL_DE_TU_API", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      nombre,
+      correo,
+      usuario,
+      contrasena,
+      tipoRegistro,
+    }),
+  })
+    .then((response) => {
+      // Aquí manejas la respuesta del servidor
+      if (response.ok) {
+        // Si la respuesta es exitosa, puedes redirigir al usuario a otra página, mostrar un mensaje, etc.
+        console.log("Registro exitoso");
+      } else {
+        // Si la respuesta no es exitosa, puedes mostrar un mensaje de error o realizar otra acción
+        console.error("Error al registrar usuario");
+      }
+    })
+    .catch((error) => {
+      // Si hay algún error en la solicitud, puedes manejarlo aquí
+      console.error("Error en la solicitud:", error);
+    });
+}
+
 var boton = document.getElementById("bot");
 boton.addEventListener("click", mifuncion);
-
-function mifuncion() {
-  alert("hola");
-}
-//checkear que sea de empresa o usuario,
