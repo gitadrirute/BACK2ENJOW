@@ -213,3 +213,13 @@ main {
 .toggle-checkbox:checked + .toggle-label::before {
   transform: translateX(30px);
 }
+
+/* Agregamos un ajuste al texto */
+.toggle-label::after {
+  content: attr(data-text); /* Usamos el atributo data-text como contenido */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Centramos verticalmente el texto */
+  left: 10px; /* Ajustamos este valor según tu preferencia */
+  white-space: nowrap; /* Evita que el texto se divida */
+}
