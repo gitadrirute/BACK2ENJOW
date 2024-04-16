@@ -30,15 +30,16 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $usuario = new Usuario;
-        $usuario->nombre = $request->name;
+        $usuario->nombre = $request->nombre;
         $usuario->apellidos = $request->apellidos;
         $usuario->correo = $request->correo;
-        $usuario->contrasena = $request->contrasena;
+        $usuario->contraseña = $request->contraseña;
+        $usuario->rol_usuario_id = $request->rol_usuario_id;
         $usuario->save();
 
         $data = [
             'mensaje' => 'Usario creado correctamente',
-            'usuario' => 'Usuario'
+            'usuario' => $usuario
         ];
 
         return response()->json($data);
@@ -47,8 +48,9 @@ class UsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Usuario $usuario)
+    public function show( $id)
     {
+        $usuario = Usuario::findOrFail($id);
         return response()->json($usuario);
     }
 
@@ -62,17 +64,20 @@ class UsuarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Usuario $usuario)
+    public function update(Request $request, $id)
     {
-        $usuario->nombre = $request->name;
+        $usuario = Usuario::findOrFail($id);
+        $usuario->nombre = $request->nombre;
         $usuario->apellidos = $request->apellidos;
         $usuario->correo = $request->correo;
-        $usuario->contrasena = $request->contrasena;
+        $usuario->contraseña = $request->contraseña;
+        $usuario->rol_usuario_id = $request->rol_usuario_id;
+
         $usuario->save();
 
         $data = [
             'mensaje' => 'Usario actualizado correctamente',
-            'usuario' => 'Usuario'
+            'usuario' => $usuario
         ];
 
         return response()->json($data);
@@ -81,12 +86,13 @@ class UsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Usuario $usuario)
+    public function destroy( $id)
     {
+        $usuario = Usuario::findOrFail($id);
         $usuario->delete();
         $data = [
             'mensaje' => 'Usario eliminado correctamente',
-            'usuario' => 'Usuario'
+            'usuario' => $usuario
         ];
         return response()->json($data);
     }

@@ -32,6 +32,9 @@ class ValoracionesController extends Controller
         $valoracion = new Valoraciones;
         $valoracion->puntuacion = $request->puntuacion;
         $valoracion->comentario = $request->comentario;
+        $valoracion->usuario_id = $request->usuario_id;
+        $valoracion->negocio_id = $request->negocio_id;
+
         $valoracion->save();
 
         $data = [
@@ -44,8 +47,9 @@ class ValoracionesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Valoraciones $valoracion)
+    public function show( $id)
     {
+        $valoracion = Valoraciones::findOrFail($id);
         $data = [
             'mensaje' => 'Detalles de la valoracion del usuario',
             'valoracion' => $valoracion
@@ -64,10 +68,13 @@ class ValoracionesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Valoraciones $valoracion)
+    public function update(Request $request, $id)
     {
+        $valoracion = Valoraciones::findOrFail($id);
         $valoracion->puntuacion = $request->puntuacion;
         $valoracion->comentario = $request->comentario;
+        $valoracion->usuario_id = $request->usuario_id;
+        $valoracion->negocio_id = $request->negocio_id;
         $valoracion->save();
 
         $data = [
@@ -80,8 +87,9 @@ class ValoracionesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Valoraciones $valoracion)
+    public function destroy( $id)
     {
+        $valoracion = Valoraciones::findOrFail($id);
         $valoracion->delete();
         $data = [
             'mensaje' => 'Valoracion de usuario eliminada correctamente',

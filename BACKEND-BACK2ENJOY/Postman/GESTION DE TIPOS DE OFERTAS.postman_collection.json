@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "1c5a0a95-0c51-49fe-8129-d508978d944c",
+		"name": "GESTION DE TIPOS DE OFERTAS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21619298",
+		"_collection_link": "https://www.postman.com/grey-comet-73791/workspace/apis/collection/21619298-1c5a0a95-0c51-49fe-8129-d508978d944c?action=share&source=collection_link&creator=21619298"
+	},
+	"item": [
+		{
+			"name": "Crear un tipo de oferta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "NmvhWrKelmQAUkTaOFFhE1UZQrCALB2qbcCcLHru",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"lkjb\",\r\n    \"direccion\": \"ñokñj \",\r\n    \"telefono\": 952454721,\r\n    \"imagenReferencia\": \"dddididid.jpg\",\r\n    \"estado\": \"ñokñj \",\r\n    \"sitioWeb\": 952454721,\r\n    \"horario\": \"dddididid.jpg\",\r\n    \"informacion\": \"sddddddddd\",\r\n    \"categoria_negocio_id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/negocios",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"negocios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar un tipo de oferta",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "k5Gwl4Tes3ZABBZDM9Na1Av3KIUHKPeQTE7WB4OL",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fechaAlta\": \"2023-04-15\",\r\n    \"fechaBaja\": \"2024-06-15\",\r\n    \"usuario_id\": \"1\",\r\n\t\"metodo_pago_id\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/historialesPremium/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"historialesPremium",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mostrar todos los tipos de oferta",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Mostrar un tipo de oferta",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un tipo de oferta",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "aUuTptO4r3umeEMT4qoMm7fYpenjIrrrkanMK9xc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/metodosPago/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"metodosPago",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

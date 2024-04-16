@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('historial_premium', function (Blueprint $table) {
+        Schema::create('valoraciones', function (Blueprint $table) {
             $table->id();
-            $table->date('fechaAlta');
-            $table->date('fechaBaja');
+            $table->integer('puntuacion');
+            $table->string('comentario');
+            $table->timestamps();
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('usuarios');
-            $table->unsignedBigInteger('metodo_pago_id');
-            $table->foreign('metodo_pago_id')->references('id')->on('metodo_pago');
-            $table->timestamps();
-            //FALTA LA CLAVE FORANEA DE METODO DE PAGO
-
+            $table->unsignedBigInteger('negocio_id');
+            $table->foreign('negocio_id')->references('id')->on('negocios');
+        
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('historial_premium');
+        Schema::dropIfExists('valoraciones');
     }
 };

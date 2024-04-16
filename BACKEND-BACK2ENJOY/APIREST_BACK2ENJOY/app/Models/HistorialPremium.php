@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class HistorialPremium extends Model
 {
     use HasFactory;
+    protected $table = "historial_premium";
 
-    public function historialPremiumUsuario()
+    public function usuario()
     {
 
         $this->belongsTo(Usuario::class);

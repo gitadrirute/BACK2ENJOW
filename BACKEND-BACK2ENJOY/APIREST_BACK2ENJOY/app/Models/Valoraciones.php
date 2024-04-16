@@ -14,4 +14,10 @@ class Valoraciones extends Model
 
         return $this->belongsTo(Usuario::class);
     }
+
+    public function valoracionesNegocio()
+    {
+
+        return $this->belongsTo(Negocio::class);
+    }
 }

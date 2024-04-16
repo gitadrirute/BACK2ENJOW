@@ -12,7 +12,9 @@ class RolesUsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $rolesUsario = RolesUsuario::all();
+
+        return response()->json($rolesUsario);
     }
 
     /**
@@ -28,15 +30,26 @@ class RolesUsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rolUsuario = new RolesUsuario;
+        $rolUsuario->nombreRol = $request->nombreRol;
+        $rolUsuario->descripcion = $request->descripcion;
+        $rolUsuario->save();
+
+        $data = [
+            'mensaje' => 'Rol de usuario creado correctamente',
+            'rolUsuario' => $rolUsuario
+        ];
+
+        return response()->json($data);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(RolesUsuario $rolesUsuario)
+    public function show(RolesUsuario $rolesUsuario, $id)
     {
-        //
+        $rolesUsuario = RolesUsuario::findOrFail($id);
+        return response()->json($rolesUsuario);
     }
 
     /**
@@ -50,16 +63,34 @@ class RolesUsuarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RolesUsuario $rolesUsuario)
+    public function update(Request $request, RolesUsuario $rolesUsuario, $id)
     {
-        //
+        $rolesUsuario = RolesUsuario::findOrFail($id);
+        $rolesUsuario->nombreRol = $request->nombreRol;
+        $rolesUsuario->descripcion = $request->descripcion;
+        $rolesUsuario->save();
+
+        $data = [
+            'mensaje' => 'Rol de usuario actualizado correctamente',
+            'rolesUsuario' => $rolesUsuario
+        ];
+
+        return response()->json($data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RolesUsuario $rolesUsuario)
+    public function destroy($id)
     {
-        //
+        $rolesUsuario = RolesUsuario::findOrFail($id);
+
+        $rolesUsuario->delete();
+        $data = [
+            'mensaje' => 'Rol de usuario eliminado correctamente',
+            'rolusuario' => $rolesUsuario
+        ];
+
+        return response()->json($data);
     }
 }

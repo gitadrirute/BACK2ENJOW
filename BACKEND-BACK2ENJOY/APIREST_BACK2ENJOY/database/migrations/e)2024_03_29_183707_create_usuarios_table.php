@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('correo')->unique();
-            $table->bcrypt('contraseña')->unique();
+            $table->string('contraseña')->unique();
 
             $table->timestamps();// es necesario crear una columna de fechaRegistro???
-            $table->unsignedBigInteger('roles_usuarios_id');
-            $table->foreign('roles_usuarios_id')->references('id')->on('roles_usuarios');
+            $table->unsignedBigInteger('rol_usuario_id');
+            $table->foreign('rol_usuario_id')->references('id')->on('roles_usuarios');
         
         });
     }

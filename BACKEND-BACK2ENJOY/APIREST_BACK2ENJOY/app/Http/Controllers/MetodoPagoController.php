@@ -13,7 +13,7 @@ class MetodoPagoController extends Controller
     public function index()
     {
         $metodoPago = MetodoPago::all();
-        
+
         return response()->json($metodoPago);
     }
 
@@ -30,15 +30,31 @@ class MetodoPagoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $metodoPago = new MetodoPago;
+        $metodoPago->tipo = $request->tipo;
+        $metodoPago->nombreTitular = $request->nombreTitular;
+        $metodoPago->codigoSeguridad = $request->codigoSeguridad;
+        $metodoPago->numeroTarjeta = $request->numeroTarjeta;
+        $metodoPago->pais = $request->pais;
+        $metodoPago->ciudad = $request->ciudad;
+        $metodoPago->codigoPostal = $request->codigoPostal;
+        $metodoPago->save();
+
+        $data = [
+            'mensaje' => 'Metodo de pago creado correctamente',
+            'metodoPago' => $metodoPago
+        ];
+
+        return response()->json($data);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(MetodoPago $metodoPago)
+    public function show(MetodoPago $metodoPago, $id)
     {
-        //
+        $metodoPago = $metodoPago::findOrFail($id);
+        return response()->json($metodoPago);
     }
 
     /**
@@ -52,16 +68,39 @@ class MetodoPagoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MetodoPago $metodoPago)
+    public function update(Request $request, MetodoPago $metodoPago, $id)
     {
-        //
+        $metodoPago = $metodoPago::findOrFail($id);
+        $metodoPago->tipo = $request->tipo;
+        $metodoPago->nombreTitular = $request->nombreTitular;
+        $metodoPago->codigoSeguridad = $request->codigoSeguridad;
+        $metodoPago->numeroTarjeta = $request->numeroTarjeta;
+        $metodoPago->pais = $request->pais;
+        $metodoPago->ciudad = $request->ciudad;
+        $metodoPago->codigoPostal = $request->codigoPostal;
+        $metodoPago->save();
+
+        $data = [
+            'mensaje' => 'Metodo de pago actualizado correctamente',
+            'metodoPago' => $metodoPago
+        ];
+
+        return response()->json($data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MetodoPago $metodoPago)
+    public function destroy(MetodoPago $metodoPago, $id)
     {
-        //
+        $metodoPago = $metodoPago::findOrFail($id);
+        $metodoPago->delete();
+        $data = [
+            'mensaje' => 'Metodo de pago eliminado correctamente',
+            'metodoPago' => $metodoPago
+
+        ];
+
+        return response()->json($data);
     }
 }

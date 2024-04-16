@@ -33,6 +33,8 @@ class HistorialPremiumController extends Controller
         $historialPremium = new HistorialPremium;
         $historialPremium->fechaAlta = $request->fechaAlta;
         $historialPremium->fechaBaja = $request->fechaBaja;
+        $historialPremium->usuario_id = $request->usuario_id;
+        $historialPremium->metodo_pago_id = $request->metodo_pago_id;
         $historialPremium->save();
 
         $data =[
@@ -47,8 +49,9 @@ class HistorialPremiumController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(HistorialPremium $historialPremium)
+    public function show(HistorialPremium $historialPremium, $id)
     {
+        $historialPremium = HistorialPremium::findOrFail($id);
         return response()->json($historialPremium);
     }
 
@@ -63,8 +66,9 @@ class HistorialPremiumController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, HistorialPremium $historialPremium)
+    public function update(Request $request, HistorialPremium $historialPremium, $id)
     {
+        $historialPremium = HistorialPremium::findOrFail($id);
         $historialPremium->fechaAlta = $request->fechaAlta;
         $historialPremium->fechaBaja = $request->fechaBaja;
         $historialPremium->save();
@@ -80,8 +84,9 @@ class HistorialPremiumController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(HistorialPremium $historialPremium)
+    public function destroy(HistorialPremium $historialPremium, $id)
     {
+        $historialPremium = HistorialPremium::findOrFail($id);
         $historialPremium->delete();
         $data =[
             'mensaje'=> 'HistorialPremiun eliminado correctamente',
