@@ -1,0 +1,26 @@
+TEMA DEL CRM
+
+cuando el usuario se registre en el formulario, validar el usuario que no suba fotos raras , nombres raros ""POLLA GORDA ETC.
+Nos llega la foto polla y el nombre pollagorda y nosotros desde el crm pues lo eliminamos, lo añadimos etc..
+
+PARA TABLAS USUARIO, NEGOCIO.
+
+ROLES DE USER: empresario, basico, premium y invitado(puede ver las reseñas, recomendaciones pero no esta registrado en la base de datos
+), 
+premium-> tiene ofertas y descuentas que se le mostraran en la pagina, en la pag principal(se visualizan las ofertas para incitar a que se hagan premium los comunes)
+los premium pueden ver las ofertas y que se apliquen las ofertas, etc
+
+
+
+OBJETIVOS: ENER LA ESTRUCTURA CLARA Y HECHA DE LA BBDD Y TENER CLAROS LOS ROLES DEL USUARIO
+
+
+
+
+--LOGIN -> CREO UNA PETICION HTTP DONDE RECIBA EL USUARIO CORREO Y CONTRASEÑA Y COMPROBAR QUE NO EXISTA EL USER, SI EXISTE COMPROBAR QU ELA CONTRASEÑA ESTE BIEN METIA, COMPROBAR SI ESTA HABILITADO EL USER  (ENDPOINT)
+
+Comprobamos que el usuario es correcto , si esta mañ, da un cod de error en concreto y le damos info al cliente que el user esta mal (no existe en la BBDD). Si es correcto devuelvo un 200 ok, y le digo que se ha logeado correctamente y que devuleva un token, ahora con ese token(contraseña temporal entre el user y la API, nos permitie saber que nos hemos logeado) ya spermite realizar las funciones
+
+
+
+SI en back uso laravel, y en el front se utiliza otra teecnologia distinta a la del back, hay que conectarlo de alguna manera, esa manera es la API REST,  PETICIONES HHTP. No se van a entender , en este caso usamos los json para comunicarse.
