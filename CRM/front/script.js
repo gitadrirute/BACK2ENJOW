@@ -30,6 +30,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${usuario.phone}</td>
                     <td>${usuario.company.name}</td>
                     <td>${usuario.address.street}</td>
+                    <td>
+                        <button class="btn btn-validate">Validar</button>
+                        <button class="btn btn-delete">Eliminar</button>
+                    </td>
                 </tr>
             `;
             tbody.innerHTML += row;
@@ -59,6 +63,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${negocio.title}</td>
                     <td>${negocio.body}</td>
                     <td>${negocio.userId}</td>
+                    <td>
+                        <button class="btn btn-validate">Validar</button>
+                        <button class="btn btn-delete">Eliminar</button>
+                    </td>
                 </tr>
             `;
             tbody.innerHTML += row;
