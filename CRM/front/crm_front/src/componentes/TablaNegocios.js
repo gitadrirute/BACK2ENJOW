@@ -17,6 +17,26 @@ const TablaNegocios = () => {
     obtenerNegocios();
   }, []);
 
+  const validarNegocio = async (id) => {
+    try {
+      const response = await axios.post(`https://tudominio.com/api/negocios/${id}/validate`);
+      console.log(response.data);
+      // Actualizar el estado o realizar otras acciones después de la validación
+    } catch (error) {
+      console.error('Error al validar negocio:', error);
+    }
+  };
+
+  const eliminarNegocio = async (id) => {
+    try {
+      const response = await axios.delete(`https://tudominio.com/api/negocios/${id}`);
+      console.log(response.data);
+      // Actualizar el estado o realizar otras acciones después de la eliminación
+    } catch (error) {
+      console.error('Error al eliminar negocio:', error);
+    }
+  };
+
   return (
     <div className="container">
       <h1>Validación de Negocios</h1>
@@ -43,8 +63,8 @@ const TablaNegocios = () => {
               <td>{negocio.body}</td>
               <td>...</td> {/* Aquí puedes mostrar más campos si están disponibles */}
               <td>
-                <button className="btn btn-validate">Validar</button>
-                <button className="btn btn-delete">Eliminar</button>
+                <button className="btn btn-validate" onClick={() => validarNegocio(negocio.id)}>Validar</button>
+                <button className="btn btn-delete" onClick={() => eliminarNegocio(negocio.id)}>Eliminar</button>
               </td>
             </tr>
           ))}
