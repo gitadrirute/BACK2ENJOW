@@ -7,7 +7,7 @@ const TablaNegocios = () => {
   useEffect(() => {
     const obtenerNegocios = async () => {
       try {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
+        const response = await axios.get("https://api.example.com/negocios");
         setNegocios(response.data);
       } catch (error) {
         console.error('Error al obtener los datos de los negocios:', error);
@@ -19,7 +19,7 @@ const TablaNegocios = () => {
 
   const validarNegocio = async (id) => {
     try {
-      const response = await axios.post(`https://tudominio.com/api/negocios/${id}/validate`);
+      const response = await axios.post(`https://api.example.com/negocios/${id}/validate`);
       console.log(response.data);
       // Actualizar el estado o realizar otras acciones después de la validación
     } catch (error) {
@@ -29,7 +29,7 @@ const TablaNegocios = () => {
 
   const eliminarNegocio = async (id) => {
     try {
-      const response = await axios.delete(`https://tudominio.com/api/negocios/${id}`);
+      const response = await axios.delete(`https://api.example.com/negocios/${id}`);
       console.log(response.data);
       // Actualizar el estado o realizar otras acciones después de la eliminación
     } catch (error) {
@@ -46,12 +46,6 @@ const TablaNegocios = () => {
             <th>IDNegocio</th>
             <th>Nombre</th>
             <th>Dirección</th>
-            <th>Foto</th>
-            <th>Horario</th>
-            <th>Información</th>
-            <th>Teléfono</th>
-            <th>Sitio Web</th>
-            <th>Ubicación</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -59,9 +53,8 @@ const TablaNegocios = () => {
           {negocios.map(negocio => (
             <tr key={negocio.id}>
               <td>{negocio.id}</td>
-              <td>{negocio.title}</td>
-              <td>{negocio.body}</td>
-              <td>...</td> {/* Aquí puedes mostrar más campos si están disponibles */}
+              <td>{negocio.nombre}</td>
+              <td>{negocio.direccion}</td>
               <td>
                 <button className="btn btn-validate" onClick={() => validarNegocio(negocio.id)}>Validar</button>
                 <button className="btn btn-delete" onClick={() => eliminarNegocio(negocio.id)}>Eliminar</button>

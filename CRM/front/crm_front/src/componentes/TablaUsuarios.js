@@ -7,8 +7,15 @@ const TablaUsuarios = () => {
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+        const response = await axios.get("http://localhost:8000/usuarios", {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization'
+          }
+        });
         setUsuarios(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error('Error al obtener los datos de los usuarios:', error);
       }
@@ -17,19 +24,16 @@ const TablaUsuarios = () => {
     obtenerUsuarios();
   }, []);
 
-  const validarUsuario = async (id) => {
-    try {
-      const response = await axios.post(`https://tudominio.com/api/usuarios/${id}/validate`);
-      console.log(response.data);
-      // Actualizar el estado o realizar otras acciones después de la validación
-    } catch (error) {
-      console.error('Error al validar usuario:', error);
-    }
-  };
 
   const eliminarUsuario = async (id) => {
     try {
-      const response = await axios.delete(`https://tudominio.com/api/usuarios/${id}`);
+      const response = await axios.delete(`http://localhost:8000/usuarios/${id}`, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization'
+        }
+      });
       console.log(response.data);
       // Actualizar el estado o realizar otras acciones después de la eliminación
     } catch (error) {
@@ -45,13 +49,12 @@ const TablaUsuarios = () => {
           <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Usuario</th>
+            <th>Apellidos</th>
+            <th>Nombre Usuario</th>
+            <th>DNI</th>
             <th>Correo</th>
-            <th>Sitio Web</th>
-            <th>Ciudad</th>
-            <th>Teléfono</th>
-            <th>Empresa</th>
-            <th>Calle</th>
+            <th>Contraseña</th>
+            <th>Validado</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -59,16 +62,14 @@ const TablaUsuarios = () => {
           {usuarios.map(usuario => (
             <tr key={usuario.id}>
               <td>{usuario.id}</td>
-              <td>{usuario.name}</td>
-              <td>{usuario.username}</td>
-              <td>{usuario.email}</td>
-              <td>{usuario.website}</td>
-              <td>{usuario.address.city}</td>
-              <td>{usuario.phone}</td>
-              <td>{usuario.company.name}</td>
-              <td>{usuario.address.street}</td>
+              <td>{usuario.nombre}</td>
+              <td>{usuario.apellidos}</td>
+              <td>{usuario.nombreUsuario}</td>
+              <td>{usuario.DNI}</td>
+              <td>{usuario.correo}</td>
+              {/* <td>{usuario.contraseña}</td> */}
+              <td>{usuario.validado}</td>
               <td>
-                <button className="btn btn-validate" onClick={() => validarUsuario(usuario.id)}>Validar</button>
                 <button className="btn btn-delete" onClick={() => eliminarUsuario(usuario.id)}>Eliminar</button>
               </td>
             </tr>
