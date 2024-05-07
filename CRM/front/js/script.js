@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const USUARIOS_API_URL = "https://jsonplaceholder.typicode.com/users"; // Cambiar esta URL por la de tu API de usuarios
+    const USUARIOS_API_URL = "https://localhost:8000/api/UsuariosNoValidadosConFotos"; // Cambiar esta URL por la de tu API de usuarios
     const NEGOCIOS_API_URL = "https://jsonplaceholder.typicode.com/posts"; // Cambiar esta URL por la de tu API de negocios
 
     // Función para obtener los datos de los usuarios
     function obtenerUsuarios() {
         axios.get(USUARIOS_API_URL)
             .then(response => {
-                mostrarUsuarios(response.data);
+                mostrarUsuarios(response.data.usuario);
             })
             .catch(error => {
                 console.error('Error al obtener los datos de los usuarios:', error);
@@ -21,15 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
         usuarios.forEach(usuario => {
             const row = `
                 <tr>
-                    <td>${usuario.id}</td>
-                    <td>${usuario.name}</td>
-                    <td>${usuario.username}</td>
-                    <td>${usuario.email}</td>
-                    <td>${usuario.website}</td>
-                    <td>${usuario.address.city}</td>
-                    <td>${usuario.phone}</td>
-                    <td>${usuario.company.name}</td>
-                    <td>${usuario.address.street}</td>
+                    <td>${usuario.nombre}</td>
+                    <td>${usuario.apellidos}</td>
+                    <td>${usuario.nombreUsuario}</td>
+                    <td>${usuario.DNI}</td>
+                    <td>${usuario.correo}</td>
+                    <td>${usuario.rutaImagen}</td>
+                    
                     <td>
                         <button class="btn btn-validate">Validar</button>
                         <button class="btn btn-delete">Eliminar</button>

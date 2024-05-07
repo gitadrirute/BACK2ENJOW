@@ -7,12 +7,13 @@ const TablaUsuarios = () => {
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/usuarios", {
-          headers: {
+        const response = await axios.get("http://localhost:8000/UsuariosNoValidadosConFotos", {
+          /* headers: {
+
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
             'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization'
-          }
+          } */
         });
         setUsuarios(response.data);
         console.log(response.data);
