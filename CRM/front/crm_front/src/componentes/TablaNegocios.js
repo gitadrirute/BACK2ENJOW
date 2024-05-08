@@ -7,7 +7,7 @@ const TablaNegocios = () => {
   useEffect(() => {
     const obtenerNegocios = async () => {
       try {
-        const response = await axios.get("https://api.example.com/negocios");
+        const response = await axios.get("http://localhost:8000/api/negocios");
         setNegocios(response.data);
       } catch (error) {
         console.error('Error al obtener los datos de los negocios:', error);
@@ -17,15 +17,7 @@ const TablaNegocios = () => {
     obtenerNegocios();
   }, []);
 
-  const validarNegocio = async (id) => {
-    try {
-      const response = await axios.post(`https://api.example.com/negocios/${id}/validate`);
-      console.log(response.data);
-      // Actualizar el estado o realizar otras acciones después de la validación
-    } catch (error) {
-      console.error('Error al validar negocio:', error);
-    }
-  };
+  
 
   const eliminarNegocio = async (id) => {
     try {
@@ -45,7 +37,11 @@ const TablaNegocios = () => {
           <tr>
             <th>IDNegocio</th>
             <th>Nombre</th>
+            <th>CIF</th>
             <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Sitio Web</th>
+            <th>Validado</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -54,10 +50,13 @@ const TablaNegocios = () => {
             <tr key={negocio.id}>
               <td>{negocio.id}</td>
               <td>{negocio.nombre}</td>
+              <td>{negocio.NIF}</td>
               <td>{negocio.direccion}</td>
+              <td>{negocio.telefono}</td>
+              <td>{negocio.sitioWeb}</td>
+              <td>{negocio.validado}</td>
               <td>
-                <button className="btn btn-validate" onClick={() => validarNegocio(negocio.id)}>Validar</button>
-                <button className="btn btn-delete" onClick={() => eliminarNegocio(negocio.id)}>Eliminar</button>
+                <button className="btn btn-danger" onClick={() => eliminarNegocio(negocio.id)}>Eliminar</button>
               </td>
             </tr>
           ))}

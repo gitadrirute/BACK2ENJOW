@@ -7,16 +7,8 @@ const TablaUsuarios = () => {
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/UsuariosNoValidadosConFotos", {
-          /* headers: {
-
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization'
-          } */
-        });
-        setUsuarios(response.data);
-        console.log(response.data);
+        const response = await axios.get("http://localhost:8000/api/usuarios");
+        setUsuarios(response.data); // Asumiendo que la respuesta es un array de objetos de usuarios
       } catch (error) {
         console.error('Error al obtener los datos de los usuarios:', error);
       }
@@ -25,18 +17,9 @@ const TablaUsuarios = () => {
     obtenerUsuarios();
   }, []);
 
-
   const eliminarUsuario = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/usuarios/${id}`, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-          'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization'
-        }
-      });
-      console.log(response.data);
-      // Actualizar el estado o realizar otras acciones después de la eliminación
+      // Aquí deberías implementar la lógica para eliminar un usuario
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
     }
@@ -68,10 +51,15 @@ const TablaUsuarios = () => {
               <td>{usuario.nombreUsuario}</td>
               <td>{usuario.DNI}</td>
               <td>{usuario.correo}</td>
-              {/* <td>{usuario.contraseña}</td> */}
+              <td>{usuario.contraseña}</td>
               <td>{usuario.validado}</td>
               <td>
-                <button className="btn btn-delete" onClick={() => eliminarUsuario(usuario.id)}>Eliminar</button>
+              {/* <button>
+                  <svg className='boton_delete' xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+              </button> */}
+                <button className="btn btn-danger" onClick={() => eliminarUsuario(usuario.id)}>Eliminar</button>
               </td>
             </tr>
           ))}
