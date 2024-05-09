@@ -18,7 +18,7 @@ const LoginRegister = (props) => {
     const password = e.target.elements.password.value;
 
     try {
-      const response = await fetch('URL_DE_TU_API/iniciar-sesion', {
+      const response = await fetch('http://localhost:8000/api/usuarios/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,43 +36,45 @@ const LoginRegister = (props) => {
     }
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    const username = e.target.elements.username.value;
-    const email = e.target.elements.email.value;
-    const password = e.target.elements.password.value;
-
+  const handleRegister = async (event) => {
+    event.preventDefault();
+  
+    const form = event.target;
+    const formData = new FormData(form);
+  
     try {
-      const response = await fetch('URL_DE_TU_API/registro', {
+      const response = await fetch('http://localhost:8000/api/usuarios/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, email, password }),
+        body: formData
       });
-      
+  
       if (response.ok) {
-        // Si el registro es exitoso, cambia al formulario de inicio de sesión
-        toggleAction();
+        // Registro exitoso
+        // Puedes redirigir a otra página o realizar alguna acción adicional
+        console.log('Usuario registrado correctamente');
       } else {
-        setError('Error en el registro');
+        // Error en el registro
+        // Puedes manejar el error de acuerdo a tu lógica de aplicación
+        console.error('Error al registrar usuario');
       }
     } catch (error) {
-      setError('Error en el registro');
+      // Error en la conexión o en el proceso de registro
+      console.error('Error de conexión o en el proceso de registro:', error);
     }
   };
+  
 
   return (
     <div className={`wrapper${action}`}>
       <div className="form-box login">
-        <form onSubmit={handleLogin} style={{ display: isRegistering ? "none" : "block" }}>
-          <h1>Login</h1>
+      <form onSubmit={handleLogin} style={{ display: isRegistering ? "none" : "block" }}>
+          <h1>Login</h1>     
           <div className="input-box">
-            <input type="text" placeholder="Usuario" required name="username" />
+            <input type="text" placeholder="Usuario" required name="nombreUsuario" />
             <FaUser className="icon" />
           </div>
           <div className="input-box">
-            <input type="password" placeholder="Contraseña" required name="password" />
+            <input type="password" placeholder="Contraseña" required name="contraseña" />
             <FaLock className="icon" />
           </div>
           <div className="remember-forgot">
@@ -98,18 +100,34 @@ const LoginRegister = (props) => {
       </div>
 
       <div className="form-box register">
-        <form onSubmit={handleRegister} style={{ display: isRegistering ? "block" : "none" }}>
+      <form onSubmit={handleRegister} className={isRegistering ? "register-form" : ""} style={{ display: isRegistering ? "block" : "none" }}>
           <h1>Registrarse</h1>
           <div className="input-box">
-            <input type="text" placeholder="Usuario" required name="username" />
+            <input type="text" placeholder="Nombre" required name="nombre" />
             <FaUser className="icon" />
           </div>
           <div className="input-box">
-            <input type="text" placeholder="Email" required name="email" />
+            <input type="text" placeholder="Apellidos" required name="apellidos" />
+            <FaUser className="icon" />
+          </div>
+          <div className="input-box">
+            <input type="text" placeholder="Usuario" required name="nombreUsuario" />
+            <FaUser className="icon" />
+          </div>
+          <div className="input-box">
+            <input type="text" placeholder="DNI" required name="DNI" />
+            <FaUser className="icon" />
+          </div>
+          <div className="input-box">
+            <input type="text" placeholder="Email" required name="correo" />
             <FaEnvelope className="icon" />
           </div>
           <div className="input-box">
-            <input type="password" placeholder="Contraseña" required name="password" />
+            <input type="password" placeholder="Contraseña" required name="contraseña" />
+            <FaLock className="icon" />
+          </div>
+          <div className="input-box">
+            <input type="password" placeholder="Repetir contraseña" required name="contraseña_confirmation" />
             <FaLock className="icon" />
           </div>
           <div className="remember-forgot">

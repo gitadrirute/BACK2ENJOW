@@ -1,7 +1,7 @@
 .wrapper {
   position: relative;
   width: 420px;
-  height: 450px;
+  min-height: 800px; /* Cambiado a min-height para permitir que crezca */
   background: transparent rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(30px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -11,38 +11,36 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  transition: height 0.2s ease;
 }
 
-.wrapper.active {
-  height: 520px;
+.wrapper.active .form-box.register {
+  height: 800px; /* Altura adicional para el formulario de registro */
 }
 
 .wrapper .form-box {
   width: 100%;
   padding: 40px;
+  transition: transform 0.18s ease;
 }
 
 .wrapper .form-box.login {
-  transition: translate 0.18s ease;
-  translate: 0;
+  transform: translateX(0);
 }
 
 .wrapper.active .form-box.login {
-  transition: none;
-  translate: -400px;
+  transform: translateX(-400px);
 }
 
 .wrapper.active .form-box.register {
-  transition: translate 0.18s ease;
-  translate: 0;
+  transform: translateX(0);
 }
 
 .wrapper .form-box.register {
   position: absolute;
-  translate: 400px;
-  transition: none;
+  transform: translateX(400px);
+  height: 800px; /* Altura predeterminada para el formulario de registro */
 }
+
 
 form h1 {
   font-size: 36px;
