@@ -21,11 +21,30 @@ const TablaNegocios = () => {
 
   const eliminarNegocio = async (id) => {
     try {
-      const response = await axios.delete(`https://api.example.com/negocios/${id}`);
-      console.log(response.data);
-      // Actualizar el estado o realizar otras acciones después de la eliminación
+      const response = await axios.delete(`http://localhost:8000/api/negocios/${id}`);
+      if (response.status === 200) {
+        // Eliminación exitosa, actualiza la lista de negocios
+        setNegocios(negocios.filter(negocio => negocio.id !== id)); /* actualiza los negocios */
+        console.log('Negocio eliminado exitosamente');
+      } else {
+        throw new Error('No se pudo eliminar el negocio');
+      }
     } catch (error) {
       console.error('Error al eliminar negocio:', error);
+    }
+  };
+
+  const validarNegocio = async (id) => {
+    try {
+      const response = await axios.put(`http://localhost:8000/api/validarNegocio/${id}`);
+      if (response.status === 200) {
+        setNegocios(negocio.filter(negocio => negocio.id !== id));
+        console.log('Negocio validado exitosamente');
+      } else {
+        throw new Error('No se pudo validar el negocio');
+      }
+    } catch (error) {
+      console.error('Error al validar negocio:', error);
     }
   };
 

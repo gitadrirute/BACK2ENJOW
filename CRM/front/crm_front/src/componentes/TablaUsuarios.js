@@ -8,7 +8,7 @@ const TablaUsuarios = () => {
     const obtenerUsuarios = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/usuarios");
-        setUsuarios(response.data); // Asumiendo que la respuesta es un array de objetos de usuarios
+        setUsuarios(response.data); 
       } catch (error) {
         console.error('Error al obtener los datos de los usuarios:', error);
       }
@@ -19,9 +19,31 @@ const TablaUsuarios = () => {
 
   const eliminarUsuario = async (id) => {
     try {
-      // Aquí deberías implementar la lógica para eliminar un usuario
+      const response = await axios.delete(`http://localhost:8000/api/usuarios/${id}`);
+      if (response.status === 200) {
+        // Eliminación exitosa, actualiza la lista de usuarios
+        setUsuarios(usuarios.filter(usuario => usuario.id !== id));
+        console.log('Usuario eliminado exitosamente');
+      } else {
+        throw new Error('No se pudo eliminar el usuario');
+      }
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
+    }
+  };
+
+
+  const validarUsuario = async (id) => {
+    try {
+      const response = await axios.put(`http://localhost:8000/api/validarUsuario/${id}`);
+      if (response.status === 200) {
+        setUsuarios(usuarios.filter(usuario => usuario.id !== id));
+        console.log('Usuario validado exitosamente');
+      } else {
+        throw new Error('No se pudo validar el usuario');
+      }
+    } catch (error) {
+      console.error('Error al validar usuario:', error);
     }
   };
 
@@ -60,6 +82,10 @@ const TablaUsuarios = () => {
                   </svg>
               </button> */}
                 <button className="btn btn-danger" onClick={() => eliminarUsuario(usuario.id)}>Eliminar</button>
+                {/* <button className="btn btn-danger" onClick={() => validarUsuario(usuario.id)}>Validar</button> */}
+                <button className="btn btn-success" onClick={() => validarUsuario(usuario.id)}>
+                  <i className="bi bi-check-circle"></i> Validar
+                </button>
               </td>
             </tr>
           ))}
