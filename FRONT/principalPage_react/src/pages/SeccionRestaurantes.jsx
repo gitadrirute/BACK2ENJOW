@@ -1,12 +1,12 @@
 import React from "react";
-import casaLola from "./assets/casa.jpg";
+import casaLola from "/Assets/mlg.jpg";
 
 import "./SeccionRestaurante.css";
 
-function SeccionRestaurante() {
+function SeccionRestaurantes() {
     return (
         <div>
-            <CardRestaurante nombre="Casa Lola" imagen={casaLola} descripcion="Tapas" />
+            <CardRestaurante nombre="CasaLola" imagen={casaLola} descripcion="Tapas" />
             <CardRestaurante nombre="Bocatas Juanma" imagen={casaLola} descripcion="Bocadillos" />
         </div>
     );
@@ -24,5 +24,5 @@ function CardRestaurante({ nombre, imagen, descripcion }) {
     );
 }
 
-export default SeccionRestaurante;
+export default SeccionRestaurantes;
 

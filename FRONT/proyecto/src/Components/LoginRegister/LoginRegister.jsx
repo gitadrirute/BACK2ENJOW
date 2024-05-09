@@ -65,9 +65,10 @@ const LoginRegister = (props) => {
   
 
   return (
-    <div className={`wrapper${action}`}>
+    <>
+      <div className={`wrapper${action}`}>
       <div className="form-box login">
-      <form onSubmit={handleLogin} style={{ display: isRegistering ? "none" : "block" }}>
+        <form onSubmit={handleLogin} style={{ display: isRegistering ? "none" : "block" }}>
           <h1>Login</h1>     
           <div className="input-box">
             <input type="text" placeholder="Usuario" required name="nombreUsuario" />
@@ -151,6 +152,7 @@ const LoginRegister = (props) => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

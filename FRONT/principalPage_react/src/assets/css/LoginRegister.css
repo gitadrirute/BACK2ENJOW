@@ -1,18 +1,25 @@
+:root{
+  --fontColor:#fff;
+}
 
 .wrapper {
   position: relative;
-  width: 420px;
-  min-height: 800px; /* Cambiado a min-height para permitir que crezca */
+  justify-content: center;  
+  width: 400px;
+  min-height: 900px;
+  max-height: 800px; /* Cambiado a min-height para permitir que crezca */
   background: transparent rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(30px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border: 2px solid;
   border-radius: 10px;
-  color: #fff;
+  color: var(--fontColor);
   display: flex;
   align-items: center;
   overflow: hidden;
 }
+
+
 
 .wrapper.active .form-box.register {
   height: 800px; /* Altura adicional para el formulario de registro */
@@ -64,12 +71,12 @@ form .input-box {
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 40px;
   font-size: 16px;
-  color: #fff;
+  color: var(--fontColor);
   padding: 20px 45px 20px 20px;
 }
 
 .input-box input::placeholder {
-  color: #fff;
+  color: var(--fontColor);
 }
 
 .input-box .icon {
@@ -88,12 +95,12 @@ form .remember-forgot {
 }
 
 .remember-forgot label input {
-  accent-color: #fff;
+  accent-color: var(--fontColor);
   margin-right: 4px;
 }
 
 .remember-forgot a {
-  color: #fff;
+  color: var(--fontColor);
   text-decoration: none;
 }
 
@@ -104,7 +111,7 @@ form .remember-forgot {
 form button {
   width: 100%;
   height: 45px;
-  background: #fff;
+  background: var(--fontColor);
   border: none;
   outline: none;
   border-radius: 40px;
@@ -122,7 +129,7 @@ form .register-link {
 }
 
 .register-link p a {
-  color: #fff;
+  color: var(--fontColor);
   text-decoration: none;
   font-weight: 600;
 }
