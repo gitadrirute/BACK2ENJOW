@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const TablaNegocios = () => {
   const [negocios, setNegocios] = useState([]);
+  const [busqueda, setBusqueda] = useState('');
 
   useEffect(() => {
     const obtenerNegocios = async () => {
@@ -18,6 +19,14 @@ const TablaNegocios = () => {
   }, []);
 
   
+  /* Busqueda de negocios */
+  const handleSearchChange = (event) => {
+    setBusqueda(event.target.value);
+  };
+
+  const negociosFiltrados = negocios.filter(negocio =>
+    negocio.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
   const eliminarNegocio = async (id) => {
     try {
@@ -38,7 +47,7 @@ const TablaNegocios = () => {
     try {
       const response = await axios.put(`http://localhost:8000/api/validarNegocio/${id}`);
       if (response.status === 200) {
-        setNegocios(negocio.filter(negocio => negocio.id !== id));
+        setNegocios(negocios.filter(negocio => negocio.id !== id));
         console.log('Negocio validado exitosamente');
       } else {
         throw new Error('No se pudo validar el negocio');
@@ -51,6 +60,7 @@ const TablaNegocios = () => {
   return (
     <div className="container">
       <h1>Validación de Negocios</h1>
+      <input type="text" placeholder="Buscar por nombre..." value={busqueda} onChange={handleSearchChange} className="form-control mb-3"/>
       <table className="table table-striped table-bordered table-hover">
         <thead>
           <tr>
@@ -65,7 +75,7 @@ const TablaNegocios = () => {
           </tr>
         </thead>
         <tbody>
-          {negocios.map(negocio => (
+          {negociosFiltrados.map(negocio => (
             <tr key={negocio.id}>
               <td>{negocio.id}</td>
               <td>{negocio.nombre}</td>
@@ -76,6 +86,9 @@ const TablaNegocios = () => {
               <td>{negocio.validado}</td>
               <td>
                 <button className="btn btn-danger" onClick={() => eliminarNegocio(negocio.id)}>Eliminar</button>
+                <button className="btn btn-success" onClick={() => validarNegocio(negocio.id)}>
+                  <i className="bi bi-check-circle"></i> Validar
+                </button>
               </td>
             </tr>
           ))}
