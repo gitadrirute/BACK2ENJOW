@@ -7,7 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Negocio;
+use App\Models\RolesUsuario;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\ValidationException;
 
@@ -136,33 +138,56 @@ class AuthController extends Controller
 
             return response()->json([
                 'status' => 0,
-                'mensaje' => "¿¿Aún no te has registrado???" // darle pistas al usuario???
+                'mensaje' => "La contraseña o nombre de usuario son incorrectos" // darle pistas al usuario???
             ], 404);
         }
     }
 
+    
+
     public function perfilUsuario()
     {
+        // Obtener el usuario autenticado
+    $usuario = auth()->user();
 
-        return response()->json([
-            'status' => "1",
-            'mensaje' => "Acerca del perfil del usuario",
-            'datos del usuario' => auth()->user()
-        ]);
+    // Inicializar la variable data que se devolverá en la respuesta
+    $data = [];
+
+    // Verificar el rol del usuario
+    if ($usuario->rol_usuario_id == 1) {
+        // Si el rol es 1 (administrador), devolver todos los datos del usuario
+        $data = $usuario;
+    } elseif ($usuario->rol_usuario_id == 2) {
+        // Si el rol es 2 (usuario normal), devolver solo nombre, apellidos y nombre de usuario
+        $data = [
+            'nombre' => $usuario->nombre,
+            'apellidos' => $usuario->apellidos,
+            'nombreUsuario' => $usuario->nombreUsuario,
+        ];
     }
+
+    // Retornar la respuesta JSON con los datos del usuario
+    return response()->json([
+        'status' => "1",
+        'mensaje' => "Acerca de mi perfil de usuario",
+        'datos del usuario' => $data
+    ]);
+    }
+
+    
 
     public function logout() //PENDIENTE
     {
-        //auth()->user()-tokens()->delete();
+        auth()->logout();
         return response()->json([
             'status' => "1",
             'mensaje' => "Sesión cerrada",
-
         ]);
     }
 
 
-    public function registroNegocio(Request $request){
+    public function registroNegocio(Request $request)
+    {
         try {
 
             $validated = $request->validate(
@@ -235,9 +260,45 @@ class AuthController extends Controller
                 'error' => $errores->errors()
             ], 422);
         }
-
     }
 
+    public function loginCRM(Request $request){
 
-    
+        $validated = $request->validate(
+            [
+                'nombreRol' => 'required',
+                'contraseña' => 'required'
+            ],
+            [
+                'nombreRol.required' => 'El campo nombre de administrador es obligatorio',
+                'contraseña.required' => 'El campo contraseña es obligatoria',
+
+            ]
+        );
+        $admin= RolesUsuario::where("nombreRol", "=", $request["nombreRol"])->first();
+
+        if (isset($admin->id)) {
+            if (Hash::check($validated['contraseña'], $admin->contraseña)) {
+
+                $token = $admin->createToken("auth_token")->plainTextToken;
+
+                return response()->json([
+                    'mensaje' => "Bienvenido de nuevo Administrador: ",
+                    'token de acceso' => $token
+                ], Response::HTTP_OK);
+            }else{
+
+                return response()->json([
+                    'mensaje' => "Error al introducir las credenciales",
+                    
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+        }else{
+            return response()->json([
+                'mensaje' => "Error al introducir las credenciales",
+                
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+    }
 }

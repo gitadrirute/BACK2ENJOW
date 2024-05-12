@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Valoraciones;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class ValoracionesController extends Controller
 {
@@ -96,5 +98,21 @@ class ValoracionesController extends Controller
             'valoracion' => $valoracion
         ];
         return response()->json($data);
+    }
+
+
+    public function mostrarValoConUserYNegocio(){
+
+        $valoraciones = DB::table('valoraciones')
+        ->join('negocios', 'negocios.id', '=', 'valoraciones.negocio_id')
+        ->join('usuarios', 'usuarios.id', '=', 'valoraciones.usuario_id')
+        ->join('categorias_negocios', 'categorias_negocios.id', '=', 'negocios.categoria_negocio_id')
+        ->select('usuarios.nombreUsuario', 'valoraciones.valoracion','valoraciones.comentario' ,'negocios.nombre','categorias_negocios.nombreCategoria', 'valoraciones.created_at') 
+        ->orderBy('valoraciones.created_at', 'DESC')->get();
+        return response()->json([
+            'mensaje' => "Todas las valoraciones de ususarios y todo slos negocios",
+            'valoraciones' => $valoraciones
+        ], Response::HTTP_OK);
+       
     }
 }

@@ -227,6 +227,27 @@ class UsuarioController extends Controller
         return response()->json($data);
     }
 
+//POR SI UN USUARIO LOGEADO QUIERE VER LOS DATOS DE OTRO USUARIO ->borrar la funcion show de laravel
+    public function mostrarTodosLosDatosUsuario($id){
+
+        $usuario = User::findOrFail($id);
+
+        $data =[
+            'mensaje' => "Perfil del usuario",
+            'usuario'=> $usuario
+        ];
+
+        return response()->json($data);
+
+    }
+
+
+    public function mostrarAlgunosDatosDeUsuario(){
+        
+    
+    }
+
+
 
     
 }

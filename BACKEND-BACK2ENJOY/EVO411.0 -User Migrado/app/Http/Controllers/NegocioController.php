@@ -174,7 +174,7 @@ class NegocioController extends Controller
         $NegociosNoValidFotos = DB::table('galeria_negocios')
         ->join('negocios', 'negocios.id', '=', 'galeria_negocios.negocio_id')
         ->join('usuarios','usuarios.id' , '=','negocios.usuario_id' )
-        ->select('negocios.nombre', 'negocios.NIF', 'galeria_negocios.rutaImagen', 'usuarios.nombreUsuario')
+        ->select('negocios.nombre', 'negocios.direccion','negocios.telefono','negocios.sitioWeb', 'galeria_negocios.rutaImagen', 'usuarios.nombreUsuario')
         ->where('negocios.validado', false)
         ->get();
     
@@ -207,5 +207,30 @@ class NegocioController extends Controller
 
         return response()->json($data);
        
+    }
+    //Si la dejo así me mostrara una foto, si se hace en dos funciones: una qu eme de las fotos del negocio y otra que me de los demas
+    public function mostrarNegociosValidadosConFotos(){
+        
+            $NegociosValidFotos = DB::table('negocios')
+                ->join('categorias_negocios', 'categorias_negocios.id', '=', 'negocios.categoria_negocio_id')
+                ->leftJoin('valoraciones', 'valoraciones.negocio_id', '=', 'negocios.id')
+                ->join('usuarios', 'usuarios.id', '=', 'negocios.usuario_id')
+                ->leftJoin('galeria_negocios', function ($join) {
+                    $join->on('galeria_negocios.negocio_id', '=', 'negocios.id')
+                        ->whereRaw('galeria_negocios.id = (SELECT MIN(id) FROM galeria_negocios WHERE negocio_id = negocios.id)');
+                })
+                ->select('negocios.nombre', 'categorias_negocios.nombreCategoria','negocios.direccion' ,'usuarios.nombreUsuario', DB::raw('MIN(galeria_negocios.rutaImagen) as rutaImagen'), DB::raw('COUNT(DISTINCT valoraciones.id) as cantidadValoraciones'))
+                ->where('negocios.validado', true)
+                ->groupBy('negocios.id')
+                ->get();
+        
+    
+    $data = [
+        'mensaje' => 'Negocios  validados con sus fotos y sus propietarios',
+        'negocios' => $NegociosValidFotos
+    ];
+    
+    return response()->json($data);
+    
     }
 }

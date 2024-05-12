@@ -26,6 +26,9 @@ Route::post('/rolesUsuario', 'App\Http\Controllers\RolesUsuarioController@store'
 Route::get('/rolesUsuario/{rol}', 'App\Http\Controllers\RolesUsuarioController@show');
 Route::put('/rolesUsuario/{rol}', 'App\Http\Controllers\RolesUsuarioController@update');
 Route::delete('/rolesUsuario/{rol}', 'App\Http\Controllers\RolesUsuarioController@destroy');
+Route::post('/loginCRM', 'App\Http\Controllers\Auth\AuthController@loginCRM'); //CRM
+
+
 
 //RUTAS USUARIOS
 Route::get('/usuarios', 'App\Http\Controllers\UsuarioController@index');
@@ -60,6 +63,7 @@ Route::post('/valoraciones', 'App\Http\Controllers\ValoracionesController@store'
 Route::get('/valoraciones/{valoracion}', 'App\Http\Controllers\ValoracionesController@show');
 Route::put('/valoraciones/{valoracion}', 'App\Http\Controllers\ValoracionesController@update');
 Route::delete('/valoraciones/{valoracion}', 'App\Http\Controllers\ValoracionesController@destroy');
+Route::get('/valoracionesDeUsuarios', 'App\Http\Controllers\ValoracionesController@mostrarValoConUserYNegocio');
 
 //RUTAS  DE CATEGORIAS DE NEGOCIOS
 Route::get('/categoriaNegocios', 'App\Http\Controllers\CategoriasNegocioController@index');
@@ -76,6 +80,7 @@ Route::put('/negocios/{negocio}', 'App\Http\Controllers\NegocioController@update
 Route::delete('/negocios/{negocio}', 'App\Http\Controllers\NegocioController@destroy');//CRM
 Route::get('/NegociosNoValidadosConFotos', 'App\Http\Controllers\NegocioController@NegociosNoValidConFotos');//CRM
 Route::put('validarNegocio/{negocio}', 'App\Http\Controllers\NegocioController@validarNegocio'); //CRM
+Route::get('/NegociosValidadosConFotos', 'App\Http\Controllers\NegocioController@mostrarNegociosValidadosConFotos');
 
 
 //RUTAS DE OFERTAS
@@ -108,10 +113,21 @@ Route::post('/registro', 'App\Http\Controllers\Auth\AuthController@registro');
 //Login
 Route::post('/login', 'App\Http\Controllers\Auth\AuthController@login');
 
-Route::group(['middleware' => ['auth:sanctum']], function() {
-    //Para ver el perfil del usuario
+//ESTE ES EL QUE FUNCIONABA, HAY QUE ESTAR AUTENTICADO PARA ACCEDER A DICHAS
+
+ //Route::group(['middleware' => ['auth:sanctum']], function() {
+   
     Route::get('/perfilUsuario', 'App\Http\Controllers\Auth\AuthController@perfilUsuario');
     Route::get('/logout', 'App\Http\Controllers\Auth\AuthController@logout');
     Route::post('/registroNegocio','App\Http\Controllers\Auth\AuthController@registroNegocio');
-});
+//}); 
 
+
+ Route::group(['middleware' =>  ['auth:sanctum' , 'Admin']], function () {
+    //Route::get('/usuarios', 'App\Http\Controllers\UsuarioController@index'); 
+}); 
+
+
+Route::group(['middleware' => ['auth:sanctum' , 'usuarioNormal']], function () {
+    //Route::get('/usuarios', 'App\Http\Controllers\UsuarioController@index'); 
+});

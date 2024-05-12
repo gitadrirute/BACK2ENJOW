@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RolesUsuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RolesUsuarioController extends Controller
 {
@@ -32,7 +33,7 @@ class RolesUsuarioController extends Controller
     {
         $rolUsuario = new RolesUsuario;
         $rolUsuario->nombreRol = $request->nombreRol;
-        $rolUsuario->contraseña = $request->contraseña;
+        $rolUsuario->contraseña = Hash::make($request->contraseña);
         $rolUsuario->save();
 
         $data = [

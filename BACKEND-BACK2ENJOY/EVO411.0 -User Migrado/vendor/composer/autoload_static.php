@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc133b312fe180afc0f2b635022ad80ac
+class ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -360,8 +360,8 @@ class ComposerStaticInitc133b312fe180afc0f2b635022ad80ac
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -535,32 +535,8 @@ class ComposerStaticInitc133b312fe180afc0f2b635022ad80ac
     );
 
     public static $classMap = array (
-        'App\\Http\\Controllers\\ApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApiController.php',
-        'App\\Http\\Controllers\\Auth\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthController.php',
-        'App\\Http\\Controllers\\CategoriasNegocioController' => __DIR__ . '/../..' . '/app/Http/Controllers/CategoriasNegocioController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\GaleriaNegociosController' => __DIR__ . '/../..' . '/app/Http/Controllers/GaleriaNegociosController.php',
-        'App\\Http\\Controllers\\GaleriaUsuariosController' => __DIR__ . '/../..' . '/app/Http/Controllers/GaleriaUsuariosController.php',
-        'App\\Http\\Controllers\\HistorialPremiumController' => __DIR__ . '/../..' . '/app/Http/Controllers/HistorialPremiumController.php',
-        'App\\Http\\Controllers\\LoginUsuariosController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginUsuariosController.php',
-        'App\\Http\\Controllers\\MetodoPagoController' => __DIR__ . '/../..' . '/app/Http/Controllers/MetodoPagoController.php',
-        'App\\Http\\Controllers\\NegocioController' => __DIR__ . '/../..' . '/app/Http/Controllers/NegocioController.php',
-        'App\\Http\\Controllers\\OfertaController' => __DIR__ . '/../..' . '/app/Http/Controllers/OfertaController.php',
-        'App\\Http\\Controllers\\RolesUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesUsuarioController.php',
-        'App\\Http\\Controllers\\TransaccionesController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransaccionesController.php',
-        'App\\Http\\Controllers\\UsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsuarioController.php',
-        'App\\Http\\Controllers\\ValoracionesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ValoracionesController.php',
-        'App\\Models\\CategoriasNegocio' => __DIR__ . '/../..' . '/app/Models/CategoriasNegocio.php',
-        'App\\Models\\GaleriaNegocios' => __DIR__ . '/../..' . '/app/Models/GaleriaNegocios.php',
-        'App\\Models\\GaleriaUsuarios' => __DIR__ . '/../..' . '/app/Models/GaleriaUsuarios.php',
-        'App\\Models\\HistorialPremium' => __DIR__ . '/../..' . '/app/Models/HistorialPremium.php',
-        'App\\Models\\MetodoPago' => __DIR__ . '/../..' . '/app/Models/MetodoPago.php',
-        'App\\Models\\Negocio' => __DIR__ . '/../..' . '/app/Models/Negocio.php',
-        'App\\Models\\Oferta' => __DIR__ . '/../..' . '/app/Models/Oferta.php',
-        'App\\Models\\RolesUsuario' => __DIR__ . '/../..' . '/app/Models/RolesUsuario.php',
-        'App\\Models\\Transacciones' => __DIR__ . '/../..' . '/app/Models/Transacciones.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
-        'App\\Models\\Valoraciones' => __DIR__ . '/../..' . '/app/Models/Valoraciones.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
@@ -6618,9 +6594,9 @@ class ComposerStaticInitc133b312fe180afc0f2b635022ad80ac
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc133b312fe180afc0f2b635022ad80ac::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc133b312fe180afc0f2b635022ad80ac::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitc133b312fe180afc0f2b635022ad80ac::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d::$classMap;
 
         }, null, ClassLoader::class);
     }
