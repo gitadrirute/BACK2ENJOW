@@ -228,7 +228,7 @@ const ContactUs = () => {
                 </p>
             </div><br/>
              {/* Captcha */}
-             <div className="g-recaptcha">
+            <div className="g-recaptcha">
                 <ReCAPTCHA
                     sitekey="6LeH7cYpAAAAAFlq1q2fmyqQo2-Mf0wRLoa045CP"
                     onChange={handleCaptchaChange}
