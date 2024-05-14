@@ -10,22 +10,30 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setError('');  // Limpiar cualquier error anterior
     try {
-      const response = await axios.post('http://localhost:8000/api/roles_usuarios/1', {
+      const response = await axios.post('http://localhost:8000/api/loginCRM', {
         nombreRol: usuario,
         contraseña: contrasena
       });
-
-      if (response.data.valido) {
-        navigate('/tablas');  // Cambio de history.push a navigate
+  
+      if (response.data) {
+        navigate('/tablas');
       } else {
-        setError('Usuario o contraseña incorrectos');
+        setError('Usuario o contraseña incorrectossssssssss');
       }
     } catch (err) {
-      setError('Error al intentar conectar al servidor');
+      if (err.response && err.response.status === 401) {
+        setError('Usuario o contraseña incorrectos');
+      } else {
+        setError('Error de conexión con el servidor');
+      }
       console.error(err);
     }
   };
+  
+  
+  
 
   return (
     <div>

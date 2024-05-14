@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // Importa useNavigate desde react-router-dom
 
 const TablaUsuarios = () => {
+  const navigate = useNavigate();  // Inicializa el hook useNavigate
   const [usuarios, setUsuarios] = useState([]);
   const [busqueda, setBusqueda] = useState('');
 
@@ -58,6 +60,12 @@ const TablaUsuarios = () => {
     }
   };
 
+  /* Ver detalles usuario */
+  const verDetalles = (id) => {
+    navigate(`/usuarios/detalle/${id}`);
+  };
+
+
 
   return (
     <div className="container">
@@ -94,6 +102,7 @@ const TablaUsuarios = () => {
                 <button className="btn btn-success" onClick={() => validarUsuario(usuario.id)}>
                   <i className="bi bi-check-circle"></i> Validar
                 </button>
+                <button className="btn btn-primary" onClick={() => verDetalles(usuario.id)}>Ver</button>
               </td>
             </tr>
           ))}
