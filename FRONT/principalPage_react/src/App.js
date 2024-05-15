@@ -11,6 +11,7 @@ import PoliticaPrivacidad from './pages/PoliticaPrivacidad';
 import Footer from './components/Footer'
 import {FormularioNegocios}  from './pages/FormularioNegocios';
 import  LoginRegister  from './pages/LoginRegister';
+import SeccionRestaurante from './pages/SeccionRestaurante';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/politicaCookies" element={<PoliticaCookies />} />
           <Route path="/negocio" element={<FormularioNegocios />} />
           <Route path="/login" element={<LoginRegister></LoginRegister>} />
+          <Route path="/restaurante" element={<SeccionRestaurante></SeccionRestaurante>} />
           {/* Otras rutas */}
         </Routes>
       

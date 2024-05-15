@@ -1,28 +1,77 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  .cards-container {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .map-container {
+    flex: 1;
+  }
+  
+ 
+  
+  
+
 .card {
     border: 1px solid hsl(0, 0, 80%);
     border-radius: 10px;
     box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
     padding: 20px;
-    margin: 50px;
-    max-width: 500px;
+    margin-bottom: 50px; /* Mover las tarjetas hacia abajo */
+    width: 500px; /* Establecer un ancho fijo */
     display: flex;
+    align-items: center; /* Alinear verticalmente */
+    margin-right: 500px; /* Espacio entre las tarjetas */
+    transition: transform 0.3s ease; /* Agregar transición */
+}
+
+.card:last-child {
+    margin-right: 500px; /* Espacio entre las tarjetas */
 }
 
 .card-image {
-    max-width: 60%;
+    max-width: 40%; /* Reducir el tamaño de la imagen */
     height: auto;
-    
-    margin-right: 10px;
+    margin-right: 20px; /* Espacio entre la imagen y los detalles */
 }
 
-.card-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.card-details {
+    flex: 1; /* Hacer que los detalles ocupen todo el espacio disponible */
+}
+
+.card-category {
+    font-weight: bold;
+    color: hsl(0, 0%, 40%);
+    margin-bottom: 5px; /* Espacio entre categoría y nombre */
 }
 
 .card-title {
     font-family: Arial, sans-serif;
     margin: 0;
     color: hsl(0, 0, 20%);
+}
+
+.card-text {
+    margin: 5px 0; /* Espacio entre elementos de texto */
+}
+
+/* Agregar efecto de agrandamiento al pasar el ratón */
+.card:hover {
+    transform: scale(1.05); /* Agrandar la tarjeta al pasar el ratón */
+}
+.discount-tag {
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);  
 }

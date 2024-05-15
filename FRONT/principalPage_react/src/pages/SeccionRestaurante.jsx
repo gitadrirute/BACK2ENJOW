@@ -1,0 +1,56 @@
+import React, { useState } from "react";
+import SimpleMarkerMap from "../components/restaurante/SimpleMarkerMap";
+import FotocasaLola from "./img/swiper Images/malaga1.jpg";
+import "../assets/css/SeccionRestaurante.css";
+import CasaLola from "../components/restaurante/CasalLola";
+
+function SeccionRestaurante() {
+  const [redirect, setRedirect] = useState(false);
+
+  // Función para manejar la redirección
+  const handleRedirect = () => {
+    setRedirect(true);
+  };
+
+  // Redirigir si redirect es true
+  if (redirect) {
+    return <CasaLola />;
+  }
+
+  return (
+    <div className="container" id="product">
+      <div className="cards-container">
+        {/* CardRestaurante para Casa Lola */}
+        <CardRestaurante
+          nombre="Casa Lola"
+          imagen={FotocasaLola}
+          categoria="Mediterráneo"
+          precio="15€"
+          descuento="20%"
+          handleRedirect={handleRedirect} 
+        />
+      </div>
+      <div className="map-container">        
+          <SimpleMarkerMap />       
+      </div>
+    </div>
+  );
+}
+
+function CardRestaurante({ nombre, imagen, categoria, precio, descuento, handleRedirect }) {
+  return (
+    <div className="card" onClick={handleRedirect}>
+      <img className="card-image" src={imagen} alt={nombre} />
+      <div className="card-details">
+        <div className="card-category">{categoria}</div>
+        <h2 className="card-title">
+          <strong>{nombre}</strong>
+        </h2>
+        <p className="card-text">{precio} de precio medio</p>
+        <p className="discount-tag">{descuento}</p>
+      </div>
+    </div>
+  );
+}
+
+export default SeccionRestaurante;
