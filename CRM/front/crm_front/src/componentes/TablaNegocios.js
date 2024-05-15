@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // Importa useNavigate desde react-router-dom
+
 
 const TablaNegocios = () => {
+  const navigate = useNavigate();  // Inicializa el hook useNavigate
   const [negocios, setNegocios] = useState([]);
   const [busqueda, setBusqueda] = useState('');
 
   useEffect(() => {
     const obtenerNegocios = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/negocios");
-        setNegocios(response.data);
+        const response = await axios.get("http://localhost:8000/api/TodosNegociosConOSinFotos");
+        // Asegurarse de que se accede a la propiedad 'negocios' que es el array
+        if (Array.isArray(response.data.negocios)) {
+          setNegocios(response.data.negocios);  // Acceder a la propiedad 'negocios'
+        } else {
+          console.error('La propiedad \'negocios\' no es un arreglo:', response.data.negocios);
+          setNegocios([]);  // Establece negocios como un arreglo vacío en caso de error
+        }
       } catch (error) {
         console.error('Error al obtener los datos de los negocios:', error);
+        setNegocios([]);  // Asegúrate de manejar errores limpiamente
       }
     };
+    
+    
 
     obtenerNegocios();
   }, []);
@@ -57,6 +69,12 @@ const TablaNegocios = () => {
     }
   };
 
+
+    /* Ver detalles usuario */
+    const verDetalles = (id) => {
+      navigate(`/negocios/detalle/${id}`);
+    };
+
   return (
     <div className="container">
       <h1>Validación de Negocios</h1>
@@ -64,35 +82,39 @@ const TablaNegocios = () => {
       <table className="table table-striped table-bordered table-hover">
         <thead>
           <tr>
-            <th>IDNegocio</th>
             <th>Nombre</th>
-            <th>CIF</th>
+            <th>NIF</th>
             <th>Dirección</th>
-            <th>Teléfono</th>
-            <th>Sitio Web</th>
+            <th>Creado por</th>
             <th>Validado</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {negociosFiltrados.map(negocio => (
-            <tr key={negocio.id}>
-              <td>{negocio.id}</td>
-              <td>{negocio.nombre}</td>
-              <td>{negocio.NIF}</td>
-              <td>{negocio.direccion}</td>
-              <td>{negocio.telefono}</td>
-              <td>{negocio.sitioWeb}</td>
-              <td>{negocio.validado}</td>
-              <td>
-                <button className="btn btn-danger" onClick={() => eliminarNegocio(negocio.id)}>Eliminar</button>
-                <button className="btn btn-success" onClick={() => validarNegocio(negocio.id)}>
-                  <i className="bi bi-check-circle"></i> Validar
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {negociosFiltrados.map(negocio => {
+    if (!negocio.id) {
+      console.warn("Negocio sin ID:", negocio);
+      return null; // No renderizar este elemento si no tiene ID
+    }
+    return (
+      <tr key={negocio.id}>
+        <td>{negocio.nombre}</td>
+        <td>{negocio.NIF}</td>
+        <td>{negocio.direccion}</td>
+        <td>{negocio.propietario}</td>
+        <td>{negocio.validado}</td>
+        <td>
+          <button className="btn btn-danger" onClick={() => eliminarNegocio(negocio.id)}>Eliminar</button>
+          <button className="btn btn-success" onClick={() => validarNegocio(negocio.id)}>
+            <i className="bi bi-check-circle"></i> Validar
+          </button>
+          <button className="btn btn-primary" onClick={() => verDetalles(negocio.id)}>Ver</button>
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
+
       </table>
     </div>
   );

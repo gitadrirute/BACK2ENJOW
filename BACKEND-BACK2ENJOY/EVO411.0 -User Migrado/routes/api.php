@@ -26,6 +26,9 @@ Route::post('/rolesUsuario', 'App\Http\Controllers\RolesUsuarioController@store'
 Route::get('/rolesUsuario/{rol}', 'App\Http\Controllers\RolesUsuarioController@show');
 Route::put('/rolesUsuario/{rol}', 'App\Http\Controllers\RolesUsuarioController@update');
 Route::delete('/rolesUsuario/{rol}', 'App\Http\Controllers\RolesUsuarioController@destroy');
+Route::post('/loginCRM', 'App\Http\Controllers\Auth\AuthController@loginCRM'); //CRM
+
+
 
 //RUTAS USUARIOS
 Route::get('/usuarios', 'App\Http\Controllers\UsuarioController@index');
@@ -37,6 +40,8 @@ Route::get('/usuariosNoValidados','App\Http\Controllers\UsuarioController@mostra
 Route::get('/UsuariosNoValidadosConFotos', 'App\Http\Controllers\UsuarioController@UsuariosNoValidConFotos');//CRM
 Route::get('/UsuariosNoValidConOsinFotos', 'App\Http\Controllers\UsuarioController@UsuariosNoValidConOsinFotos');//CRM
 Route::put('/validarUsuario/{usuario}', 'App\Http\Controllers\UsuarioController@validarUsuario');//CRM
+Route::get('/usuariosTotales', 'App\Http\Controllers\UsuarioController@todosUsuariosConOSinFotos');//CRM
+
 
 
 //RUTAS HISTORIAL PREMIUM
@@ -60,6 +65,7 @@ Route::post('/valoraciones', 'App\Http\Controllers\ValoracionesController@store'
 Route::get('/valoraciones/{valoracion}', 'App\Http\Controllers\ValoracionesController@show');
 Route::put('/valoraciones/{valoracion}', 'App\Http\Controllers\ValoracionesController@update');
 Route::delete('/valoraciones/{valoracion}', 'App\Http\Controllers\ValoracionesController@destroy');
+Route::get('/valoracionesDeUsuarios', 'App\Http\Controllers\ValoracionesController@mostrarValoConUserYNegocio');
 
 //RUTAS  DE CATEGORIAS DE NEGOCIOS
 Route::get('/categoriaNegocios', 'App\Http\Controllers\CategoriasNegocioController@index');
@@ -67,6 +73,7 @@ Route::post('/categoriaNegocios', 'App\Http\Controllers\CategoriasNegocioControl
 Route::get('/categoriaNegocios/{categoria}', 'App\Http\Controllers\CategoriasNegocioController@show');
 Route::put('/categoriaNegocios/{categoria}', 'App\Http\Controllers\CategoriasNegocioController@update');
 Route::delete('/categoriaNegocios/{categoria}', 'App\Http\Controllers\CategoriasNegocioController@destroy');
+Route::post('/categoriaNegocios', 'App\Http\Controllers\CategoriasNegocioController@store');
 
 //RUTAS DE NEGOCIOS
 Route::get('/negocios', 'App\Http\Controllers\NegocioController@index');
@@ -74,8 +81,11 @@ Route::post('/negocios', 'App\Http\Controllers\NegocioController@store');
 Route::get('/negocios/{negocio}', 'App\Http\Controllers\NegocioController@show');
 Route::put('/negocios/{negocio}', 'App\Http\Controllers\NegocioController@update');
 Route::delete('/negocios/{negocio}', 'App\Http\Controllers\NegocioController@destroy');//CRM
-Route::get('/NegociosNoValidadosConFotos', 'App\Http\Controllers\NegocioController@NegociosNoValidConFotos');//CRM
+Route::get('/NegociosNoValidConOSinFotos', 'App\Http\Controllers\NegocioController@NegociosNoValidConOSinFotos');//CRM
 Route::put('validarNegocio/{negocio}', 'App\Http\Controllers\NegocioController@validarNegocio'); //CRM
+Route::get('/NegociosValidadosConFotos', 'App\Http\Controllers\NegocioController@mostrarNegociosValidadosConFotos');
+Route::get('/TodosNegociosConOSinFotos', 'App\Http\Controllers\NegocioController@TodosNegociosConOSinFotos');//CRM
+Route::post('/registroNegocio','App\Http\Controllers\Auth\AuthController@registroNegocio');
 
 
 //RUTAS DE OFERTAS
@@ -108,10 +118,22 @@ Route::post('/registro', 'App\Http\Controllers\Auth\AuthController@registro');
 //Login
 Route::post('/login', 'App\Http\Controllers\Auth\AuthController@login');
 
-Route::group(['middleware' => ['auth:sanctum']], function() {
-    //Para ver el perfil del usuario
+//ESTE ES EL QUE FUNCIONABA, HAY QUE ESTAR AUTENTICADO PARA ACCEDER A DICHAS
+
+ Route::group(['middleware' => ['auth:sanctum']], function() { // pueden acceder aquellos que estan autenticados pero da igualsi es admin o normal
+   
     Route::get('/perfilUsuario', 'App\Http\Controllers\Auth\AuthController@perfilUsuario');
     Route::get('/logout', 'App\Http\Controllers\Auth\AuthController@logout');
-    Route::post('/registroNegocio','App\Http\Controllers\Auth\AuthController@registroNegocio');
-});
+}); 
 
+
+ Route::group(['middleware' =>  ['auth:sanctum' , 'Admin']], function () { // pueden acceder aquellos que esten autenticados y que admas solo sean admins
+    //Route::get('/admin/usuarios', 'App\Http\Controllers\UsuarioController@index'); 
+
+}); 
+
+
+Route::group(['middleware' => ['auth:sanctum' , 'usuarioNormal']], function () {
+    //Route::get('/usuarios', 'App\Http\Controllers\UsuarioController@index');
+ 
+});

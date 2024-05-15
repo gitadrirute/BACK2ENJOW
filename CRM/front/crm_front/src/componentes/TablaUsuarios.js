@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // Importa useNavigate desde react-router-dom
 
 const TablaUsuarios = () => {
+  const navigate = useNavigate();  // Inicializa el hook useNavigate
   const [usuarios, setUsuarios] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [mostrarNoValidados, setMostrarNoValidados] = useState(false);
+
 
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/usuarios");
-        setUsuarios(response.data); 
+        let url = "http://localhost:8000/api/usuariosTotales";
+        if (mostrarNoValidados) {
+          url = "http://127.0.0.1:8000/api/UsuariosNoValidConOsinFotos";
+        }
+        const response = await axios.get(url);
+        setUsuarios(response.data.usuario || []); 
       } catch (error) {
         console.error('Error al obtener los datos de los usuarios:', error);
       }
     };
 
     obtenerUsuarios();
-  }, []);
+  }, [mostrarNoValidados]);
 
   /* Busqueda de usuarios */
   const handleSearchChange = (event) => {
@@ -26,6 +34,11 @@ const TablaUsuarios = () => {
   const usuariosFiltrados = usuarios.filter(usuario =>
     usuario.nombre.toLowerCase().includes(busqueda.toLowerCase())
   );
+
+  /* Boton para cambiar a no validados */
+  const toggleMostrarNoValidados = () => {
+    setMostrarNoValidados(!mostrarNoValidados);
+  };
 
   /* Eliminar usuario */
   const eliminarUsuario = async (id) => {
@@ -58,10 +71,18 @@ const TablaUsuarios = () => {
     }
   };
 
+  /* Ver detalles usuario */
+  const verDetalles = (id) => {
+    navigate(`/usuarios/detalle/${id}`);
+  };
+
+
 
   return (
     <div className="container">
       <h1>Validación de Usuarios</h1>
+      <button onClick={toggleMostrarNoValidados} className="btn btn-info">{mostrarNoValidados ? 'Mostrar Todos' : 'Mostrar No Validados'}</button>
+      <br></br>
       <input type="text" placeholder="Buscar por nombre..." value={busqueda} onChange={handleSearchChange} className="form-control mb-3"/>
       <table className="table table-striped table-bordered table-hover">
         <thead>
@@ -94,6 +115,7 @@ const TablaUsuarios = () => {
                 <button className="btn btn-success" onClick={() => validarUsuario(usuario.id)}>
                   <i className="bi bi-check-circle"></i> Validar
                 </button>
+                <button className="btn btn-primary" onClick={() => verDetalles(usuario.id)}>Ver</button>
               </td>
             </tr>
           ))}

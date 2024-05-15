@@ -1,0 +1,21 @@
+
+.formulario-container {
+    width:800px ;
+    text-align: center;
+    background: transparent rgba(255, 255, 255, 0.1);
+    background-size: cover;
+    backdrop-filter: blur(30px);
+    padding: 20px; /* Espaciado interno */
+    border-radius: 10px; /* Borde redondeado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin-bottom: 20px; /* Margen inferior para separar del contenido debajo */
+  }
+  
+  form .input-box input{
+    width: 80%;/* Espaciado entre cada campo*/
+    padding-top: 10px;
+    height: 30px;
+  }
+  
+  /* Agrega cualquier otro estilo necesario para los campos del formulario */
+  
