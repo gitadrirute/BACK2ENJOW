@@ -1,0 +1,62 @@
+/* General Page Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Header and Titles */
+h1, h3 {
+    color: #333;
+}
+
+/* Info Section Styling */
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+}
+
+.info-icon {
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+button.active {
+    background-color: green;
+    color: white;
+}
+
+.tabs button {
+    padding: 10px 20px;
+    margin-right: 5px;
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+}
+
+.tabs button.active {
+    background-color: green;
+    color: white;
+}
+
+.restaurant-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}

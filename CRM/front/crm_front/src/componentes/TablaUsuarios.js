@@ -9,7 +9,6 @@ const TablaUsuarios = () => {
   const [mostrarNoValidados, setMostrarNoValidados] = useState(false);
 
 
-
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {

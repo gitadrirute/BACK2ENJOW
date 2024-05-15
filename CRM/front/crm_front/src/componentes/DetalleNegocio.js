@@ -30,7 +30,6 @@ const DetalleNegocio = () => {
     return <div>Cargando...</div>; // Mensaje de carga mientras los datos no están disponibles
   }
 
-
   return (
     <div>
       <h1>Detalles del Negocio</h1>

@@ -2,28 +2,28 @@ import React, { useState } from "react";
 import "../assets/css/LoginRegister.css";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha";
 
 const LoginRegister = (props) => {
   const [action, setAction] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [error, set_Error] = useState("");
   // Estado para controlar el valor del captcha
-  const [captchaValue, setCaptchaValue] = useState(null);
-
+/*   const [captchaValue, setCaptchaValue] = useState(null);
+ */
   const [successMessage, setSuccessMessage] = useState(false);
   
 
   // Función para manejar el cambio de captcha
-  const handleCaptchaChange = (value) => {
-    console.log("Captcha value:", value);
-    setCaptchaValue(value);
+  // const handleCaptchaChange = (value) => {
+  //   console.log("Captcha value:", value);
+  //   setCaptchaValue(value);
 
-    // Si se completa el captcha, elimina el error relacionado
-    if (value) {
-        clearErrors('recaptcha');
-    }
-  };
+  //   // Si se completa el captcha, elimina el error relacionado
+  //   if (value) {
+  //       clearErrors('recaptcha');
+  //   }
+  // };
 
   //controla el mensaje de exito
   let successMsg =""
@@ -71,22 +71,22 @@ const LoginRegister = (props) => {
   };
 
   //!OJO HACER QUE AL REGISTRARSE REDIRIJA A LA PAGINA PRINCIPAL CAMBIADA PARA USUARIOS REGISTRADOS
-  const handleRegister = handleSubmit(async (event,data) => {
-    event.preventDefault();
+  const handleRegister = handleSubmit(async (data) => {
     // Verificar si el captcha está seleccionado
-    if (!captchaValue) {
-      setError('recaptcha', { type: 'manual', message: 'Por favor, completa el captcha' });
-      return; // No envía el formulario
-    } 
+    // if (!captchaValue) {
+    //   setError('recaptcha', { type: 'manual', message: 'Por favor, completa el captcha' });
+    //   return; // No envía el formulario
+    // } 
 
+    console.log(data);
     alert("enviando...")
-    data.recaptchaToken = captchaValue; // Incluye el token del captcha en los datos
+    // data.recaptchaToken = captchaValue; // Incluye el token del captcha en los datos
   
     // const form = event.target;
     // const formData = new FormData(form);
   
     try {
-      const response = await fetch('http://localhost:8000/api/usuarios/', {
+      const response = await fetch('http://localhost:8000/api/registro/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -218,15 +218,15 @@ const LoginRegister = (props) => {
                 {...register("nombreUsuario",{//implementar lo de unique(no se como va jeje)
                     required: {
                       value: true,
-                      message: "El campo 'nombreUsuario  es obligatorio"
+                      message: "El campo nombreUsuario  es obligatorio"
                     },
                     maxLength: {
                         value: 13,
-                        message: "El campo 'nombreUsuario  no puede tener mas de 13 caracteres"
+                        message: "El campo nombreUsuario  no puede tener mas de 13 caracteres"
                     },
                     minLength: {
                       value: 5,
-                      message: "El campo 'nombreUsuario  no puede tener menos de 5 caracteres"
+                      message: "El campo nombreUsuario  no puede tener menos de 5 caracteres"
                     },
                     pattern: {
                         value: /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/,
@@ -237,12 +237,12 @@ const LoginRegister = (props) => {
                 <FaUser className="icon" />
               </div>
               <div className="input-box">
-                {errors.dni 
-                  ? <span className='formError'>{errors.dni.message}</span>
+                {errors.DNI 
+                  ? <span className='formError'>{errors.DNI.message}</span>
                   : <span></span>}
                 <input type="text" placeholder="DNI" 
                 name="DNI" 
-                {...register("dni",{//implementar lo de unique(no se como va jeje)
+                {...register("DNI",{//implementar lo de unique(no se como va jeje)
                     required: {
                       value: true,
                       message: "El campo 'DNI  es obligatorio"
@@ -312,10 +312,17 @@ const LoginRegister = (props) => {
                 <FaLock className="icon" />
               </div>
               <div className="input-box">
-                <input type="password" placeholder="Repetir contraseña" required name="contraseña_confirmation" />
+                <input type="password" placeholder="Repetir contraseña" name="contraseña_confirmation" 
+                  {...register("contraseña_confirmation",{
+                    required:{
+                      value:true,
+                      message:"no son iguales"
+                    }
+                  })}
+                />
                 <FaLock className="icon" />
               </div>
-              <div className="remember-forgot">
+              {/* <div className="remember-forgot">
                 {errors.privacidad 
                   ? <span className='formError'>{errors.privacidad.message}</span>
                   : <span></span>}
@@ -332,14 +339,14 @@ const LoginRegister = (props) => {
                   Acepto los términos y condiciones
                 </label>
               </div>
-              {/* Captcha */}
+              {/* Captcha 
               <div className="g-recaptcha">
-                  <ReCAPTCHA
-                    sitekey="6LeH7cYpAAAAAFlq1q2fmyqQo2-Mf0wRLoa045CP"
-                    onChange={handleCaptchaChange}
-                  />
-                  {errors.recaptcha && <span className='formError'>{errors.recaptcha.message}</span>}
-              </div>
+                <ReCAPTCHA
+                  sitekey="6LeH7cYpAAAAAFlq1q2fmyqQo2-Mf0wRLoa045CP"
+                  onChange={handleCaptchaChange}
+                />
+                {errors.recaptcha && <span className='formError'>{errors.recaptcha.message}</span>}
+              </div> */}
 
               <button type="submit">Registrarse</button>
               <p>{error}</p>

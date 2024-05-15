@@ -256,9 +256,9 @@ export const FormularioNegocios = () => {
                 </select>
               </div>
 
-              {/* <div className="input-box">
-                <input type="text" placeholder="Usuario ID" name="usuario_id" value={formData.usuario_id} onChange={handleChange} />
-              </div> */}
+              <div className="input-box">
+                <input type="text" placeholder="Usuario ID" name="usuario_id" />
+              </div>
 
               <button type="submit">Enviar</button>
             </form>
