@@ -2,7 +2,7 @@
 
 /* VARIABLES GLOBALES*/
 :root{
-  --main-color: #545454;
+  --main-color: #434343;
   --background-color: #FFFFFF;
   --font-color: #FFFFFF;
   --font-color_2: #1d1d1b;
@@ -10,7 +10,7 @@
   --box-color:#FFFFFF;
   --contrast:#91c4ff;
   --contrast_light:#a1cdff;
-  --contrast_dark:#7cb9ff;
+  --contrast_dark:#0052af;
   --shadow:#3636366e;
 }
 
@@ -190,20 +190,19 @@ header .logo{
 }
 
 .menu_busqueda input[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #0b2799;
 }
 
 /* swiper principal*/
 .swiper {
   /* filter: blur(2px); */
-  width: 100%;
-  height: 400px;
+  margin-top: 15px;
 }
 
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: var(--background-color);
+  /* background: var(--background-color); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -212,8 +211,8 @@ header .logo{
 
 .swiper-slide img {
   /* position: absolute; */
-  width: 100%;
-  height: 300px;
+  width: 10px;
+  height: 10px;
 }
 /* ---------------fin de primer bloque-------------- */
 

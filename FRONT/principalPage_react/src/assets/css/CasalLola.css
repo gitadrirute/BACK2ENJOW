@@ -1,15 +1,9 @@
 /* General Page Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-}
 
 /* Header and Titles */
-h1, h3 {
+/* h1, h3 {
     color: #333;
-}
+} */
 
 /* Info Section Styling */
 .info-section {
@@ -35,7 +29,7 @@ button {
 }
 
 button.active {
-    background-color: green;
+    background-color: rgb(0, 82, 137);
     color: white;
 }
 
@@ -48,7 +42,7 @@ button.active {
 }
 
 .tabs button.active {
-    background-color: green;
+    background-color: rgb(0, 82, 137);
     color: white;
 }
 

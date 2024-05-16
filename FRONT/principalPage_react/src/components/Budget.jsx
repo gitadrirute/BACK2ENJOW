@@ -31,7 +31,7 @@ const Budget = () => {
                 <p>No pierdas más tiempo buscando, ¡permítenos diseñar la ruta perfecta para ti!</p><br/>
                 <div id="showFormBtn_2" className="buttonBox">
                 
-                    <Link className="clickable_btn" to="/login" onClick={(event) => handleRedirectTo('contact')}>
+                    <Link className="clickable_btn" to="/login" onClick={(event) => handleRedirectTo('product')}>
                     <b>¡Registrate!</b></Link>
                     
                 </div>

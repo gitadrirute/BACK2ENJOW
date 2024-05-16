@@ -40,6 +40,7 @@ function FormularioReseñas() {
 
     return (
         <div>
+        {/*     ARREGLAR ESTOOO  OJOOOOOO  */}
             <h2>Deja tu reseña:</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -48,7 +49,7 @@ function FormularioReseñas() {
                 </div>
                 <div>
                     <label>Tu comentario:</label>
-                    <textarea value={comment} onChange={handleCommentChange} />
+                    {/* <textarea value={comment} onChange={handleCommentChange} /> */}
                 </div>
                 <button type="submit">Enviar reseña</button>
             </form>

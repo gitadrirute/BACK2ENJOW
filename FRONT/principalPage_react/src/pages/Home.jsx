@@ -1,10 +1,10 @@
 import React from 'react'
 import Presentation from '../components/Presentation'
-import CallUs from '../components/CallUs'
+// import CallUs from '../components/CallUs'
 import Budget from '../components/Budget'
 import FaqSection from '../components/FaqSection'
 import ContactUs from '../components/ContactUs'
-import NewsLetter from '../components/NewsLetter'
+// import NewsLetter from '../components/NewsLetter'
 import '../assets/css/App.css';
 import MeetUs from '../components/MeetUs'
 
@@ -15,11 +15,10 @@ const Home = () => {
     <>
       <Presentation></Presentation>
       <MeetUs></MeetUs>
-      <CallUs></CallUs>
       <Budget></Budget>
       <FaqSection></FaqSection>
       <ContactUs></ContactUs>
-      <NewsLetter></NewsLetter>
+      {/* <NewsLetter></NewsLetter> */}
       
     </>
   )

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import SimpleMarkerMap from "../components/restaurante/SimpleMarkerMap";
-import FotocasaLola from "./img/swiper Images/malaga1.jpg";
 import "../assets/css/SeccionRestaurante.css";
 import CasaLola from "../components/restaurante/CasalLola";
 
@@ -23,15 +22,15 @@ function SeccionRestaurante() {
         {/* CardRestaurante para Casa Lola */}
         <CardRestaurante
           nombre="Casa Lola"
-          imagen={FotocasaLola}
+          imagen="./img/restaurante/casa.jpg"  // Ruta relativa al directorio public
           categoria="Mediterráneo"
           precio="15€"
           descuento="20%"
-          handleRedirect={handleRedirect} 
+          handleRedirect={handleRedirect}
         />
       </div>
-      <div className="map-container">        
-          <SimpleMarkerMap />       
+      <div className="map-container">
+          <SimpleMarkerMap />
       </div>
     </div>
   );

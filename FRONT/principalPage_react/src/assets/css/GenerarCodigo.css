@@ -1,20 +1,15 @@
 /* GeneradorCodigo.css */
 
-/* Estilos para la imagen */
-.img-container {
-    width: 48px; /* Ancho deseado */
-    height: 48px; /* Alto deseado */
-    overflow: hidden; /* Oculta cualquier parte de la imagen que se desborde del contenedor */
-    border-radius: 50%; /* Hace que el contenedor tenga forma de círculo */
-  }
-  
-  .img-container img {
-    width: 100%; /* Asegura que la imagen ocupe todo el contenedor */
-    height: auto; /* Permite que la altura se ajuste automáticamente */
-  }
-  
-  /* Estilos para el contenedor de texto */
-  .text-container {
-    flex: 1; /* Hace que el contenedor de texto ocupe todo el espacio disponible */
-  }
+.contenedor_descuento{
+  /* background-color: aqua; */
+  padding-left: 220px;
+}
+.btnCodigo{
+  width: 40%;
+  background: rgb(0, 140, 255);
+}
+
+.contenido_descuento img{
+  width: 30px;
+}
   

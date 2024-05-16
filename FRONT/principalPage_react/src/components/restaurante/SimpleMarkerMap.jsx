@@ -30,33 +30,33 @@ class SimpleMarkerMap extends Component {
     const { restaurantes, activeMarker, selectedRestaurant } = this.state;
 
     return (
-      <div>
-      <div style={{ maxWidth: '100px', maxHeight: '100px' }}> {/* Ajustar tamaño del contenedor del mapa */}
-        <Map
-          google={this.props.google}
-          zoom={14}
-          initialCenter={{ lat: 36.720991, lng: -4.417784 }} // Centro en Casa Lola
-        >
-          {restaurantes.map(restaurante => (
-            <Marker
-              key={restaurante.nombre}
-              title={restaurante.nombre}
-              name={restaurante.nombre}
-              position={restaurante.coordenadas}
-              onClick={this.onMarkerClick}
-            />
-          ))}
-          <InfoWindow
-            marker={activeMarker}
-            visible={activeMarker === activeMarker}
+      <div className='mapa'>
+        <div > {/* Ajustar tamaño del contenedor del mapa */}
+          <Map
+            google={this.props.google}
+            zoom={14}
+            initialCenter={{ lat: 36.720991, lng: -4.417784 }} // Centro en Casa Lola
           >
-            <div>
-              <h3>{selectedRestaurant.name}</h3>
-              <p>{selectedRestaurant.address}</p>
-            </div>
-          </InfoWindow>
-        </Map>
-      </div>
+            {restaurantes.map(restaurante => (
+              <Marker
+                key={restaurante.nombre}
+                title={restaurante.nombre}
+                name={restaurante.nombre}
+                position={restaurante.coordenadas}
+                onClick={this.onMarkerClick}
+              />
+            ))}
+            <InfoWindow
+              marker={activeMarker}
+              visible={activeMarker === activeMarker}
+            >
+              <div>
+                <h3>{selectedRestaurant.name}</h3>
+                <p>{selectedRestaurant.address}</p>
+              </div>
+            </InfoWindow>
+          </Map>
+        </div>
       </div>
     );
   }
