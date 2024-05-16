@@ -14,8 +14,8 @@ function App() {
         <Route path="/" element={<Navigate replace to="/login" />} />
         <Route path="/login" element={<Login />} />  // Asegúrate de definir también la ruta para login
         <Route path="/tablas" element={<Tablas />} />
-        <Route path="/usuarios/detalle/:id" element={<DetalleUsuario />} />  // Nueva ruta para detalles del usuario
-        <Route path="/negocios/detalle/:id" element={<DetalleNegocio />} />  // Nueva ruta para detalles del usuario
+        <Route path="/detallesUsuario/detalle/:id" element={<DetalleUsuario />} />  // Nueva ruta para detalles del usuario
+        <Route path="/detallesNegocio/detalle/:id" element={<DetalleNegocio />} />  // Nueva ruta para detalles del negocio
       </Routes>
     </Router>
   );

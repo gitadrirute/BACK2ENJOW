@@ -7,28 +7,26 @@ const TablaNegocios = () => {
   const navigate = useNavigate();  // Inicializa el hook useNavigate
   const [negocios, setNegocios] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [mostrarNoValidados, setMostrarNoValidados] = useState(false);
 
   useEffect(() => {
     const obtenerNegocios = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/TodosNegociosConOSinFotos");
-        // Asegurarse de que se accede a la propiedad 'negocios' que es el array
-        if (Array.isArray(response.data.negocios)) {
-          setNegocios(response.data.negocios);  // Acceder a la propiedad 'negocios'
-        } else {
-          console.error('La propiedad \'negocios\' no es un arreglo:', response.data.negocios);
-          setNegocios([]);  // Establece negocios como un arreglo vacío en caso de error
+        let url = "http://127.0.0.1:8000/api/TodosNegociosConOSinFotos";
+        if (mostrarNoValidados) {
+          url = "http://127.0.0.1:8000/api/NegociosNoValidConOSinFotos";
         }
+        const response = await axios.get(url);
+        setNegocios(response.data.negocios || []); 
       } catch (error) {
-        console.error('Error al obtener los datos de los negocios:', error);
-        setNegocios([]);  // Asegúrate de manejar errores limpiamente
+        console.error('Error al obtener los datos de los usuarios:', error);
       }
     };
     
     
 
     obtenerNegocios();
-  }, []);
+  }, [mostrarNoValidados]);
 
   
   /* Busqueda de negocios */
@@ -39,6 +37,11 @@ const TablaNegocios = () => {
   const negociosFiltrados = negocios.filter(negocio =>
     negocio.nombre.toLowerCase().includes(busqueda.toLowerCase())
   );
+
+    /* Boton para cambiar a no validados */
+    const toggleMostrarNoValidados = () => {
+      setMostrarNoValidados(!mostrarNoValidados);
+    };
 
   const eliminarNegocio = async (id) => {
     try {
@@ -72,12 +75,13 @@ const TablaNegocios = () => {
 
     /* Ver detalles usuario */
     const verDetalles = (id) => {
-      navigate(`/negocios/detalle/${id}`);
+      navigate(`/detallesNegocio/detalle/${id}`);
     };
 
   return (
     <div className="container">
       <h1>Validación de Negocios</h1>
+      <button onClick={toggleMostrarNoValidados} className="btn btn-info">{mostrarNoValidados ? 'Mostrar Todos' : 'Mostrar No Validados'}</button>
       <input type="text" placeholder="Buscar por nombre..." value={busqueda} onChange={handleSearchChange} className="form-control mb-3"/>
       <table className="table table-striped table-bordered table-hover">
         <thead>

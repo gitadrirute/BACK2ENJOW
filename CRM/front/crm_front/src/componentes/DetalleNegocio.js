@@ -11,8 +11,8 @@ const DetalleNegocio = () => {
     // Función para cargar los datos del negocio
     const fetchNegocio = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/negocios/${id}`); // Llamada a la API
-        setNegocio(response.data); // Guardar los datos del usuario en el estado
+        const response = await axios.get(`http://127.0.0.1:8000/api/detallesNegocio/${id}`); // Llamada a la API
+        setNegocio(response.data.negocio); // Guardar los datos del usuario en el estado
       } catch (error) {
         setError('No se pudo cargar la información del negocio'); // Manejo de errores
         console.error('Error fetching data: ', error);
@@ -34,9 +34,17 @@ const DetalleNegocio = () => {
     <div>
       <h1>Detalles del Negocio</h1>
       <ul>
-        <li>Nombre: {negocio.nombre}</li>
-        <li>NIF: {negocio.NIF}</li>
-        {/* Agrega más detalles según sea necesario */}
+        <li><span className="fw-bold">ID:</span> {negocio.id}</li>
+        <li><span className="fw-bold">Nombre:</span> {negocio.nombre}</li>
+        <li><span className="fw-bold">Validado:</span> {negocio.validado}</li>
+        <li><span className="fw-bold">NIF:</span> {negocio.NIF}</li>
+        <li><span className="fw-bold">Direccion:</span> {negocio.direccion}</li>
+        <li><span className="fw-bold">Telefono:</span> {negocio.telefono}</li>
+        <li><span className="fw-bold">Sitio Web:</span> {negocio.sitioWeb}</li>
+        <li><span className="fw-bold">Creado por:</span> {negocio.propietario}</li>
+        <li><span className="fw-bold">Categoria:</span> {negocio.categoria}</li>
+        <li><span className="fw-bold">Fecha de registro:</span> {negocio.fechaRegistro}</li>
+        <li><span className="fw-bold">Imágenes subidas:</span></li>
       </ul>
     </div>
   );

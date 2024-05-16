@@ -11,8 +11,8 @@ const DetalleUsuario = () => {
     // Función para cargar los datos del usuario
     const fetchUsuario = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/usuarios/${id}`); // Llamada a la API
-        setUsuario(response.data); // Guardar los datos del usuario en el estado
+        const response = await axios.get(`http://127.0.0.1:8000/api/detallesUsuario/${id}`); // Llamada a la API
+        setUsuario(response.data.usuario); // Guardar los datos del usuario en el estado
       } catch (error) {
         setError('No se pudo cargar la información del usuario'); // Manejo de errores
         console.error('Error fetching data: ', error);
@@ -34,11 +34,16 @@ const DetalleUsuario = () => {
     <div>
       <h1>Detalles del Usuario</h1>
       <ul>
-        <li>Nombre: {usuario.nombre}</li>
-        <li>Apellido: {usuario.apellido}</li>
-        <li>Email: {usuario.email}</li>
-        {/* Agrega más detalles según sea necesario */}
-      </ul>
+        <li><span className="fw-bold">ID:</span> {usuario.id}</li>
+        <li><span className="fw-bold">Nombre:</span> {usuario.nombre}</li>
+        <li><span className="fw-bold">Apellido:</span> {usuario.apellidos}</li>
+        <li><span className="fw-bold">UserName:</span> {usuario.nombreUsuario}</li>
+        <li><span className="fw-bold">Validado:</span> {usuario.validado}</li>
+        <li><span className="fw-bold">DNI:</span> {usuario.DNI}</li>
+        <li><span className="fw-bold">Fecha de registro:</span> {usuario.fechaRegistro}</li>
+        <li><span className="fw-bold">Foto Perfil:</span></li>      
+    </ul>
+
     </div>
   );
 };

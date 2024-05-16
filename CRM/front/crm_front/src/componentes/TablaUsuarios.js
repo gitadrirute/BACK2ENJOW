@@ -73,7 +73,7 @@ const TablaUsuarios = () => {
 
   /* Ver detalles usuario */
   const verDetalles = (id) => {
-    navigate(`/usuarios/detalle/${id}`);
+    navigate(`/detallesUsuario/detalle/${id}`);
   };
 
 
