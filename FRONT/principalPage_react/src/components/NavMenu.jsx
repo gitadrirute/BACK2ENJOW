@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 export const NavMenu = () => {
-    
     const navigate = useNavigate();
+    const { isLoggedIn, logout } = useAuth();
 
     // Función para manejar el desplazamiento suave a una sección específica
     const handleRedirectTo = (id) => {
@@ -24,45 +25,50 @@ export const NavMenu = () => {
         }, 0);
     };
 
+    // Función para manejar el cierre de sesión
+    const handleLogout = () => {
+        logout(); // Cerrar sesión
+        navigate('/'); // Redirigir a la página principal
+    };
+
     return (
         <>
         <header>
             <img className="logo" src="./img/Logos/logo back2enjoy.png" alt="Logo Nimio Estudio" />
             <nav className="links" id="header_page">
             <ul className="link_list">
-                        {/* Modifica los enlaces para usar `onClick` y `handleRedirectTo` */}
-                        <li className="link">
-                            <Link to="/" onClick={() => handleRedirectTo('product')}>
-                                Inicio
-                            </Link>
-                        </li>
-                        <li className="link">
-                            <Link to="/" onClick={() => handleRedirectTo('about_us_Advantages')}>
-                                Quiénes somos
-                            </Link>
-                        </li>
-                        <li className="link">
-                            <Link to="/" onClick={() => handleRedirectTo('budget')}>
-                                Hazte premium
-                            </Link>
-                        </li>
-                        <li className="link">
-                            <Link to="/" onClick={() => handleRedirectTo('faq-section')}>
-                                Preguntas Frecuentes
-                            </Link>
-                        </li>
-                    </ul>
+                {/* Modifica los enlaces para usar `onClick` y `handleRedirectTo` */}
+                <li className="link">
+                    <Link to="/" onClick={() => handleRedirectTo('product')}>
+                        Inicio
+                    </Link>
+                </li>
+                <li className="link">
+                    <Link to="/" onClick={() => handleRedirectTo('about_us_Advantages')}>
+                        Quiénes somos
+                    </Link>
+                </li>
+                <li className="link">
+                    <Link to="/" onClick={() => handleRedirectTo('budget')}>
+                        Hazte premium
+                    </Link>
+                </li>
+                <li className="link">
+                    <Link to="/" onClick={() => handleRedirectTo('faq-section')}>
+                        Preguntas Frecuentes
+                    </Link>
+                </li>
+            </ul>
             </nav>
             {/* Usa `Link` con `onClick` para manejar el desplazamiento suave */}
             <div className='btnGroup'>
-                {/* <Link className="clickable_btn" to="/" onClick={(event) => handleRedirectTo('contact')}>
-                    <b>Contacto</b>
-                </Link> */}
-                <Link className="clickable_btn" to="/negocio" onClick={(event) => handleRedirectTo('start')}>
-                    <b>Empresa</b>
-                </Link>
-                <Link className="clickable_btn" to="/login" onClick={(event) => handleRedirectTo('contact')}>
-                    <b>Registrarse</b>
+                {isLoggedIn && ( // Mostrar botón solo si está autenticado
+                    <Link className="clickable_btn" to="/negocio" onClick={(event) => handleRedirectTo('start')}>
+                        <b>Empresa</b>
+                    </Link>
+                )}
+                <Link className="clickable_btn" to="/login" onClick={isLoggedIn ? handleLogout : (event) => handleRedirectTo('contact')}>
+                    <b>{isLoggedIn ? 'Cerrar Sesión' : 'Registrarse'}</b>
                 </Link>
             </div>
         </header>

@@ -1,7 +1,7 @@
 import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-const PayPalPayment = () => {
+const PasarelaPago = () => {
   const paypalOptions = {
     "client-id": "Af24EXG3-Uz3r-IHeinR2VWo52YPKqBqPWJNb6HnjO2IY4uY_o1ShSPZG_x5auggqxg8AYcHSiE8S3AT",
     currency: "USD",
@@ -46,4 +46,4 @@ const PayPalPayment = () => {
   );
 };
 
-export default PayPalPayment;
+export default PasarelaPago;
