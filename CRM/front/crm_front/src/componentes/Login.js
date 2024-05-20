@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Cambio a useNavigate
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from '../img/logo_sin_texto.png'; // Importa la imagen
 
 const Login = () => {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();  // Uso de useNavigate en lugar de useHistory
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -20,7 +22,7 @@ const Login = () => {
       if (response.data) {
         navigate('/tablas');
       } else {
-        setError('Usuario o contraseña incorrectossssssssss');
+        setError('Usuario o contraseña incorrectos');
       }
     } catch (err) {
       if (err.response && err.response.status === 401) {
@@ -31,29 +33,37 @@ const Login = () => {
       console.error(err);
     }
   };
-  
-  
-  
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Nombre de usuario"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={contrasena}
-          onChange={(e) => setContrasena(e.target.value)}
-        />
-        <button type="submit">Aceptar</button>
-      </form>
-      {error && <p>{error}</p>}
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4" style={{ width: '400px' }}>
+        <div className="text-center mb-4">
+          <img src={logo} alt="Logo" style={{ width: '100px' }} />
+        </div>
+        <h2 className="text-center mb-4">Login</h2>
+        <form onSubmit={handleLogin}>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Nombre de usuario"
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Contraseña"
+              value={contrasena}
+              onChange={(e) => setContrasena(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Aceptar</button>
+        </form>
+        {error && <p className="text-danger mt-3 text-center">{error}</p>}
+      </div>
     </div>
   );
 };

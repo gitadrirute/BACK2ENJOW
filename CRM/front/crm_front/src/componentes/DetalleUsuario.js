@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+
 const DetalleUsuario = () => {
   const { id } = useParams(); // Obtiene el id desde la URL
   const [usuario, setUsuario] = useState(null); // Estado para guardar los datos del usuario
@@ -30,6 +31,10 @@ const DetalleUsuario = () => {
     return <div>Cargando...</div>; // Mensaje de carga mientras los datos no están disponibles
   }
 
+  // Verifica la URL de la imagen en la consola
+  console.log('URL de la imagen:', `http://127.0.0.1:8000${usuario.rutaImagen}`);
+
+
   return (
     <div>
       <h1>Detalles del Usuario</h1>
@@ -41,9 +46,11 @@ const DetalleUsuario = () => {
         <li><span className="fw-bold">Validado:</span> {usuario.validado}</li>
         <li><span className="fw-bold">DNI:</span> {usuario.DNI}</li>
         <li><span className="fw-bold">Fecha de registro:</span> {usuario.fechaRegistro}</li>
-        <li><span className="fw-bold">Foto Perfil:</span></li>      
-    </ul>
-
+        <li><span className="fw-bold">Foto Perfil:</span></li>
+        {usuario.rutaImagen && (
+          <img src={`http://127.0.0.1:8000${usuario.rutaImagen}`} style={{ width: '200px', height: '200px' }}  alt="Foto de Perfil" />
+        )}
+      </ul>
     </div>
   );
 };
