@@ -30,6 +30,9 @@ const DetalleNegocio = () => {
     return <div>Cargando...</div>; // Mensaje de carga mientras los datos no están disponibles
   }
 
+    // Verifica la URL de la imagen en la consola
+    console.log('URL de la imagen:', `http://127.0.0.1:8000${negocio.rutaImagen}`);
+
   return (
     <div>
       <h1>Detalles del Negocio</h1>
@@ -45,6 +48,9 @@ const DetalleNegocio = () => {
         <li><span className="fw-bold">Categoria:</span> {negocio.categoria}</li>
         <li><span className="fw-bold">Fecha de registro:</span> {negocio.fechaRegistro}</li>
         <li><span className="fw-bold">Imágenes subidas:</span></li>
+        {negocio.rutaImagen && (
+          <img src={`http://127.0.0.1:8000${negocio.rutaImagen}`} style={{ width: '200px', height: '200px' }}  alt="Foto negocio" />
+        )}
       </ul>
     </div>
   );

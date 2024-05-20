@@ -49,3 +49,7 @@ tr:nth-child(even) {
     background-color: #f44336;
     color: white;
 }
+
+img{
+    width: 100px;
+}
