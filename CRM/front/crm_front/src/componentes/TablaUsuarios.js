@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';  // Importa useNavigate desde react-router-dom
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css'; // Asegúrate de tener Bootstrap Icons instalados
 
 const TablaUsuarios = () => {
   const navigate = useNavigate();  // Inicializa el hook useNavigate
   const [usuarios, setUsuarios] = useState([]);
   const [busqueda, setBusqueda] = useState('');
   const [mostrarNoValidados, setMostrarNoValidados] = useState(false);
-
 
   useEffect(() => {
     const obtenerUsuarios = async () => {
@@ -76,16 +77,23 @@ const TablaUsuarios = () => {
     navigate(`/detallesUsuario/detalle/${id}`);
   };
 
-
-
   return (
-    <div className="container">
-      <h1>Validación de Usuarios</h1>
-      <button onClick={toggleMostrarNoValidados} className="btn btn-info">{mostrarNoValidados ? 'Mostrar Todos' : 'Mostrar No Validados'}</button>
-      <br></br>
-      <input type="text" placeholder="Buscar por nombre..." value={busqueda} onChange={handleSearchChange} className="form-control mb-3"/>
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">Validación de Usuarios</h1>
+      <div className="d-flex justify-content-between mb-3">
+        <button onClick={toggleMostrarNoValidados} className="btn btn-info">
+          {mostrarNoValidados ? 'Mostrar Todos' : 'Mostrar No Validados'}
+        </button>
+        <input 
+          type="text" 
+          placeholder="Buscar por nombre..." 
+          value={busqueda} 
+          onChange={handleSearchChange} 
+          className="form-control w-50"
+        />
+      </div>
       <table className="table table-striped table-bordered table-hover">
-        <thead>
+        <thead className="table-dark">
           <tr>
             <th>ID</th>
             <th>Nombre</th>
@@ -110,12 +118,15 @@ const TablaUsuarios = () => {
               <td>{usuario.contraseña}</td>
               <td>{usuario.validado}</td>
               <td>
-                <button className="btn btn-danger" onClick={() => eliminarUsuario(usuario.id)}>Eliminar</button>
-                {/* <button className="btn btn-danger" onClick={() => validarUsuario(usuario.id)}>Validar</button> */}
-                <button className="btn btn-success" onClick={() => validarUsuario(usuario.id)}>
+                <button className="btn btn-danger btn-sm me-2" onClick={() => eliminarUsuario(usuario.id)}>
+                  <i className="bi bi-trash"></i> Eliminar
+                </button>
+                <button className="btn btn-success btn-sm me-2" onClick={() => validarUsuario(usuario.id)}>
                   <i className="bi bi-check-circle"></i> Validar
                 </button>
-                <button className="btn btn-primary" onClick={() => verDetalles(usuario.id)}>Ver</button>
+                <button className="btn btn-primary btn-sm" onClick={() => verDetalles(usuario.id)}>
+                  <i className="bi bi-eye"></i> Ver
+                </button>
               </td>
             </tr>
           ))}
