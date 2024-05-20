@@ -5,8 +5,8 @@
 .wrapper {
   position: relative;
   justify-content: center;  
-  width: 400px;
-  min-height: 900px;
+  width: 500px;
+  min-height: 600px;
   max-height: 800px; /* Cambiado a min-height para permitir que crezca */
   background: transparent rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(30px);
@@ -22,7 +22,7 @@
 
 
 .wrapper.active .form-box.register {
-  height: 800px; /* Altura adicional para el formulario de registro */
+  height: 900px; /* Altura adicional para el formulario de registro */
 }
 
 .wrapper .form-box {
@@ -33,6 +33,7 @@
 
 .wrapper .form-box.login {
   transform: translateX(0);
+  width: 300px;
 }
 
 .wrapper.active .form-box.login {
@@ -45,6 +46,7 @@
 
 .wrapper .form-box.register {
   position: absolute;
+  /* width: 700px; */
   transform: translateX(400px);
   height: 800px; /* Altura predeterminada para el formulario de registro */
 }

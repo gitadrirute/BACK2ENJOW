@@ -37,52 +37,69 @@ export const FormularioNegocios = () => {
     register,
     handleSubmit, 
     formState:{errors},
-    setError,
-    clearErrors,
+    // setError,
+    // clearErrors,
+    setValue,
     reset
   } = useForm();
   
   const [successMessage, setSuccessMessage] = useState(false);
+  const [previewImages, setPreviewImages] = useState([]);
+
 
   //controla el mensaje de exito
   let successMsg =""
   if (successMessage) {
       successMsg = "¡¡Enviado con exito!!"
   }
-  const formSubmit = handleSubmit( async (e,data) => {
-    e.preventDefault();
 
+  
+
+
+  //Control de las imagenes 
+  //Aqui se añaden al data del formulario con setValue
+  const handleImagesChange = (e) => {
+    const files = Array.from(e.target.files);
+    setValue('imagenes', files);
+    
+    const previewUrls = files.map(file => URL.createObjectURL(file));
+    setPreviewImages(previewUrls);
+  };
+
+  const formSubmit = handleSubmit( async (data) => {
     try {
-      const response = await fetch('http://tu-api.com/negocios', {
+      //añade las imagenes al json del formularo
+      const formData = new FormData();
+      for (const key in data) {
+        if (key === 'imagenes') {
+          data[key].forEach((file, index) => {
+            formData.append(`imagenes[${index}]`, file);
+          });
+        } else {
+          formData.append(key, data[key]);
+        }
+      }
+
+      console.log(data);
+      console.log(formData);
+      //envio de datos del formulario
+      const response = await fetch('CAMBIARRRRRRRR OJOOO PERRO', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        body: formData
       });
 
       if (response.ok) {
-        // Registro exitoso
-        // Puedes redirigir a otra página o realizar alguna acción adicional
-        console.log('Usuario registrado correctamente');
         alert("Enviado con éxito");
-        setSuccessMessage(true)
-        reset(); //Limpia el formulario después de enviar
+        setSuccessMessage(true);
+        reset();
+        setPreviewImages([]);
       } else {
-        // Error en el registro
-        // Puedes manejar el error de acuerdo a tu lógica de aplicación
         console.log('Error al registrar usuario');
       }
-
-      console.log('Datos enviados correctamente');
-      // Puedes hacer alguna acción adicional aquí, como redireccionar a una página de éxito.
     } catch (error) {
       console.log('Error:', error.message);
-      // Manejar el error aquí, puedes mostrar un mensaje de error al usuario.
     }
   });
-
-  
 
   return (
     <>
@@ -92,9 +109,11 @@ export const FormularioNegocios = () => {
             <form onSubmit={formSubmit}>
               <h1>Sube tu negocio</h1>
               <div className="input-box">
-                {errors.nombre 
-                  ? <span className='formError'>{errors.nombre.message}</span>
-                  : <span></span>}
+                <div className='errorBox'>
+                  {errors.nombre 
+                    ? <span className='formError'>{errors.nombre.message}</span>
+                    : <span></span>}
+                </div>
                 <input type="text" placeholder="Nombre" name="nombre"
                   {...register("nombre", {
                     required: {
@@ -112,9 +131,11 @@ export const FormularioNegocios = () => {
                   })}/>
               </div>
               <div className="input-box">
-                {errors.nif 
-                  ? <span className='formError'>{errors.nif.message}</span>
-                  : <span></span>}
+                <div className='errorBox'>
+                  {errors.nombre 
+                    ? <span className='formError'>{errors.nombre.message}</span>
+                    : <span></span>}
+                </div>
                 <input type="text" placeholder="NIF"  name="NIF"
                   {...register("nif", {
                     required: {
@@ -136,9 +157,11 @@ export const FormularioNegocios = () => {
                   })}/>
               </div>
               <div className="input-box">
-                {errors.nif 
-                  ? <span className='formError'>{errors.nif.message}</span>
-                  : <span></span>}
+              <div className='errorBox'>
+                  {errors.nombre 
+                    ? <span className='formError'>{errors.nombre.message}</span>
+                    : <span></span>}
+                </div>
                 <input type="text" placeholder="Dirección" name="direccion"
                 {...register("nif", {
                   required: {
@@ -160,9 +183,11 @@ export const FormularioNegocios = () => {
                 })}/>
               </div>
               <div className="input-box">
-                {errors.telefono 
-                  ? <span className='formError'>{errors.telefono.message}</span>
-                  : <span></span>}
+              <div className='errorBox'>
+                  {errors.nombre 
+                    ? <span className='formError'>{errors.nombre.message}</span>
+                    : <span></span>}
+                </div>
                 <input type="text" placeholder="Télefono" name="telefono"
                 {...register("telefono", {
                   required: {
@@ -184,9 +209,11 @@ export const FormularioNegocios = () => {
                 })}/>
               </div>
               <div className="input-box">
-                {errors.sitioWeb 
-                    ? <span className='formError'>{errors.sitioWeb.message}</span>
+                <div className='errorBox'>
+                  {errors.nombre 
+                    ? <span className='formError'>{errors.nombre.message}</span>
                     : <span></span>}
+                </div>
                 <input type="text" placeholder="Sitio Web" name="sitioWeb"
                 {...register("sitioWeb", {
                   required: {
@@ -224,12 +251,13 @@ export const FormularioNegocios = () => {
                     message: "El campo sitio Web no puede tener menos de 2 caracteres"
                   }
                 })}/>
-                
               </div>
               <div className="input-box">{/* Podria ser mejor poner la calle y obtener coordenadas por google maps */}
-                {errors.ubicacion 
-                  ? <span className='formError'>{errors.ubicacion.message}</span>
-                  : <span></span>}
+                <div className='errorBox'>
+                  {errors.nombre 
+                    ? <span className='formError'>{errors.nombre.message}</span>
+                    : <span></span>}
+                </div>
                 <input type="text" placeholder="Ubicación" name="ubicacion"
                 {...register("ubicacion", {
                   required: {
@@ -245,8 +273,8 @@ export const FormularioNegocios = () => {
               </div>
               <div className="input-box">
                 <select
-                  /* value={categoriaNegocio}
-                  onChange={handleChange} */
+                  // value={categoriaNegocio}
+                  // onChange={handleChange}
                   name="categoria_negocio_id"
                 >
                   <option value="">Selecciona una categoría de negocio</option>
@@ -255,12 +283,32 @@ export const FormularioNegocios = () => {
                   <option value="3">Categoría 3</option>
                 </select>
               </div>
-
-              <div className="input-box">
-                <input type="text" placeholder="Usuario ID" name="usuario_id" />
+              <div className='addImg'>
+                <div className='errorBox'>
+                  {errors.imagen 
+                    ? <span className='formError'>{errors.nombre.message}</span>
+                    : <span></span>}
+                </div>
+                <input
+                  type="file"
+                  placeholder="Añade imágenes"
+                  accept="image/*"
+                  onChange={handleImagesChange}
+                />
               </div>
+          {/* Si hay imagenes las muestra */}
+          {previewImages.length > 0 && (
+            <div className="images-preview">
+              {previewImages.map((image, index) => (
+                <img key={index} src={image} alt={`Previsualización ${index}`} style={{ maxWidth: '100%', maxHeight: '200px', margin: '5px' }} />
+              ))}
+            </div>
+          )}
 
-              <button type="submit">Enviar</button>
+              {/* <div className="input-box">
+                <input type="text" placeholder="Usuario ID" name="usuario_id" value={formData.usuario_id} onChange={handleChange} />
+              </div> */}
+              {successMessage ? <button>{successMsg}</button> : <button onClick={formSubmit}>Enviar</button>}
             </form>
           </div>
         </section>
