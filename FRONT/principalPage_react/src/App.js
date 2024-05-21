@@ -13,6 +13,8 @@ import {FormularioNegocios}  from './pages/FormularioNegocios';
 import  LoginRegister  from './pages/LoginRegister';
 import { AuthProvider, useAuth } from './components/AuthContext';
 import HomeLoged from './pages/HomeLoged';
+import SeccionRestaurante from './pages/SeccionRestaurante';
+import CasaLola from './components/restaurante/CasalLola';
 
 function App() {
   // Componente para mostrar contenido si esta registrado o no dependiendo del estado de autenticación
@@ -33,6 +35,9 @@ function App() {
             <Route path="/politicaCookies" element={<PoliticaCookies />} />
             <Route path="/negocio" element={<FormularioNegocios />} />
             <Route path="/login" element={<LoginRegister></LoginRegister>} />
+            <Route path="/restaurante" element={<SeccionRestaurante></SeccionRestaurante>} /> {/* OJO QUE HAY CONFLICTO CON EL CSS ESTE Y EL DE LA PAGINA PRINCIPAL DE RESTAURANTES */}
+            {/* RUTAS PARA LA CARTA INDIVIDUAL DE RESTAURANTE/HOTEL */}
+            <Route path="/Card" element={<CasaLola></CasaLola>} />
             {/* Otras rutas */}
           </Routes>
         
