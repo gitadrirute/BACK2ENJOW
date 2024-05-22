@@ -10,58 +10,45 @@ const LoginRegister = (props) => {
   const [action, setAction] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [error, set_Error] = useState("");
-  // Estado para controlar el valor del captcha
   const [captchaValue, setCaptchaValue] = useState(null);
-
   const [successMessage, setSuccessMessage] = useState(false);
-
-  //Para ver si esta registrado el usuario
   const { login } = useAuth();
-
   const navigate = useNavigate();
   
-  // Función para manejar el cambio de captcha
   const handleCaptchaChange = (value) => {
-    console.log("Captcha value:", value);
     setCaptchaValue(value);
-
-    // Si se completa el captcha, elimina el error relacionado
     if (value) {
         clearErrors('recaptcha');
     }
   };
 
-  //controla el mensaje de exito
-  let successMsg =""
+  let successMsg = "";
   if (successMessage) {
-      successMsg = "¡¡Enviado con exito!!"
+      successMsg = "¡¡Enviado con éxito!!";
   }
 
   const toggleAction = () => {
     setAction(isRegistering ? "" : " active");
     setIsRegistering(!isRegistering);
   };
-  
-  //*Uso la react-hook-form que tiene todo lo necesario para validar los formularios
+
   const {
       register,
       handleSubmit, 
-      formState:{errors},
+      formState:{ errors },
       setError,
       clearErrors,
-      reset
+      reset,
+      watch
   } = useForm();
 
-  //!OJO HACER QUE AL REGISTRARSE REDIRIJA A LA PAGINA PRINCIPAL CAMBIADA PARA USUARIOS REGISTRADOS
   const handleLogin = async (e) => {
     e.preventDefault();
-    // const username = e.target.elements.username.value;
-    // const password = e.target.elements.password.value;
-
-    login();//ya esta como logueado
+    const username = e.target.elements.username.value;
+    const password = e.target.elements.password.value;
+    login();
     navigate("/");
-
-    /* try {
+    try {
       const response = await fetch('http://localhost:8000/api/usuarios/', {
         method: 'POST',
         headers: {
@@ -69,60 +56,44 @@ const LoginRegister = (props) => {
         },
         body: JSON.stringify({ username, password })
       });
-      
-      
       if (response.ok) {
         props.history.push('/pasarela');
-
       } else {
         set_Error('Credenciales inválidas');
       }
-
     } catch (error) {
       set_Error('Error al iniciar sesión');
-    } */
+    } 
   };
 
   const handleRegister = handleSubmit(async (data) => {
-    // Verificar si el captcha está seleccionado
     if (!captchaValue) {
       setError('recaptcha', { type: 'manual', message: 'Por favor, completa el captcha' });
       return;
-  }
+    }
     alert("enviando...");
-    data.recaptchaToken = captchaValue; // Incluye el token del captcha en los datos
-  
-    console.log("Datos enviados a la API:", data);
-    
-    // const form = event.target;
-    // const formData = new FormData(form);
-  
+    data.recaptchaToken = captchaValue;
     try {
-    const response = await fetch('http://127.0.0.1:8000/api/registro', {
+      const response = await fetch('http://127.0.0.1:8000/api/registro', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    });
-
-    const responseData = await response.json();
-    if (response.ok) {
-        console.log('Usuario registrado correctamente');
-        alert("Enviado con éxito");
+      });
+      const responseData = await response.json();
+      if (response.ok) {
         setSuccessMessage(true);
         reset();
-    } else {
-        console.error('Error al registrar usuario:', responseData);
+      } else {
         const serverErrors = responseData.error;
         Object.keys(serverErrors).forEach((field) => {
-            setError(field, { type: 'server', message: serverErrors[field][0] });
+          setError(field, { type: 'server', message: serverErrors[field][0] });
         });
+      }
+    } catch (error) {
+      setError('form', { type: 'manual', message: 'Error de conexión o en el proceso de registro' });
     }
-} catch (error) {
-    console.error('Error de conexión o en el proceso de registro:', error);
-    setError('form', { type: 'manual', message: 'Error de conexión o en el proceso de registro' });
-}
   });
 
   return (
@@ -130,14 +101,14 @@ const LoginRegister = (props) => {
       <section className="mainSection">
         <div className={`wrapper${action}`}>
           <div className="form-box login">
-          <form onSubmit={handleLogin} style={{ display: isRegistering ? "none" : "block" }}>
+            <form onSubmit={handleLogin} style={{ display: isRegistering ? "none" : "block" }}>
               <h1>Login</h1>     
               <div className="input-box">
-                <input type="text" placeholder="Usuario" required name="nombreUsuario"/>
+                <input type="text" placeholder="Usuario" required name="username"/>
                 <FaUser className="icon" />
               </div>
               <div className="input-box">
-                <input type="password" placeholder="Contraseña" required name="contraseña" />
+                <input type="password" placeholder="Contraseña" required name="password" />
                 <FaLock className="icon" />
               </div>
               <div className="remember-forgot">
@@ -147,10 +118,8 @@ const LoginRegister = (props) => {
                 </label>
                 <a href="/">¿Olvidaste la contraseña?</a>
               </div>
-
               <button type="submit">Login</button>
               <p>{error}</p>
-
               <div className="register-link">
                 <p>
                   ¿No tienes cuenta?{" "}
@@ -161,16 +130,11 @@ const LoginRegister = (props) => {
               </div>
             </form>
           </div>
-
-        {/* //*Registrarse ---------------------------- */}
           <div className="form-box register">
-          <form onSubmit={handleRegister} className={isRegistering ? "register-form" : ""} style={{ display: isRegistering ? "block" : "none" }}>
+            <form onSubmit={handleRegister} className={isRegistering ? "register-form" : ""} style={{ display: isRegistering ? "block" : "none" }}>
               <h1>Registrarse</h1>
               <div className="input-box">
-                {/* feedback al usuario */}
-                {errors.nombre 
-                  ? <span className='formError'>{errors.nombre.message}</span>
-                  : <span></span>}
+                {errors.nombre && <span className='formError'>{errors.nombre.message}</span>}
                 <input type="text" placeholder="Nombre"
                  name="nombre" 
                  {...register("nombre",{
@@ -180,7 +144,7 @@ const LoginRegister = (props) => {
                       },
                       maxLength: {
                           value: 30,
-                          message: "El campo nombre no puede tener mas de 30 caracteres"
+                          message: "El campo nombre no puede tener más de 30 caracteres"
                       },
                       minLength: {
                         value: 2,
@@ -195,89 +159,81 @@ const LoginRegister = (props) => {
                 <FaUser className="icon" />
               </div>
               <div className="input-box">
-                {errors.apellidos 
-                  ? <span className='formError'>{errors.apellidos.message}</span>
-                  : <span></span>}
+                {errors.apellidos && <span className='formError'>{errors.apellidos.message}</span>}
                 <input type="text" placeholder="Apellidos" name="apellidos" 
                 {...register("apellidos",{
                     required: {
                       value: true,
-                      message: "El campo apellidos  es obligatorio"
+                      message: "El campo apellidos es obligatorio"
                     },
                     maxLength: {
                         value: 40,
-                        message: "El campo apellidos  no puede tener mas de 30 caracteres"
+                        message: "El campo apellidos no puede tener más de 40 caracteres"
                     },
                     minLength: {
                       value: 2,
-                      message: "El campo apellidos  no puede tener menos de 2 caracteres"
+                      message: "El campo apellidos no puede tener menos de 2 caracteres"
                     },
                     pattern: {
                         value: /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/,
-                        message: "El campo apellidos  no puede contener caracteres especiales"
+                        message: "El campo apellidos no puede contener caracteres especiales"
                     }
                   })
                 }/>
                 <FaUser className="icon" />
               </div>
               <div className="input-box">
-                {errors.nombreUsuario 
-                  ? <span className='formError'>{errors.nombreUsuario.message}</span>
-                  : <span></span>}
+                {errors.nombreUsuario && <span className='formError'>{errors.nombreUsuario.message}</span>}
                 <input type="text" placeholder="Usuario" 
                 name="nombreUsuario" 
-                {...register("nombreUsuario",{//implementar lo de unique(no se como va jeje)
+                {...register("nombreUsuario",{
                     required: {
                       value: true,
-                      message: "El campo 'nombreUsuario  es obligatorio"
+                      message: "El campo nombre de usuario es obligatorio"
                     },
                     maxLength: {
                         value: 13,
-                        message: "El campo 'nombreUsuario  no puede tener mas de 13 caracteres"
+                        message: "El campo nombre de usuario no puede tener más de 13 caracteres"
                     },
                     minLength: {
                       value: 5,
-                      message: "El campo 'nombreUsuario  no puede tener menos de 5 caracteres"
+                      message: "El campo nombre de usuario no puede tener menos de 5 caracteres"
                     },
                     pattern: {
-                        value: /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/,
-                        message: "El campo 'nombreUsuario  no puede contener caracteres especiales"
+                        value: /^[a-zA-Z0-9]+$/,
+                        message: "El campo nombre de usuario no puede contener caracteres especiales"
                     }
                   })
                 }/>
                 <FaUser className="icon" />
               </div>
               <div className="input-box">
-                {errors.dni 
-                  ? <span className='formError'>{errors.dni.message}</span>
-                  : <span></span>}
+                {errors.DNI && <span className='formError'>{errors.DNI.message}</span>}
                 <input type="text" placeholder="DNI" 
                 name="DNI" 
-                {...register("dni",{//implementar lo de unique(no se como va jeje)
+                {...register("DNI",{
                     required: {
                       value: true,
-                      message: "El campo 'DNI  es obligatorio"
+                      message: "El campo DNI es obligatorio"
                     },
                     maxLength: {
                         value: 9,
-                        message: 'El DNI debe de tener 9 caracteres'
+                        message: 'El DNI debe tener 9 caracteres'
                     },
                     pattern: {
                         value: /^[0-9]{8}[A-Z]$/,
-                        message: "El DNI debe de tener el formato correcto"
+                        message: "El DNI debe tener el formato correcto"
                     }
                   })
                 }/>
                 <FaUser className="icon" />
               </div>
               <div className="input-box">
-                {errors.correo 
-                  ? <span className='formError'>{errors.correo.message}</span>
-                  : <span></span>}
+                {errors.correo && <span className='formError'>{errors.correo.message}</span>}
                 <input type="email" placeholder="Email" name="correo"
-                  {...register("correo",{//implementar lo de unique(no se como va jeje)
+                  {...register("correo",{
                       required: {
-                        value:true,
+                        value: true,
                         message: 'El campo correo es obligatorio'
                       },
                       maxLength: {
@@ -290,25 +246,23 @@ const LoginRegister = (props) => {
                       },
                       pattern:{
                         value: /^[a-zA-Z0-9.%_+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$/,
-                        message:"El correo debe de tener el formato correcto"
+                        message:"El correo debe tener el formato correcto"
                       }
                     })
                   } /> 
                 <FaEnvelope className="icon" />
               </div>
               <div className="input-box">
-                {errors.contraseña 
-                  ? <span className='formError'>{errors.contraseña.message}</span>
-                  : <span></span>}
+                {errors.contraseña && <span className='formError'>{errors.contraseña.message}</span>}
                 <input type="password" placeholder="Contraseña" name="contraseña"
-                 {...register("contraseña",{//implementar lo de unique(no se como va jeje)
+                 {...register("contraseña",{
                       required: {
-                        value:true,
+                        value: true,
                         message: 'El campo contraseña es obligatorio'
                       },
                       maxLength: {
                         value: 30,
-                        message: "El campo contraseña no puede tener mas de 30 caracteres"
+                        message: "El campo contraseña no puede tener más de 30 caracteres"
                       },
                       minLength: {
                         value: 8,
@@ -323,19 +277,27 @@ const LoginRegister = (props) => {
                 <FaLock className="icon" />
               </div>
               <div className="input-box">
-                <input type="password" placeholder="Repetir contraseña" required name="contraseña_confirmation" />
+                {errors.contraseña_confirmation && <span className='formError'>{errors.contraseña_confirmation.message}</span>}
+                <input type="password" placeholder="Repetir contraseña" name="contraseña_confirmation"
+                 {...register("contraseña_confirmation",{
+                      required: {
+                        value: true,
+                        message: 'El campo confirmar contraseña es obligatorio'
+                      },
+                      validate: (value) =>
+                        value === watch('contraseña') || 'Las contraseñas no coinciden'
+                    })
+                  } />
                 <FaLock className="icon" />
               </div>
               <div className="remember-forgot">
-                {errors.privacidad 
-                  ? <span className='formError'>{errors.privacidad.message}</span>
-                  : <span></span>}
+                {errors.privacidad && <span className='formError'>{errors.privacidad.message}</span>}
                 <label>
                   <input 
                   type="checkbox"
                   {...register("privacidad",{
                           required: {
-                            value:true,
+                            value: true,
                             message: "Debes aceptar los términos de privacidad"
                           }
                         })
@@ -343,7 +305,6 @@ const LoginRegister = (props) => {
                   Acepto los términos y condiciones
                 </label>
               </div>
-              {/* Captcha */}
               <div className="g-recaptcha">
                   <ReCAPTCHA
                     sitekey="6LeH7cYpAAAAAFlq1q2fmyqQo2-Mf0wRLoa045CP"
@@ -351,10 +312,8 @@ const LoginRegister = (props) => {
                   />
                   {errors.recaptcha && <span className='formError'>{errors.recaptcha.message}</span>}
               </div>
-
               <button type="submit">Registrarse</button>
               <p>{error}</p>
-
               <div className="register-link">
                 <p>
                   ¿Tienes una cuenta?
