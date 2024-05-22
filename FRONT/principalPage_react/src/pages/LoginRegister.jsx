@@ -290,7 +290,7 @@ const LoginRegister = (props) => {
                   } />
                 <FaLock className="icon" />
               </div>
-              {/* <div className="remember-forgot">
+               <div className="remember-forgot">
                 {errors.privacidad && <span className='formError'>{errors.privacidad.message}</span>}
                 <label>
                   <input 
@@ -311,7 +311,7 @@ const LoginRegister = (props) => {
                     onChange={handleCaptchaChange}
                   />
                   {errors.recaptcha && <span className='formError'>{errors.recaptcha.message}</span>}
-              </div> */}
+              </div> 
               <button type="submit">Registrarse</button>
               <p>{error}</p>
               <div className="register-link">
