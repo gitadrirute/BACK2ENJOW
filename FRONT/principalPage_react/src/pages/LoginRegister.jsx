@@ -20,7 +20,6 @@ const LoginRegister = (props) => {
 
   const navigate = useNavigate();
   
-
   // Función para manejar el cambio de captcha
   const handleCaptchaChange = (value) => {
     console.log("Captcha value:", value);
@@ -42,8 +41,9 @@ const LoginRegister = (props) => {
     setAction(isRegistering ? "" : " active");
     setIsRegistering(!isRegistering);
   };
-    //*Uso la react-hook-form que tiene todo lo necesario par avalidar los formularios
-    const {
+  
+  //*Uso la react-hook-form que tiene todo lo necesario para validar los formularios
+  const {
       register,
       handleSubmit, 
       formState:{errors},
@@ -83,48 +83,47 @@ const LoginRegister = (props) => {
     } */
   };
 
-  const handleRegister = handleSubmit(async (event,data) => {
-    event.preventDefault();
+  const handleRegister = handleSubmit(async (data) => {
     // Verificar si el captcha está seleccionado
     if (!captchaValue) {
       setError('recaptcha', { type: 'manual', message: 'Por favor, completa el captcha' });
-      return; // No envía el formulario
-    } 
-
-    alert("enviando...")
+      return;
+  }
+    alert("enviando...");
     data.recaptchaToken = captchaValue; // Incluye el token del captcha en los datos
   
+    console.log("Datos enviados a la API:", data);
+    
     // const form = event.target;
     // const formData = new FormData(form);
   
     try {
-      const response = await fetch('http://localhost:8000/api/usuarios/', {
+    const response = await fetch('http://127.0.0.1:8000/api/registro', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Convierte los datos a JSON
-      });
-  
-      if (response.ok) {
-        // Registro exitoso
-        // Puedes redirigir a otra página o realizar alguna acción adicional
+        body: JSON.stringify(data),
+    });
+
+    const responseData = await response.json();
+    if (response.ok) {
         console.log('Usuario registrado correctamente');
         alert("Enviado con éxito");
-        setSuccessMessage(true)
-        reset(); //Limpia el formulario después de enviar
-      } else {
-        // Error en el registro
-        // Puedes manejar el error de acuerdo a tu lógica de aplicación
-        console.error('Error al registrar usuario');
-      }
-
-    } catch (error) {
-      // Error en la conexión o en el proceso de registro
-      console.error('Error de conexión o en el proceso de registro:', error);
+        setSuccessMessage(true);
+        reset();
+    } else {
+        console.error('Error al registrar usuario:', responseData);
+        const serverErrors = responseData.error;
+        Object.keys(serverErrors).forEach((field) => {
+            setError(field, { type: 'server', message: serverErrors[field][0] });
+        });
     }
+} catch (error) {
+    console.error('Error de conexión o en el proceso de registro:', error);
+    setError('form', { type: 'manual', message: 'Error de conexión o en el proceso de registro' });
+}
   });
-  
 
   return (
     <>
@@ -337,7 +336,7 @@ const LoginRegister = (props) => {
                   {...register("privacidad",{
                           required: {
                             value:true,
-                            message: "Debes aceptar los terminos de privacidad"
+                            message: "Debes aceptar los términos de privacidad"
                           }
                         })
                       }/>
