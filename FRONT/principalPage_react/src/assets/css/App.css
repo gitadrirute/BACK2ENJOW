@@ -99,32 +99,38 @@ header .logo{
   background-size: cover;
 }
 
+/*--------------- Botones ------------------*/
+
+.btnGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+}
+
 .clickable_btn {
   text-align: center;
-  /* justify-self: center; */
-  padding: 5px 40px 5px 40px;
+  padding: 5px 40px;
   border-radius: 40px;
   margin: 10px;
   text-decoration: none;
   color: var(--font-color_2);
   background-color: var(--contrast);
-  transition:all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  flex: 1;
+  min-width: 150px; /* Optional: ensures buttons have a minimum width */
+  max-width: 200px; /* Optional: ensures buttons don't get too wide */
 }
 
 .clickable_btn:hover {
   border: 1px solid var(--shadow);
-  background:var(--contrast_dark);
-  color:var(--font-color);
+  background: var(--contrast_dark);
+  color: var(--font-color);
 }
 
-.btnGroup{
-  display: grid;
-  grid-template-columns: 50% 50% ;
-  grid-template-rows: 50% 50%;
-  padding: 10px;
-  justify-content: space-between;
-  /* grid-template-columns: 30%; */
-}
+/*---------------FIN Botones ------------------*/
+
 
 .social-list {
   list-style-type: none; /* Remove default list styles */
@@ -418,64 +424,85 @@ header .logo{
   color: red;
 }
 /* ------------FIN DE CARTAS----------- */
-
 /*---------------UNETE ------------------*/
 
-.budget{
-  margin-left: 60px;
+.budget {
+  margin: 0 auto;
   padding: 5%;
   padding-bottom: 50px;
   padding-top: 65px;
   display: grid;
-  grid-template-columns: 60% 40%;
-  grid-auto-flow: column;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
 
-.budget__title{
+.budget__title {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   text-align: center;
   font-size: 30px;
   padding: 10px;
-  width: 800px;
+  max-width: 800px;
+  margin: 0 auto;
 }
+
+.budget__title h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
 .budget__title p {
-  font-size: 20px;
+  font-size: 18px;
   padding: 10px;
+  line-height: 1.5;
 }
 
+.buttonBox {
+  margin-top: 20px;
+}
 
-.budget__img img{
-  width: 400px;
-  border-radius: 400px ;
+.clickable_btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background-color: var(--contrast);
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.clickable_btn:hover {
+  background-color: var(--contrast_dark);
+}
+
+.budget__img img {
+  text-align: start;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 50%;
   box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.671);
   animation: moveUpDown 1.5s ease-in-out infinite alternate;
+  margin: 0 auto;
 }
 
 @keyframes moveUpDown {
   0% {
-      transform: translateY(1px);
-      -webkit-transform: translateY(1px);
-      -moz-transform: translateY(1px);
-      -ms-transform: translateY(1px);
-      -o-transform: translateY(1px);
-}
+    transform: translateY(0);
+  }
   100% {
-      transform: translateY(-30px);
-      -webkit-transform: translateY(-30px);
-      -moz-transform: translateY(-30px);
-      -ms-transform: translateY(-30px);
-      -o-transform: translateY(-30px);
+    transform: translateY(-30px);
   }
 }
 
-
 /*---------------FIN UNETE ------------------*/
+
 
 /*------------- btn despliegue de formularios---------------*/
 

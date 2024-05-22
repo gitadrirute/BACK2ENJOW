@@ -1,23 +1,23 @@
 import React, { useEffect, useRef } from "react";
 // import "./RestaurantCard.css"; // Asegúrate de importar el CSS
-import RestaurantCard from './RestaurantCard'
+import HotelCard from './HotelCard'
 import { useNavigate } from "react-router-dom";
 
-const RestaurantSection = () => {
-  const restaurantContainerRef = useRef(null);
+const HotelSection = () => {
+  const hotelContainerRef = useRef(null);
   const navigate = useNavigate();
 
   const handleTitleClick = () => {
-    navigate("/restaurante");
+    navigate("/hotel");
   };
   
   return (
     <div onClick={handleTitleClick} className="container">
       <div className="label-container">
-        <h2>Restaurantes</h2>
+        <h2>Hoteles</h2>
       </div>
-      <div className="card-slider" ref={restaurantContainerRef}>
-      <RestaurantCard
+      <div className="card-slider" ref={hotelContainerRef}>
+      <HotelCard
         imageSrc="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/be4h2xc9cqcugdjydotn"
         discount="20% de descuento"
         name="Indio Clasic"
@@ -26,7 +26,7 @@ const RestaurantSection = () => {
         description="Short description"
         country="India"
         />
-        <RestaurantCard
+        <HotelCard
         imageSrc="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/egm3aym4fa73hst2tv9b"
         discount="10% de descuento"
         name="De dulces "
@@ -35,7 +35,7 @@ const RestaurantSection = () => {
         description="Short description"
         country="India"
         />
-        <RestaurantCard
+        <HotelCard
         imageSrc="./img/restaurante/casa.jpg"
         discount="24% de descuento"
         name="Casa LOLA"
@@ -49,4 +49,4 @@ const RestaurantSection = () => {
   );
 };
 
-export default RestaurantSection;
+export default HotelSection;

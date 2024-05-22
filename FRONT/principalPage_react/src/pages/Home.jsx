@@ -7,6 +7,8 @@ import ContactUs from '../components/ContactUs'
 // import NewsLetter from '../components/NewsLetter'
 import '../assets/css/App.css';
 import MeetUs from '../components/MeetUs'
+import RestaurantSection from './UsuarioRegistrado/RestaurantSection'
+import HotelSection from './UsuarioRegistrado/HotelSection'
 
 
 //PAGINA PRINCIPAL
@@ -14,6 +16,8 @@ const Home = () => {
   return (
     <>
       <Presentation></Presentation>
+      <RestaurantSection city={"Malaga"}/>
+      <HotelSection city={"Malaga"}/>
       <MeetUs></MeetUs>
       <Budget></Budget>
       <FaqSection></FaqSection>
