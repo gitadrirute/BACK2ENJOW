@@ -1,15 +1,44 @@
-/* GeneradorCodigo.css */
+/* GenerarCodigo.css */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que el pop-up esté encima de otros elementos */
+}
 
-.contenedor_descuento{
-  /* background-color: aqua; */
-  padding-left: 220px;
-}
-.btnCodigo{
-  width: 40%;
-  background: rgb(0, 140, 255);
+.popup-inner {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 90%; /* Asegura que el pop-up no sea más ancho que la pantalla */
+  width: 300px; /* Establece un ancho fijo para el pop-up */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade sombra para mejor visibilidad */
 }
 
-.contenido_descuento img{
-  width: 30px;
+.btnCerrar {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-  
+
+.imagen-descuento {
+  width: 100px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+}
+
+.contenido_descuento {
+  display: flex;
+  align-items: center;
+}
