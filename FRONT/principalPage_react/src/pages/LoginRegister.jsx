@@ -48,7 +48,6 @@ const LoginRegister = (props) => {
     const password = e.target.elements.password.value;
 
     try {
-<<<<<<< HEAD
       const response = await fetch('http://localhost:8000/api/usuarios/', {
         method: 'POST',
         headers: {
@@ -61,26 +60,6 @@ const LoginRegister = (props) => {
       } else {
         set_Error('Credenciales inválidas');
       }
-=======
-        const response = await fetch('http://localhost:8000/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ nombreUsuario: username, contraseña: password })
-        });
-
-        const data = await response.json();
-        console.log('Response data:', data); // Verificar la respuesta del servidor
-
-        if (response.ok) {
-            console.log('Token:', data['token de acceso']); // Verificar el token recibido
-            login(data['token de acceso']);  // Guardar el token en el contexto de autenticación
-            navigate("/");
-        } else {
-            set_Error(data.mensaje || 'Credenciales inválidas');
-        }
->>>>>>> c48f1db0d1bf89b66a52bf0246c45292dfcda3e9
     } catch (error) {
         set_Error('Error al iniciar sesión');
     }
@@ -105,14 +84,8 @@ const LoginRegister = (props) => {
       if (response.ok) {
         setSuccessMessage(true);
         reset();
-<<<<<<< HEAD
         // Redirige a la pasarela de pago
         navigate("/pasarela");
-=======
-        console.log('Token:', responseData['token de acceso']); // Verificar el token recibido
-        login(responseData['token de acceso']);  // Guardar el token en el contexto de autenticación
-        navigate("/");
->>>>>>> c48f1db0d1bf89b66a52bf0246c45292dfcda3e9
       } else {
         const serverErrors = responseData.error;
         Object.keys(serverErrors).forEach((field) => {
