@@ -8,9 +8,9 @@
   --font-color_2: #1d1d1b;
   --secondary-bg: #e6e6e6;
   --box-color:#FFFFFF;
-  --contrast:#91c4ff;
+  --contrast:#79b7ff;
   --contrast_light:#a1cdff;
-  --contrast_dark:#0052af;
+  --contrast_dark:#0061cfc9;
   --shadow:#3636366e;
 }
 
@@ -44,7 +44,7 @@ body {
 
 .ir-arriba:hover{
   background-color: var(--contrast_light);
-  box-shadow: 0 0 10px #abffab;
+  box-shadow: 0 0 10px var(--contrast_light);
 }
 
 /* Cabecera para el menu de navegacion superior */
@@ -108,26 +108,30 @@ header .logo{
   justify-content: center;
   padding: 10px;
 }
-
 .clickable_btn {
   text-align: center;
-  padding: 5px 40px;
-  border-radius: 40px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--shadow);
   margin: 10px;
   text-decoration: none;
   color: var(--font-color_2);
   background-color: var(--contrast);
-  transition: all 0.4s ease-in-out;
+  transition: all 0.3s ease-in-out;
   flex: 1;
   min-width: 150px; /* Optional: ensures buttons have a minimum width */
   max-width: 200px; /* Optional: ensures buttons don't get too wide */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Añade una pequeña sombra */
 }
 
-.clickable_btn:hover {
+.clickable_btn:hover { /* Cambiado a :focus para mantener la interacción al hacer clic */
   border: 1px solid var(--shadow);
   background: var(--contrast_dark);
   color: var(--font-color);
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3); 
+  transform: translateY(3px); /* Incrementa la sombra al hacer hover/focus */
 }
+
 
 /*---------------FIN Botones ------------------*/
 
@@ -169,7 +173,6 @@ header .logo{
   padding-bottom: 11px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra */
-  filter: brightness(150%); /* Aumenta el brillo del formulario */
   background-color: rgb(255, 255, 255); /* Fondo semi-transparente */
 }
 
@@ -178,17 +181,21 @@ header .logo{
   margin-right: 10px;
 }
 
+.menu_busqueda input[type="submit"]{
+  font-size: 16px;
+}
+
 .menu_busqueda select,
-.menu_busqueda input[type="text"],
-.menu_busqueda input[type="submit"] {
+.menu_busqueda input[type="text"] {
+  border: none;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 5px;
   font-size: 16px;
 }
 
-.menu_busqueda input[type="submit"] {
+/* .menu_busqueda input[type="submit"] {
   background-color: var(--contrast_dark);
   color: white;
   cursor: pointer;
@@ -198,7 +205,7 @@ header .logo{
 .menu_busqueda input[type="submit"]:hover {
   background-color: #0b2799;
 }
-
+ */
 /* swiper principal*/
 .swiper {
   /* filter: blur(2px); */
@@ -444,7 +451,7 @@ header .logo{
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
   padding: 10px;
   max-width: 800px;
   margin: 0 auto;
@@ -465,7 +472,7 @@ header .logo{
   margin-top: 20px;
 }
 
-.clickable_btn {
+/* .clickable_btn {
   display: inline-block;
   padding: 10px 20px;
   font-size: 18px;
@@ -480,7 +487,7 @@ header .logo{
 
 .clickable_btn:hover {
   background-color: var(--contrast_dark);
-}
+} */
 
 .budget__img img {
   text-align: start;
@@ -533,7 +540,7 @@ button{
 }
 
 .buttonBox:hover button{
-  border-radius: 300px;
+  /* border-radius: 300px; */
   background-color: var(--contrast_dark);
   color:#fff;
 }
@@ -590,18 +597,7 @@ input{
   font-size: 16px;
 }
 
-button[type="submit"] {
-  background-color:var(--contrast);
-  color: var(--font-color_2);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-button[type="submit"]:hover {
-  background-color: var(--contrast_dark);
-  color: var(--font-color);
-}
 
 /*---- popup de alertas ----*/
 .custom-popup {
@@ -731,7 +727,7 @@ button[type="submit"]:hover {
 
 #contactBtn{
   margin-top: 40px;
-  width: 55%;
+  width: 1000px;
 }
 
 /* .contact_form .inputbox [type="submit"] {

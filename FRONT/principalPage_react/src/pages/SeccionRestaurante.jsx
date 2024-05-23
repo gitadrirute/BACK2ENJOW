@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import SimpleMarkerMap from "../components/restaurante/SimpleMarkerMap";
+
 import "../assets/css/SeccionRestaurante.css";
 import CasaLola from "../components/restaurante/CasalLola";
+import MapCardComponent from "../components/restaurante/Mapa";
 
 function SeccionRestaurante() {
   const [redirect, setRedirect] = useState(false);
@@ -30,7 +31,7 @@ function SeccionRestaurante() {
         />
       </div>
       <div className="map-container">
-          <SimpleMarkerMap />
+          <MapCardComponent/>
       </div>
     </div>
   );

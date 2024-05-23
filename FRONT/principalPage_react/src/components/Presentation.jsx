@@ -57,7 +57,7 @@ const Presentation = () => {
               <option value="/restaurante">Restaurantes</option>
               <option value="/">Hoteles</option>
             </select>
-            <input type="submit" value="Buscar" />
+            <input className='clickable_btn' type="submit" value="Buscar" />
           </form>
         </div>
   </div>

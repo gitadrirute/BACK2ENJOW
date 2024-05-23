@@ -57,7 +57,7 @@ const LoginRegister = (props) => {
         body: JSON.stringify({ username, password })
       });
       if (response.ok) {
-        props.history.push('/pasarela');
+        navigate("/login"); // Redirige al login después de iniciar sesión
       } else {
         set_Error('Credenciales inválidas');
       }
@@ -85,6 +85,8 @@ const LoginRegister = (props) => {
       if (response.ok) {
         setSuccessMessage(true);
         reset();
+        // Redirige a la pasarela de pago
+        navigate("/pasarela");
       } else {
         const serverErrors = responseData.error;
         Object.keys(serverErrors).forEach((field) => {
@@ -127,8 +129,7 @@ const LoginRegister = (props) => {
                     Regístrate
                   </a>
                 </p>
-              </div>
-            </form>
+              </div>            </form>
           </div>
           <div className="form-box register">
             <form onSubmit={handleRegister} className={isRegistering ? "register-form" : ""} style={{ display: isRegistering ? "block" : "none" }}>
@@ -321,8 +322,7 @@ const LoginRegister = (props) => {
                     Iniciar sesión
                   </a>
                 </p>
-              </div>
-            </form>
+              </div>            </form>
           </div>
         </div>
       </section>

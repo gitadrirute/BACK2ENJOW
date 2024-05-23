@@ -64,11 +64,11 @@ export const NavMenu = () => {
             <div className='btnGroup'>
                 {isLoggedIn && ( // Mostrar botón solo si está autenticado
                     <Link className="clickable_btn" to="/negocio" onClick={(event) => handleRedirectTo('start')}>
-                        <b>Empresa</b>
+                        Empresa
                     </Link>
                 )}
                 <Link className="clickable_btn" to="/login" onClick={isLoggedIn ? handleLogout : (event) => handleRedirectTo('contact')}>
-                    <b>{isLoggedIn ? 'Cerrar Sesión' : 'Registrarse'}</b>
+                    {isLoggedIn ? 'Cerrar Sesión' : 'Registrarse'}
                 </Link>
             </div>
         </header>

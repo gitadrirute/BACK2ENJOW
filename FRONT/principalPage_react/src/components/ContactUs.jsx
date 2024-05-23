@@ -237,7 +237,7 @@ const ContactUs = () => {
             </div>
 
             <div id="contactBtn" className="buttonBox">
-                {successMessage ? <button onClick={handleRetry}>{successMsg}</button> : <button onClick={formSubmit}>Enviar</button>}
+                {successMessage ? <button className='clickable_btn' onClick={handleRetry}>{successMsg}</button> : <button className='clickable_btn' onClick={formSubmit}>Enviar</button>}
             </div>
             </form>
             <br/>
