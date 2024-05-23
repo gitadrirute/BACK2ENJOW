@@ -48,20 +48,6 @@ const LoginRegister = (props) => {
     const password = e.target.elements.password.value;
 
     try {
-<<<<<<< HEAD
-      const response = await fetch('http://localhost:8000/api/usuarios/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password })
-      });
-      if (response.ok) {
-        navigate("/login"); // Redirige al login después de iniciar sesión
-      } else {
-        set_Error('Credenciales inválidas');
-      }
-=======
         const response = await fetch('http://localhost:8000/api/login', {
             method: 'POST',
             headers: {
@@ -80,7 +66,6 @@ const LoginRegister = (props) => {
         } else {
             set_Error(data.mensaje || 'Credenciales inválidas');
         }
->>>>>>> c48f1db0d1bf89b66a52bf0246c45292dfcda3e9
     } catch (error) {
         set_Error('Error al iniciar sesión');
     }
@@ -105,14 +90,9 @@ const LoginRegister = (props) => {
       if (response.ok) {
         setSuccessMessage(true);
         reset();
-<<<<<<< HEAD
-        // Redirige a la pasarela de pago
-        navigate("/pasarela");
-=======
         console.log('Token:', responseData['token de acceso']); // Verificar el token recibido
         login(responseData['token de acceso']);  // Guardar el token en el contexto de autenticación
-        navigate("/");
->>>>>>> c48f1db0d1bf89b66a52bf0246c45292dfcda3e9
+        navigate("/pasarela");
       } else {
         const serverErrors = responseData.error;
         Object.keys(serverErrors).forEach((field) => {
@@ -155,7 +135,8 @@ const LoginRegister = (props) => {
                     Regístrate
                   </a>
                 </p>
-              </div>            </form>
+              </div>
+            </form>
           </div>
           <div className="form-box register">
             <form onSubmit={handleRegister} className={isRegistering ? "register-form" : ""} style={{ display: isRegistering ? "block" : "none" }}>
@@ -348,7 +329,8 @@ const LoginRegister = (props) => {
                     Iniciar sesión
                   </a>
                 </p>
-              </div>            </form>
+              </div>
+            </form>
           </div>
         </div>
       </section>
