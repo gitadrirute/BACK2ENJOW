@@ -1,318 +1,156 @@
 import React, { useState } from 'react';
 import "../assets/css/FormularioNegocios.css";
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../components/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-export const FormularioNegocios = () => {
-  // const [formData, setFormData] = useState({
-  //   nombre: '',
-  //   NIF: '',
-  //   direccion: '',
-  //   telefono: '',
-  //   sitioWeb: '',
-  //   horario: '',
-  //   informacion: '',
-  //   ubicacion: '',
-  //   validado: false,
-  //   categoria_negocio_id: '',
-  //   usuario_id: ''
-  // });
-
-  // const handleChange = (e) => {
-  //     const { name, value } = e.target;
-  //     setFormData(prevState => ({
-  //       ...prevState,
-  //       [name]: value
-  //     }));
-  //   };
-
-  /* 
-  //*Puede servir para interacuar con el select de negocio
-  const [categoriaNegocio, setCategoriaNegocio] = useState('');
-
-  const handleChange = (event) => {
-    setCategoriaNegocio(event.target.value);
-  };
-  */
-  const {
-    register,
-    handleSubmit, 
-    formState:{errors},
-    // setError,
-    // clearErrors,
-    setValue,
-    reset
-  } = useForm();
-  
+const FormularioNegocios = () => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [successMessage, setSuccessMessage] = useState(false);
-  const [previewImages, setPreviewImages] = useState([]);
+  const [error, setError] = useState("");
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
-
-  //controla el mensaje de exito
-  let successMsg =""
-  if (successMessage) {
-      successMsg = "¡¡Enviado con exito!!"
+  // Redirigir al login si no está autenticado
+  if (!isLoggedIn) {
+    navigate('/login');
   }
 
-  
-
-
-  //Control de las imagenes 
-  //Aqui se añaden al data del formulario con setValue
-  const handleImagesChange = (e) => {
-    const files = Array.from(e.target.files);
-    setValue('imagenes', files);
-    
-    const previewUrls = files.map(file => URL.createObjectURL(file));
-    setPreviewImages(previewUrls);
-  };
-
-  const formSubmit = handleSubmit( async (data) => {
+  const formSubmit = handleSubmit(async (data) => {
     try {
-      //añade las imagenes al json del formularo
-      const formData = new FormData();
-      for (const key in data) {
-        if (key === 'imagenes') {
-          data[key].forEach((file, index) => {
-            formData.append(`imagenes[${index}]`, file);
-          });
-        } else {
-          formData.append(key, data[key]);
-        }
+      // Asegurarse de agregar el usuario_id del usuario autenticado
+      const usuario_id = localStorage.getItem('usuario_id'); // Asegúrate de almacenar el usuario_id en localStorage cuando el usuario inicie sesión
+      if (!usuario_id) {
+        setError('Usuario no autenticado');
+        return;
       }
 
-      console.log(data);
-      console.log(formData);
-      //envio de datos del formulario
-      const response = await fetch('CAMBIARRRRRRRR OJOOO PERRO', {
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+      formData.append('usuario_id', usuario_id); // Añadir usuario_id al formData
+
+      const response = await fetch('http://127.0.0.1:8000/api/registroNegocio', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
         body: formData
       });
 
       if (response.ok) {
-        alert("Enviado con éxito");
         setSuccessMessage(true);
         reset();
-        setPreviewImages([]);
+        navigate('/upload-photos');
       } else {
-        console.log('Error al registrar usuario');
+        const responseData = await response.json();
+        setError(responseData.error || 'Error al registrar el negocio');
       }
     } catch (error) {
-      console.log('Error:', error.message);
+      setError('Error de conexión o en el proceso de registro');
     }
   });
 
   return (
     <>
-      <>
-        <section className="mainSection">
-          <div className="formulario-container" id='start'>
-            <form onSubmit={formSubmit}>
-              <h1>Sube tu negocio</h1>
-              <div className="input-box">
-                <div className='errorBox'>
-                  {errors.nombre 
-                    ? <span className='formError'>{errors.nombre.message}</span>
-                    : <span></span>}
-                </div>
-                <input type="text" placeholder="Nombre" name="nombre"
-                  {...register("nombre", {
-                    required: {
-                      value: true,
-                      message: "El campo nombre es obligatorio"
-                    },
-                    maxLength: {
-                        value: 50,
-                        message: "El campo nombre no puede tener mas de 50 caracteres"
-                    },
-                    minLength: {
-                      value: 2,
-                      message: "El campo nombre no puede tener menos de 2 caracteres"
-                    }
-                  })}/>
-              </div>
-              <div className="input-box">
-                <div className='errorBox'>
-                  {errors.nombre 
-                    ? <span className='formError'>{errors.nombre.message}</span>
-                    : <span></span>}
-                </div>
-                <input type="text" placeholder="NIF"  name="NIF"
-                  {...register("nif", {
-                    required: {
-                      value: true,
-                      message: "El campo NIF es obligatorio"
-                    },
-                    maxLength: {
-                        value: 30,
-                        message: "El campo NIF no puede tener mas de 30 caracteres"
-                    },
-                    minLength: {
-                      value: 2,
-                      message: "El campo NIF no puede tener menos de 2 caracteres"
-                    },
-                    pattern: {
-                      value: /(X(-|\.)?0?\d{7}(-|\.)?[A-Z]|[A-Z](-|\.)?\d{7}(-|\.)?[0-9A-Z]|\d{8}(-|\.)?[A-Z])$/,
-                      message: "El campo NIF debe de seguir el formato"
-                    }
-                  })}/>
-              </div>
-              <div className="input-box">
+      <section className="mainSection">
+        <div className="formulario-container" id='start'>
+          <form onSubmit={formSubmit}>
+            <h1>Sube tu negocio</h1>
+            <div className="input-box">
               <div className='errorBox'>
-                  {errors.nombre 
-                    ? <span className='formError'>{errors.nombre.message}</span>
-                    : <span></span>}
-                </div>
-                <input type="text" placeholder="Dirección" name="direccion"
-                {...register("nif", {
-                  required: {
-                    value: true,
-                    message: "El campo NIF es obligatorio"
-                  },
-                  maxLength: {
-                      value: 30,
-                      message: "El campo NIF no puede tener mas de 30 caracteres"
-                  },
-                  minLength: {
-                    value: 2,
-                    message: "El campo NIF no puede tener menos de 2 caracteres"
-                  },
-                  pattern: {
-                    value: /(X(-|\.)?0?\d{7}(-|\.)?[A-Z]|[A-Z](-|\.)?\d{7}(-|\.)?[0-9A-Z]|\d{8}(-|\.)?[A-Z])$/,
-                    message: "El campo NIF debe de seguir el formato"
-                  }
-                })}/>
+                {errors.nombre && <span className='formError'>{errors.nombre.message}</span>}
               </div>
-              <div className="input-box">
-              <div className='errorBox'>
-                  {errors.nombre 
-                    ? <span className='formError'>{errors.nombre.message}</span>
-                    : <span></span>}
-                </div>
-                <input type="text" placeholder="Télefono" name="telefono"
-                {...register("telefono", {
-                  required: {
-                    value: true,
-                    message: "El campo telefono es obligatorio"
-                  },
-                  maxLength: {
-                      value: 16,
-                      message: "El campo telefono no puede tener mas de 16 caracteres"
-                  },
-                  minLength: {
-                    value: 8,
-                    message: "El campo telefono no puede tener menos de 8 caracteres"
-                  },
-                  pattern: {
-                    value: /(\+)*[0-9][ -]*([0-9][ -]*){9,15}/,
-                    message: "El campo 'telefono debe de seguir el formato"
-                  }
-                })}/>
-              </div>
-              <div className="input-box">
-                <div className='errorBox'>
-                  {errors.nombre 
-                    ? <span className='formError'>{errors.nombre.message}</span>
-                    : <span></span>}
-                </div>
-                <input type="text" placeholder="Sitio Web" name="sitioWeb"
-                {...register("sitioWeb", {
-                  required: {
-                    value: true,
-                    message: "El campo sitio Web es obligatorio"
-                  },
-                  maxLength: {
-                      value: 120,
-                      message: "El campo sitio Web no puede tener mas de 120 caracteres"
-                  },
-                  minLength: {
-                    value: 2,
-                    message: "El campo sitio Web no puede tener menos de 2 caracteres"
-                  },
-                  pattern: {
-                    // http://www.google.com este formato.
-                    value: /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/,
-                    message: "El campo sitio web debe contener una URL válida"
-                  }
-                })}/>
-              </div>
-              {/* //really?
-              <div className="input-box">
-                <input type="text" placeholder="Horario" name="horario"/>
-              </div> */}
-              <div className="input-box">
-                <input type="text" placeholder="Información" name="informacion"
-                {...register("informacion", {
-                  maxLength: {
-                      value: 300,
-                      message: "El campo sitio Web no puede tener mas de 300 caracteres"
-                  },
-                  minLength: {
-                    value: 2,
-                    message: "El campo sitio Web no puede tener menos de 2 caracteres"
-                  }
-                })}/>
-              </div>
-              <div className="input-box">{/* Podria ser mejor poner la calle y obtener coordenadas por google maps */}
-                <div className='errorBox'>
-                  {errors.nombre 
-                    ? <span className='formError'>{errors.nombre.message}</span>
-                    : <span></span>}
-                </div>
-                <input type="text" placeholder="Ubicación" name="ubicacion"
-                {...register("ubicacion", {
-                  required: {
-                    value: true,
-                    message: "El campo ubicacion es obligatorio"
-                  },
-                  pattern: {
-                    
-                    value: /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/,
-                    message: "La ubicación debe estar en formato de coordenadas geográficas (latitud, longitud)"
-                  }
-                })}/>
-              </div>
-              <div className="input-box">
-                <select
-                  // value={categoriaNegocio}
-                  // onChange={handleChange}
-                  name="categoria_negocio_id"
-                >
-                  <option value="">Selecciona una categoría de negocio</option>
-                  <option value="1">Restaurante</option>
-                  <option value="2">Hotel</option>
-                  <option value="3">Categoría 3</option>
-                </select>
-              </div>
-              <div className='addImg'>
-                <div className='errorBox'>
-                  {errors.imagen 
-                    ? <span className='formError'>{errors.nombre.message}</span>
-                    : <span></span>}
-                </div>
-                <input
-                  type="file"
-                  placeholder="Añade imágenes"
-                  accept="image/*"
-                  onChange={handleImagesChange}
-                />
-              </div>
-          {/* Si hay imagenes las muestra */}
-          {previewImages.length > 0 && (
-            <div className="images-preview">
-              {previewImages.map((image, index) => (
-                <img key={index} src={image} alt={`Previsualización ${index}`} style={{ maxWidth: '100%', maxHeight: '200px', margin: '5px' }} />
-              ))}
+              <input type="text" placeholder="Nombre" name="nombre"
+                {...register("nombre", {
+                  required: "El campo nombre es obligatorio",
+                  maxLength: { value: 50, message: "El campo nombre no puede tener más de 50 caracteres" },
+                  minLength: { value: 2, message: "El campo nombre no puede tener menos de 2 caracteres" },
+                  pattern: { value: /^[a-zA-Z\s]+$/, message: "El campo nombre no puede contener caracteres especiales" }
+                })} />
             </div>
-          )}
-
-              {/* <div className="input-box">
-                <input type="text" placeholder="Usuario ID" name="usuario_id" value={formData.usuario_id} onChange={handleChange} />
-              </div> */}
-              {successMessage ? <button>{successMsg}</button> : <button onClick={formSubmit}>Enviar</button>}
-            </form>
-          </div>
-        </section>
-      </>
+            <div className="input-box">
+              <div className='errorBox'>
+                {errors.NIF && <span className='formError'>{errors.NIF.message}</span>}
+              </div>
+              <input type="text" placeholder="NIF" name="NIF"
+                {...register("NIF", {
+                  required: "El campo NIF es obligatorio",
+                  maxLength: { value: 9, message: "El campo NIF no puede tener más de 9 caracteres" },
+                  minLength: { value: 9, message: "El campo NIF debe tener 9 caracteres" },
+                  pattern: { value: /^[0-9]{8}[A-Za-z]$/, message: "El campo NIF debe seguir el formato" }
+                })} />
+            </div>
+            <div className="input-box">
+              <div className='errorBox'>
+                {errors.direccion && <span className='formError'>{errors.direccion.message}</span>}
+              </div>
+              <input type="text" placeholder="Dirección" name="direccion"
+                {...register("direccion", {
+                  required: "El campo dirección es obligatorio",
+                  maxLength: { value: 150, message: "El campo dirección no puede tener más de 150 caracteres" },
+                  minLength: { value: 2, message: "El campo dirección no puede tener menos de 2 caracteres" }
+                })} />
+            </div>
+            <div className="input-box">
+              <div className='errorBox'>
+                {errors.telefono && <span className='formError'>{errors.telefono.message}</span>}
+              </div>
+              <input type="text" placeholder="Teléfono" name="telefono"
+                {...register("telefono", {
+                  required: "El campo teléfono es obligatorio",
+                  maxLength: { value: 15, message: "El campo teléfono no puede tener más de 15 caracteres" },
+                  minLength: { value: 9, message: "El campo teléfono no puede tener menos de 9 caracteres" },
+                  pattern: { value: /^\d{9,15}$/, message: "El número de teléfono debe tener entre 9 y 15 dígitos" }
+                })} />
+            </div>
+            <div className="input-box">
+              <div className='errorBox'>
+                {errors.sitioWeb && <span className='formError'>{errors.sitioWeb.message}</span>}
+              </div>
+              <input type="text" placeholder="Sitio Web" name="sitioWeb"
+                {...register("sitioWeb", {
+                  required: "El campo sitio Web es obligatorio",
+                  maxLength: { value: 120, message: "El campo sitio Web no puede tener más de 120 caracteres" },
+                  minLength: { value: 2, message: "El campo sitio Web no puede tener menos de 2 caracteres" },
+                  pattern: { value: /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/, message: "El campo sitio web debe contener una URL válida" }
+                })} />
+            </div>
+            <div className="input-box">
+              <input type="text" placeholder="Información" name="informacion"
+                {...register("informacion", {
+                  maxLength: { value: 250, message: "El campo información no puede tener más de 250 caracteres" },
+                  minLength: { value: 2, message: "El campo información no puede tener menos de 2 caracteres" }
+                })} />
+            </div>
+            <div className="input-box">
+              <div className='errorBox'>
+                {errors.ubicacion && <span className='formError'>{errors.ubicacion.message}</span>}
+              </div>
+              <input type="text" placeholder="Ubicación" name="ubicacion"
+                {...register("ubicacion", {
+                  required: "El campo ubicación es obligatorio",
+                  pattern: { value: /^[-+]?\d{1,2}\.\d+,[-+]?\d{1,3}\.\d+$/, message: "La ubicación debe estar en formato de coordenadas geográficas (latitud, longitud)" }
+                })} />
+            </div>
+            <div className="input-box">
+              <select name="categoria_negocio_id" {...register("categoria_negocio_id", { required: "Seleccione una categoría de negocio" })}>
+                <option value="">Selecciona una categoría de negocio</option>
+                <option value="1">Restaurante</option>
+                <option value="2">Hotel</option>
+                <option value="3">Categoría 3</option>
+              </select>
+              {errors.categoria_negocio_id && <span className='formError'>{errors.categoria_negocio_id.message}</span>}
+            </div>
+            <button type="submit">Registrar Negocio</button>
+            <p>{error}</p>
+            {successMessage && <span>¡¡Enviado con éxito!!</span>}
+          </form>
+        </div>
+      </section>
     </>
-  )
-}
+  );
+};
+
+export default FormularioNegocios;

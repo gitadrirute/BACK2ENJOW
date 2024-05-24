@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import PoliticaCookies from './pages/PoliticaCookies';
 import PoliticaPrivacidad from './pages/PoliticaPrivacidad';
 import Footer from './components/Footer';
-import { FormularioNegocios } from './pages/FormularioNegocios';
+import FormularioNegocios from './pages/FormularioNegocios';
 import LoginRegister from './pages/LoginRegister';
 import { AuthProvider, useAuth } from './components/AuthContext';
 import HomeLoged from './pages/HomeLoged';
@@ -16,7 +16,7 @@ import CasaLola from './components/restaurante/CasalLola';
 import CodigoDescuento from './components/restaurante/CodigoDescuento'; // Importa el componente
 import './assets/css/GenerarCodigo.css'; // Importa el archivo CSS
 import PasarelaPago from './pages/PasarelaPago';
-import FormularioFotosNegocio from './pages/FormularioFotoNegocio'; // Importa el nuevo formulario de subida de fotos
+import FormularioFotosNegocio from './pages/FormularioFotoNegocio'; // Importa el componente de subir fotos
 
 function App() {
   // Componente para mostrar contenido si está registrado o no dependiendo del estado de autenticación
