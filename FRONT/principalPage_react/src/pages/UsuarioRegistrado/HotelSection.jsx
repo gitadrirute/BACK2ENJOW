@@ -8,7 +8,7 @@ const HotelSection = () => {
   const navigate = useNavigate();
 
   const handleTitleClick = () => {
-    navigate("/hotel");
+    navigate("/hoteles");
   };
   
   return (

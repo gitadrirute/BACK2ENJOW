@@ -31,7 +31,8 @@ body {
 /*-------boton ir arriba-------*/
 .ir-arriba {
   display: block;
-  height: 30px;
+  /* justify-items: center; */
+  height: 43px;
   padding:5px;
   border-radius: 50px;
   background:var(--contrast);
@@ -206,6 +207,8 @@ header .logo{
   background-color: #0b2799;
 }
  */
+
+
 /* swiper principal*/
 .swiper {
   /* filter: blur(2px); */
@@ -215,7 +218,6 @@ header .logo{
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  /* background: var(--background-color); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -223,9 +225,7 @@ header .logo{
 }
 
 .swiper-slide img {
-  /* position: absolute; */
-  width: 10px;
-  height: 10px;
+  object-fit: cover;
 }
 /* ---------------fin de primer bloque-------------- */
 
@@ -303,7 +303,6 @@ header .logo{
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: var(--secondary-bg);
   display: flex;
   justify-content: center;
   align-items: center;

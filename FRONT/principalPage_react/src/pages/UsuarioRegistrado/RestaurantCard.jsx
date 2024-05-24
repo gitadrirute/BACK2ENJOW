@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 
 //Se añaden como parametros los datos de la carta
-const RestaurantCard = ({ imageSrc, discount, name, rating, deliveryTime, description, country }) => {
+const RestaurantCard = ({ imageSrc, discount, name, rating, deliveryTime, description }) => {
     const navigate = useNavigate();
 
     //por lo que se ve redirige al mismo sitio, pero hay que verlo cuando hayan mas
@@ -28,7 +28,6 @@ const RestaurantCard = ({ imageSrc, discount, name, rating, deliveryTime, descri
           </div>
         </div>
         <p>{description}</p>
-        <p>{country}</p>
       </div>
     </div>
   );

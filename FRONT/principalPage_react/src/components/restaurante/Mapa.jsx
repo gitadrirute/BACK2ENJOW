@@ -2,7 +2,7 @@ import React from 'react';
 
 const MapCardComponent = () => {
   return (
-    <div className="container">
+    <div className="mapContainer">
       <section className="mx-auto my-5" style={{ maxWidth: '23rem' }}>
         <div id="map-container-google-1" className="z-depth-1-half map-container" style={{ height: '500px' }}>
           <iframe
