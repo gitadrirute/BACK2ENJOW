@@ -18,25 +18,24 @@ const FormularioNegocios = () => {
 
   const formSubmit = handleSubmit(async (data) => {
     try {
-      // Asegurarse de agregar el usuario_id del usuario autenticado
-      const usuario_id = localStorage.getItem('usuario_id'); // Asegúrate de almacenar el usuario_id en localStorage cuando el usuario inicie sesión
-      if (!usuario_id) {
+      const authToken = localStorage.getItem('authToken'); // Obtener el token de autenticación
+
+      if (!authToken) {
         setError('Usuario no autenticado');
         return;
       }
 
-      const formData = new FormData();
-      for (const key in data) {
-        formData.append(key, data[key]);
-      }
-      formData.append('usuario_id', usuario_id); // Añadir usuario_id al formData
+      const formData = {
+        ...data,
+      };
 
       const response = await fetch('http://127.0.0.1:8000/api/registroNegocio', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`
         },
-        body: formData
+        body: JSON.stringify(formData)
       });
 
       if (response.ok) {
@@ -45,7 +44,8 @@ const FormularioNegocios = () => {
         navigate('/upload-photos');
       } else {
         const responseData = await response.json();
-        setError(responseData.error || 'Error al registrar el negocio');
+        const errorMessage = responseData.mensaje || 'Error al registrar el negocio';
+        setError(errorMessage);
       }
     } catch (error) {
       setError('Error de conexión o en el proceso de registro');
@@ -144,7 +144,7 @@ const FormularioNegocios = () => {
               {errors.categoria_negocio_id && <span className='formError'>{errors.categoria_negocio_id.message}</span>}
             </div>
             <button type="submit">Registrar Negocio</button>
-            <p>{error}</p>
+            <p>{error}</p> {/* Mostrar el mensaje de error */}
             {successMessage && <span>¡¡Enviado con éxito!!</span>}
           </form>
         </div>
