@@ -15,7 +15,8 @@ import SeccionRestaurante from './pages/SeccionRestaurante';
 import CasaLola from './components/restaurante/CasalLola';
 import CodigoDescuento from './components/restaurante/CodigoDescuento'; // Importa el componente
 import './assets/css/GenerarCodigo.css'; // Importa el archivo CSS
-import PasarelaPago from './pages/PasarelaPago';;
+import PasarelaPago from './pages/PasarelaPago';
+import FormularioFotosNegocio from './pages/FormularioFotosNegocio'; // Importa el nuevo formulario de subida de fotos
 
 function App() {
   // Componente para mostrar contenido si está registrado o no dependiendo del estado de autenticación
@@ -37,12 +38,10 @@ function App() {
           <Route path="/negocio" element={<FormularioNegocios />} />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/restaurante" element={<SeccionRestaurante />} />
-          {/* Ruta para el generador de código de descuento */}
           <Route path="/generador-codigo" element={<CodigoDescuento />} />
           <Route path="/Card" element={<CasaLola />} />
-          <Route path="/Card" element={<CasaLola />} />
           <Route path="/pasarela" element={<PasarelaPago />} />
-
+          <Route path="/upload-photos" element={<FormularioFotosNegocio />} /> {/* Nueva ruta añadida */}
         </Routes>
         <Footer />
       </div>
