@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import BotonPerfil from '../components/BotonPerfil';
 
 export const NavMenu = () => {
     const navigate = useNavigate();
@@ -65,6 +66,11 @@ export const NavMenu = () => {
                 {isLoggedIn && ( // Mostrar botón solo si está autenticado
                     <Link className="clickable_btn" to="/negocio" onClick={(event) => handleRedirectTo('start')}>
                         Empresa
+                    </Link>
+                )}
+                {isLoggedIn && ( // Mostrar botón solo si está autenticado
+                    <Link className="clickable_btn" to="/negocio" onClick={(event) => handleRedirectTo('start')}>
+                        <BotonPerfil></BotonPerfil>
                     </Link>
                 )}
                 <Link className="clickable_btn" to="/login" onClick={isLoggedIn ? handleLogout : (event) => handleRedirectTo('contact')}>

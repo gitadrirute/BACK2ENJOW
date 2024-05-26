@@ -39,7 +39,7 @@ function App() {
           <Route path="/politicaCookies" element={<PoliticaCookies />} />
           <Route path="/negocio" element={<FormularioNegocios />} />
           <Route path="/login" element={<LoginRegister />} />
-          <Route path="/restaurante" element={<SeccionRestaurante />} />
+          <Route path="/restaurantes" element={<SeccionRestaurante />} />
           <Route path="/hoteles" element={<SeccionHotel />} />
           <Route path="/generador-codigo" element={<CodigoDescuento />} />
           <Route path="/Card" element={<CasaLola />} />
