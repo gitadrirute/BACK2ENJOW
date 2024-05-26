@@ -19,7 +19,7 @@ function Rating() {
                             onClick={() => setRating(currentRating)} />
                         <FaStar 
                             className='star' 
-                            size={40} 
+                            size={25} 
                             color={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
                             onMouseEnter={() => setHover(currentRating)}
                             onMouseLeave={() => setHover(null)} />

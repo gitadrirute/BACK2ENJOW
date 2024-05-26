@@ -23,9 +23,9 @@ const CodigoDescuento = () => {
         }
 
         $('#codigo').text(codigoAleatorio);
-        $('#popup-registrado').show();
+        $('#popup-registrado').css('display', 'flex');
       } else {
-        $('#popup-no-registrado').show();
+        $('#popup-no-registrado').css('display', 'flex');
       }
     };
 
@@ -37,19 +37,21 @@ const CodigoDescuento = () => {
   return (
     <>
       <div className="contenedor_descuento">
-        <button id="btnCodigo" className="btnCodigo">
-          <div className="contenido_descuento">
-            <img src="/img/restaurante/porcentaje1.jpg" alt="Descuento" className="imagen-descuento"/>
-            <div>
-              <p className="info_descuento">
-                Obtén hasta un<br />
-                <span className="font-bold">20% de descuento</span>
-              </p>
+        <div className="btnContainer">
+          <button id="btnCodigo" className="btnCodigo">
+            <div className="contenido_descuento">
+              <img src="/img/restaurante/descuento1.png" alt="Descuento" className="imagen-descuento" />
+              <div className="texto_descuento">
+                <p className="info_descuento">
+                  Obtén hasta un<br />
+                  <span className="font-bold">20% de descuento</span>
+                </p>
+              </div>
             </div>
-          </div>
-        </button>
+          </button>
+        </div>
 
-        <div id="popup-registrado" className="popup" style={{ display: 'none' }}>
+        <div id="popup-registrado" className="popup">
           <div className="popup-inner">
             <h2>¡Gracias por tu compra!</h2>
             <p>Tu código de descuento es: <span id="codigo"></span></p>
@@ -57,7 +59,7 @@ const CodigoDescuento = () => {
           </div>
         </div>
 
-        <div id="popup-no-registrado" className="popup" style={{ display: 'none' }}>
+        <div id="popup-no-registrado" className="popup">
           <div className="popup-inner">
             <h2>Lo sentimos</h2>
             <p>Pero tienes que registrarte para obtener un código de descuento.</p>

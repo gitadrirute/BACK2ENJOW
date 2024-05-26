@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import ReCAPTCHA from "react-google-recaptcha";
 import { Link } from 'react-router-dom';
 // import { type } from '@testing-library/user-event/dist/type';
+import BotonPerfil from '../components/BotonPerfil';
 
 const ContactUs = () => {
     //Validacion de formulario
@@ -243,6 +244,8 @@ const ContactUs = () => {
             <br/>
         </div>
     </section>
+    <BotonPerfil></BotonPerfil>
+
     </>
   )
 }

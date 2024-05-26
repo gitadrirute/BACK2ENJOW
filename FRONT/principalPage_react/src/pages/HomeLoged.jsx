@@ -7,6 +7,7 @@ import Budget from '../components/Budget';
 import FaqSection from '../components/FaqSection';
 import ContactUs from '../components/ContactUs';
 import HotelSection from './UsuarioRegistrado/HotelSection';
+import BotonPerfil from '../components/BotonPerfil';
 
 const HomeLoged = () => {
     //Pagina principal
@@ -19,6 +20,7 @@ const HomeLoged = () => {
       <Budget></Budget>
       <FaqSection></FaqSection>
       <ContactUs></ContactUs>
+      {/* <BotonPerfil></BotonPerfil> */}
     </>
   )
 }

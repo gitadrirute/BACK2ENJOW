@@ -1,56 +1,36 @@
-/* General Page Styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
-/* Header and Titles */
-/* h1, h3 {
-    color: #333;
-} */
-
-/* Info Section Styling */
-.info-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  height: auto; /* Cambiado de 420px a auto para adaptarse al contenido */
+  padding: 20px; /* Agrega padding para no pegar el contenido a los bordes */
+  margin: 5% auto 80px; /* Simplificado para claridad */
+  box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);
 }
 
-.info-item {
+  
+.tab-pane-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Cambiar a center si se desea centrar todo */
+  width: 100%;
+}
+
+  
+  .tab-pane-content p, .tab-pane-content h3 {
+    margin: 0.5rem 0;
+  }
+  
+  .icon-text {
     display: flex;
     align-items: center;
+    justify-content: center; /* Considerar cambiar a flex-start si el ícono debe alinearse a la izquierda */
+    width: 100%;
 }
 
-.info-icon {
-    margin-right: 10px;
-}
-
-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #ccc;
-    cursor: pointer;
-}
-
-button.active {
-    background-color: rgb(0, 82, 137);
-    color: white;
-}
-
-.tabs button {
-    padding: 10px 20px;
-    margin-right: 5px;
-    background-color: lightgray;
-    border: none;
-    cursor: pointer;
-}
-
-.tabs button.active {
-    background-color: rgb(0, 82, 137);
-    color: white;
-}
-
-.restaurant-container {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    padding: 20px;
-    max-width: 600px;
-    margin: auto;
+.icon-text p {
+    margin-left: 0.5rem;
 }

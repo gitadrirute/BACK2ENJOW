@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Rating from './Rating';
+import "../../assets/css/FormularioReseñas.css";
 
 function FormularioReseñas() {
     const [rating, setRating] = useState(null);
@@ -15,7 +16,7 @@ function FormularioReseñas() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         try {
             const response = await fetch('url_de_tu_api', {
                 method: 'POST',
@@ -24,34 +25,33 @@ function FormularioReseñas() {
                 },
                 body: JSON.stringify({ rating, comment }),
             });
-            
+
             if (!response.ok) {
                 throw new Error('Error al enviar la reseña');
             }
 
-            // Manejo exitoso de la respuesta del servidor
             console.log('Reseña enviada correctamente');
-            // Aquí puedes realizar otras acciones, como mostrar un mensaje de éxito o redirigir al usuario.
         } catch (error) {
             console.error('Error:', error);
-            // Aquí puedes manejar el error, como mostrar un mensaje al usuario.
         }
     };
 
     return (
-        <div>
-        {/*     ARREGLAR ESTOOO  OJOOOOOO  */}
+        <div className="formulario-container">
             <h2>Deja tu reseña:</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="formulario-field">
                     <label>Tu valoración:</label>
                     <Rating value={rating} onChange={handleRatingChange} />
                 </div>
-                <div>
+                <div className="formulario-field">
                     <label>Tu comentario:</label>
-                    {/* <textarea value={comment} onChange={handleCommentChange} /> */}
+                    <textarea value={comment} onChange={handleCommentChange} /> 
                 </div>
-                <button type="submit">Enviar reseña</button>
+                
+                <div className="formulario-boton">
+                    <button type="submit">Enviar reseña</button>
+                </div>
             </form>
         </div>
     );
