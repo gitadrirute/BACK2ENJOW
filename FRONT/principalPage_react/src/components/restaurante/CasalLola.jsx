@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import "../../assets/css/CasalLola.css";
 import GeneradorCodigo from './CodigoDescuento';
 import FormularioReseñas from './FormularioReseñas';
@@ -9,6 +10,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CasaLola = () => {
   const [activeTab, setActiveTab] = useState('descripcion');
+  const [negocio, setNegocio] = useState(null);
+
+  useEffect(() => {
+    // Reemplaza {id} con el ID real que necesites
+    const id = 40; // Ejemplo
+    axios.get(`http://127.0.0.1:8000/api/paginaPrincipalNegocio/${id}`)
+      .then(response => {
+        setNegocio(response.data.negocios[0]);
+      })
+      .catch(error => {
+        console.error('Error fetching the negocio:', error);
+      });
+  }, []);
 
   return (
     <>
@@ -71,10 +85,16 @@ const CasaLola = () => {
           <div className={`container tab-pane ${activeTab === 'descripcion' ? 'active' : 'fade'}`}>
             <div className="tab-pane-content">
               <br />
-              <h3>Casa Lola</h3>
-              <p>📍 C. Duque de la Victoria, 3. 29015 Málaga</p>
-              <p>🍴 Mediterráneo</p>
-              <p>💵 Precio medio 15 €</p>
+              {negocio && (
+                <>
+                  <h3>{negocio.nombre}</h3>
+                  <p>📍 Dirección: {negocio.direccion}</p>
+                  <p>📞 Teléfono: {negocio.telefono}</p>
+                  <p>🌐 Sitio Web: <a href={negocio.sitioWeb} target="_blank" rel="noopener noreferrer">{negocio.sitioWeb}</a></p>
+                  <p>ℹ️ Información: {negocio.informacion}</p>
+                </>
+              )}
+                           
               <GeneradorCodigo />
             </div>
           </div>
