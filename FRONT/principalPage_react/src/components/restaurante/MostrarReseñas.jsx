@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
-function FormularioReseñas() {
+function FormularioReseñas({ negocioId }) {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
         // Realizar la solicitud GET para obtener los comentarios
-        fetch('/API')
+        fetch(`http://127.0.0.1:8000/api/valoracionesNegocio/${id}`)
             .then(response => response.json())
             .then(data => setComments(data))
             .catch(error => console.error('Error fetching comments:', error));
-    }, []); // Ejecutar solo una vez al montar el componente
+    }, [negocioId]); // Ejecutar solo una vez al montar el componente
 
     return (
         <div>
-            <h2>Comments</h2>
+            <h2>Comentarios</h2>
             <ul>
-                {FormularioReseñas.map(comment => (
+                {comments.map(comment => (
                     <li key={comment.id}>
                         <p>{comment.text}</p>
                         <p>Autor: {comment.author}</p>
@@ -27,3 +27,4 @@ function FormularioReseñas() {
 }
 
 export default FormularioReseñas;
+

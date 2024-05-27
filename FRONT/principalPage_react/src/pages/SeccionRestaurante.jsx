@@ -17,7 +17,12 @@ function SeccionRestaurante() {
       try {
         const response = await fetch("http://127.0.0.1:8000/api/listadoHosteleriaTF");
         const data = await response.json();
-        setRestaurantes(data);
+        console.log(data); // Verificar los datos recibidos
+        if (Array.isArray(data.negocios)) {
+          setRestaurantes(data.negocios);
+        } else {
+          console.error("Error: La propiedad 'negocios' no es un array", data);
+        }
       } catch (error) {
         console.log("Error al obtener los datos de la API", error);
       }
@@ -26,7 +31,6 @@ function SeccionRestaurante() {
     fetchData();
   }, []);
 
-  //!CAMBIAR EL TEMA DE LA REDIRECCION
   // Función para manejar la redirección
   const handleRedirect = () => {
     setRedirect(true);
@@ -49,6 +53,11 @@ function SeccionRestaurante() {
 
   // Función para ordenar tus elementos según los selectores
   const sortedRestaurants = () => {
+    if (!Array.isArray(restaurantes)) {
+      console.error('Error: restaurantes is not an array', restaurantes);
+      return [];
+    }
+    
     let sorted = [...restaurantes]; // Hacer una copia de la lista de restaurantes
     
     // Ordenar por precio y luego por descuento
@@ -67,7 +76,7 @@ function SeccionRestaurante() {
         }
       }
     });
-  
+
     return sorted;
   };
 
@@ -83,7 +92,7 @@ function SeccionRestaurante() {
             <option value="desc">Mayor a menor</option>
           </select>
           <label htmlFor="sortOrder">Ordenar por descuento: </label>
-          <select  id="sortDiscount" value={descuentoSortOrder} onChange={handleDescuentoSortChange}>
+          <select id="sortDiscount" value={descuentoSortOrder} onChange={handleDescuentoSortChange}>
             <option value="asc">Menor a mayor</option>
             <option value="desc">Mayor a menor</option>
           </select>
@@ -93,9 +102,9 @@ function SeccionRestaurante() {
             <CardRestaurante
               key={index}
               nombre={restaurant.nombre}
-              imagen={restaurant.imagen}
-              precio={`${restaurant.precio}€`}
-              descuento={`${restaurant.descuento}%`}
+              imagen={restaurant.rutaImagen || "./venta.jpg"} // Usa una imagen por defecto si no hay imagen
+              precio={`${restaurant.mediaPuntuacion ? restaurant.mediaPuntuacion : 'N/A'}€`}
+              descuento={`${restaurant.descuento ? restaurant.descuento : '0'}%`}
               handleRedirect={handleRedirect}
             />
           ))}

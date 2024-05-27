@@ -54,7 +54,7 @@ const Presentation = () => {
           <form onSubmit={handleSubmit}>
             <label htmlFor="opciones">Que quieres hacer</label>
             <select name="opciones" id="opciones">
-              <option value="/restaurante">Restaurantes</option>
+              <option value="/restaurantes">Restaurantes</option>
               <option value="/">Hoteles</option>
             </select>
             <input className='clickable_btn' type="submit" value="Buscar" />
