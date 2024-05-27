@@ -19,6 +19,7 @@ import PasarelaPago from './pages/PasarelaPago';
 import FormularioFotosNegocio from './pages/FormularioFotoNegocio'; // Importa el componente de subir fotos
 import SeccionHotel from './pages/SeccionHotel';
 import UserProfile from './pages/Perfil';
+import FormularioReseñas from './components/restaurante/FormularioReseñas'; // Importa el componente de reseñas
 
 function App() {
   // Componente para mostrar contenido si está registrado o no dependiendo del estado de autenticación
@@ -46,7 +47,7 @@ function App() {
           <Route path="/pasarela" element={<PasarelaPago />} />
           <Route path="/upload-photos" element={<FormularioFotosNegocio />} /> {/* Nueva ruta añadida */}
           <Route path="/perfil" element={<UserProfile />} />
-
+          <Route path="/reseñas/:negocioId" element={<FormularioReseñas />} /> {/* Ruta para el formulario de reseñas */}
         </Routes>
         <Footer />
       </div>
