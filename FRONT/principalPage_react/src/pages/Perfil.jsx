@@ -14,6 +14,7 @@ function UserProfile() {
     fetchData();
   }, []);
 */}
+//!OJOOO PONER EL BTN DE CERRAR SESION Y REDIRIGIR A AÑADIR FOTOS A LA EMPRESA
   return (
     <div className="container33">
       <div id="logo" className="logo">

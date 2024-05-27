@@ -1,12 +1,32 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import "../assets/css/SeccionRestaurantes_y_hoteles.css";
 import CasaLola from "../components/restaurante/CasalLola";
 import MapCardComponent from "../components/restaurante/Mapa";
+// import restaurants from './restaurants.json'; // Asegúrate de que la ruta es correcta
 
 function SeccionRestaurante() {
+
+  const [restaurantes, setRestaurantes] = useState([]);
+  const [precioSortOrder, setPrecioSortOrder] = useState('asc');
+  const [descuentoSortOrder, setDescuentoSortOrder] = useState('asc');
   const [redirect, setRedirect] = useState(false);
 
+  useEffect(() => {
+    // Función para obtener los datos de la API
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/listadoHosteleriaTF");
+        const data = await response.json();
+        setRestaurantes(data);
+      } catch (error) {
+        console.log("Error al obtener los datos de la API", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  //!CAMBIAR EL TEMA DE LA REDIRECCION
   // Función para manejar la redirección
   const handleRedirect = () => {
     setRedirect(true);
@@ -17,59 +37,72 @@ function SeccionRestaurante() {
     return <CasaLola />;
   }
 
+  // Función para manejar el cambio de orden en el selector de precio
+  const handlePrecioSortChange = (event) => {
+    setPrecioSortOrder(event.target.value);
+  };
+
+  // Función para manejar el cambio de orden en el selector de descuento
+  const handleDescuentoSortChange = (event) => {
+    setDescuentoSortOrder(event.target.value);
+  };
+
+  // Función para ordenar tus elementos según los selectores
+  const sortedRestaurants = () => {
+    let sorted = [...restaurantes]; // Hacer una copia de la lista de restaurantes
+    
+    // Ordenar por precio y luego por descuento
+    sorted.sort((a, b) => {
+      if (precioSortOrder === 'asc') {
+        if (a.precio !== b.precio) {
+          return a.precio - b.precio;
+        } else {
+          return a.descuento - b.descuento;
+        }
+      } else {
+        if (a.precio !== b.precio) {
+          return b.precio - a.precio;
+        } else {
+          return b.descuento - a.descuento;
+        }
+      }
+    });
+  
+    return sorted;
+  };
+
   return (
     <div className="containerSection" id="product">
       
       <div className="cards-Section">
         <h2>Restaurantes</h2>
+        <div className="sort-container">
+          <label htmlFor="sortOrder">Ordenar por precio: </label>
+          <select id="sortPrice" value={precioSortOrder} onChange={handlePrecioSortChange}>
+            <option value="asc">Menor a mayor</option>
+            <option value="desc">Mayor a menor</option>
+          </select>
+          <label htmlFor="sortOrder">Ordenar por descuento: </label>
+          <select  id="sortDiscount" value={descuentoSortOrder} onChange={handleDescuentoSortChange}>
+            <option value="asc">Menor a mayor</option>
+            <option value="desc">Mayor a menor</option>
+          </select>
+        </div>
         <div className="cardsContainer">
-          {/* CardRestaurante para Casa Lola */}
-          <CardRestaurante
-            nombre="Casa Lola"
-            imagen="./img/restaurante/casa.jpg"  // Ruta relativa al directorio public
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardRestaurante
-            nombre="Casa Lola"
-            imagen="./img/restaurante/casa.jpg"  // Ruta relativa al directorio public
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardRestaurante
-            nombre="Casa Lola"
-            imagen="./img/restaurante/casa.jpg"  // Ruta relativa al directorio public
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardRestaurante
-            nombre="Casa Lola"
-            imagen="./img/restaurante/casa.jpg"  // Ruta relativa al directorio public
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardRestaurante
-            nombre="Casa Lola"
-            imagen="./img/restaurante/casa.jpg"  // Ruta relativa al directorio public
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardRestaurante
-            nombre="Casa Lola"
-            imagen="./img/restaurante/casa.jpg"  // Ruta relativa al directorio public
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
+        {sortedRestaurants().map((restaurant, index) => (
+            <CardRestaurante
+              key={index}
+              nombre={restaurant.nombre}
+              imagen={restaurant.imagen}
+              precio={`${restaurant.precio}€`}
+              descuento={`${restaurant.descuento}%`}
+              handleRedirect={handleRedirect}
+            />
+          ))}
         </div>
       </div>
       <div className="map-containerSection">
-          <MapCardComponent/>
+        <MapCardComponent/>
       </div>
     </div>
   );

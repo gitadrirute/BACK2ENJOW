@@ -1,121 +1,18 @@
-import React, { useState } from "react";
-//!ojo cambiar las rutas 
-// import "../assets/css/SeccionHotel.css"; // Cambio en la importación del archivo CSS
-import CasaLola from "../components/restaurante/CasalLola"; // Cambio en la importación del componente CasaLola
-import MapCardComponent from "../components/restaurante/Mapa"; // Cambio en la importación del componente MapCardComponent
+import React, { useState, useEffect } from "react";
+import "../assets/css/SeccionRestaurantes_y_hoteles.css";
+// import CasaLola from "../components/restaurante/CasaLola";
+import MapCardComponent from "../components/restaurante/Mapa";
 
 function SeccionHotel() {
-  const [redirect, setRedirect] = useState(false);
-
-  // Función para manejar la redirección
-  const handleRedirect = () => {
-    setRedirect(true);
-  };
-
-  // Redirigir si redirect es true
-  if (redirect) {
-    return <CasaLola />;
-  }
-
-  return (
-    <>
-    
-    <div className="containerSection" id="product">
-      
-      <div className="cards-containerSection">
-        <h2>Hoteles</h2>
-        <div className="cardsContainer">
-          {/* CardHotel para Casa Lola */}
-          <CardHotel
-            nombre="Hotel ibis"
-            imagen="./img/hotel/casa.jpg" // Cambio en la ruta de la imagen
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardHotel
-            nombre="Hotel ibis"
-            imagen="./img/hotel/casa.jpg" // Cambio en la ruta de la imagen
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardHotel
-            nombre="Hotel ibis"
-            imagen="./img/hotel/casa.jpg" // Cambio en la ruta de la imagen
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardHotel
-            nombre="Hotel ibis"
-            imagen="./img/hotel/casa.jpg" // Cambio en la ruta de la imagen
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-          <CardHotel
-            nombre="Hotel ibis"
-            imagen="./img/hotel/casa.jpg" // Cambio en la ruta de la imagen
-            precio="15€"
-            descuento="20%"
-            handleRedirect={handleRedirect}
-          />
-        </div>
-      </div>
-      <div className="map-containerSection">
-        <MapCardComponent />
-      </div>
-    </div>
-    </>
-  );
-}
-
-function CardHotel({ nombre, imagen, categoria, precio, descuento, handleRedirect }) { // Cambio en el nombre de la función y los parámetros
-  return (
-    <div className="card" onClick={handleRedirect}>
-      <div className="card-image-container">
-        <img className="card-image" src={imagen} alt={nombre} />
-      </div>
-      <div className="card-details">
-        <div className="card-category">{categoria}</div>
-        <h2 className="card-title">
-          <strong>{nombre}</strong>
-        </h2>
-        <p className="card-text">{precio} de precio medio</p>
-        <p className="discount-tag">{descuento}</p>
-      </div>
-    </div>
-  );
-}
-
-export default SeccionHotel;
-
-/* import React, { useState, useEffect } from 'react';
-
-//!Esta seccion es para obtener las cartas desde la apiiii
-//Np rallarse
-const HotelCard = ({ hotelData }) => {
-  // Renderizar la tarjeta del hotel
-  return (
-    <div className="hotel-card">
-      <img src={hotelData.image_url} alt={hotelData.name} />
-      <h2>{hotelData.name}</h2>
-      <p>{hotelData.description}</p>
-      <p>Ubicación: {hotelData.location}</p>
-    </div>
-  );
-};
-
-const SeccionHotel = () => {
   const [hotels, setHotels] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     // Función para obtener datos de hoteles desde la API
     const fetchHotels = async () => {
       try {
-        // Realizar solicitud a la API para obtener la lista de hoteles
-        const response = await fetch('https://tu-api.com/hotels');
+        const response = await fetch('http://127.0.0.1:8000/api/listadoHotelesTF');
         if (!response.ok) {
           throw new Error('No se pudo obtener la lista de hoteles');
         }
@@ -126,28 +23,78 @@ const SeccionHotel = () => {
       }
     };
 
-    // Llamar a la función para obtener datos de hoteles cuando el componente se monte
     fetchHotels();
-
-    // Nota: En un caso real, es posible que quieras añadir una limpieza aquí
-    // para cancelar la solicitud cuando el componente se desmonte.
-
   }, []);
 
-  // Renderizar la lista de hoteles
+  //!CAMBIAR LAS REDIRECCIONES AL MENU DEL NEGOCIO
+  const handleRedirect = () => {
+    setRedirect(true);
+  };
+
+  if (redirect) {
+    return {/* <CasaLola /> */};
+  }
+
+  const sortedHotels = hotels.sort((a, b) => {
+    if (sortOrder === 'asc') {
+      return a.precio - b.precio;
+    } else {
+      return b.precio - a.precio;
+    }
+  });
+
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
   return (
-    <>
-    <div className="hotel-list">
-      {hotels.map((hotel) => (
-        <HotelCard key={hotel.id} hotelData={hotel} />
-      ))}
+    <div className="containerSection" id="product">
+      <div className="cards-Section">
+        <h2>Hoteles</h2>
+        <div className="sort-container">
+          <label htmlFor="sortOrder">Ordenar por precio: </label>
+          <select id="sortOrder" value={sortOrder} onChange={handleSortChange}>
+            <option value="asc">Menor a mayor</option>
+            <option value="desc">Mayor a menor</option>
+          </select>
+        </div>
+        <div className="cardsContainer">
+          {sortedHotels.map((hotel, index) => (
+            <CardHotel
+              key={hotel.id}
+              nombre={hotel.nombre}
+              imagen={hotel.imagen}
+              precio={`${hotel.precio}€`}
+              distancia={hotel.distancia}
+              descuento={hotel.descuento}
+              handleRedirect={handleRedirect}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="map-containerSection">
+        <MapCardComponent />
+      </div>
     </div>
-    <div className="map-containerSection">
-        <MapCardComponent/>
-    </div>
-    </>
   );
-};
+}
+
+function CardHotel({ nombre, imagen, precio, distancia, descuento, handleRedirect }) {
+  return (
+    <div className="card" onClick={handleRedirect}>
+      <div className="card-image-container">
+        <img className="card-image" src={imagen} alt={nombre} />
+      </div>
+      <div className="card-details">
+        <h2 className="card-title">
+          <strong>{nombre}</strong>
+        </h2>
+        <p className="card-text">{precio} de precio medio</p>
+        <p className="card-text">{distancia} km de Centro de la ciudad</p>
+        <p className="discount-tag">{descuento}</p>
+      </div>
+    </div>
+  );
+}
 
 export default SeccionHotel;
- */

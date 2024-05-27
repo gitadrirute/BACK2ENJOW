@@ -26,6 +26,10 @@ button {
   padding: 10px;
 } */
 
+.info-conaitner{
+  width: 300px;
+  justify-content: center;
+}
 .card-slider {
   display: flex;
   white-space: nowrap;

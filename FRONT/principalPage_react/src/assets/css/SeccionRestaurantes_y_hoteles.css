@@ -1,24 +1,24 @@
 .containerSection {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 20px;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
   
-  .cards-Section {
-    flex: 1;
-  }
+.cards-Section {
+  flex: 1;
+}
 
-  .cardsContainer{
-    display: grid;
-    justify-items: center;
-    align-content: center;
-    grid-template-columns: 50% 50%;
-  }
-  
-  .map-containerSection {
-    width: 50%; /* Reducir el ancho del contenedor del mapa */
-  }
+.cardsContainer{
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  grid-template-columns: 50% 50%;
+}
+
+.map-containerSection {
+  width: 50%; /* Reducir el ancho del contenedor del mapa */
+}
 
  .card {
   display: flex;
@@ -63,11 +63,10 @@
   border-radius: 4px;
   display: inline-block;
 }
-
   
-  /* Agregar efecto de agrandamiento al pasar el ratón */
-  .card:hover {
-    transform: scale(1.05);
-  }
+/* Agregar efecto de agrandamiento al pasar el ratón */
+.card:hover {
+  transform: scale(1.05);
+}
   
   
