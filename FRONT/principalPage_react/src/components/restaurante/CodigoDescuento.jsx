@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import $ from 'jquery';
 import '../../assets/css/GenerarCodigo.css'; // Importa el archivo CSS
 import { useAuth } from '../AuthContext'; // Asegúrate de que la ruta es correcta
+import { useNavigate } from 'react-router-dom';
 
 const CodigoDescuento = () => {
   const { isLoggedIn } = useAuth(); // Utiliza el hook para obtener el estado de autenticación
+  const navigate = useNavigate(); // Hook para la navegación
 
   useEffect(() => {
     const generarCodigo = () => {
@@ -32,7 +34,11 @@ const CodigoDescuento = () => {
     $('#btnCodigo').on('click', generarCodigo);
     $('#btnCerrarRegistrado').on('click', () => $('#popup-registrado').hide());
     $('#btnCerrarNoRegistrado').on('click', () => $('#popup-no-registrado').hide());
-  }, [isLoggedIn]);
+    $('#btnRegistrarse').on('click', () => {
+      $('#popup-no-registrado').hide();
+      navigate('/login'); // Redirigir a la página de registro
+    });
+  }, [isLoggedIn, navigate]);
 
   return (
     <>
@@ -64,6 +70,7 @@ const CodigoDescuento = () => {
             <h2>Lo sentimos</h2>
             <p>Pero tienes que registrarte para obtener un código de descuento.</p>
             <button id="btnCerrarNoRegistrado" className="btnCerrar">Cerrar</button>
+            <button id="btnRegistrarse" className="btnRegistrarse">Registrarse</button>
           </div>
         </div>
       </div>
